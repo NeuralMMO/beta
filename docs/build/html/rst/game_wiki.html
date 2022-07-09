@@ -266,25 +266,33 @@
 <p>Neural MMO is inspired by classic Massively Multiplayer Online Role-Playing Games. Most of the game systems are adapted from existing games, but they are not copied directly for two reasons. First, the mechanics of actual MMOs are substantially more complex and require dozens to hundreds of hours of investment in order to understand. As Neural MMO is primarily a research platform, we aim to keep it accessible for that purpose. Second, many common game mechanics result in complex and inefficient observation and action spaces. We have made the necessary adaptations to preserve as much environment expressivity as possible without compromising efficiency.</p>
 <section id="glossary">
 <h2>Glossary<a class="headerlink" href="#glossary" title="Permalink to this headline">¶</a></h2>
-<p>A quick reference of standard game terms:
-- <strong>Tick:</strong> The simulation interval of the server; a timestep. With rendering enabled, the server targets 0.6s/tick.
-- <strong>NPC:</strong> Non-Player Character; any agent not controlled by a user. Sometimes called a <em>mob</em>
-- <strong>Spawn:</strong> Entering into the game, e.g. <em>players spawn with 10 health</em>
-- <strong>RPG:</strong> Role-Playing Game, e.g. a game in which the player takes on a particular role, usually one removed from modern reality, such as that of a knight or wizard. <em>MMO</em> is short for <em>MMORPG</em>, as most MMOs are also role-playing games.
-- <strong>XP (exp):</strong> Experience, a stat associated with progression systems to represent levels.</p>
+<dl class="simple">
+<dt>A quick reference of standard game terms:</dt><dd><ul class="simple">
+<li><p><strong>Tick:</strong> The simulation interval of the server; a timestep. With rendering enabled, the server targets 0.6s/tick.</p></li>
+<li><p><strong>NPC:</strong> Non-Player Character; any agent not controlled by a user. Sometimes called a <em>mob</em></p></li>
+<li><p><strong>Spawn:</strong> Entering into the game, e.g. <em>players spawn with 10 health</em></p></li>
+<li><p><strong>RPG:</strong> Role-Playing Game, e.g. a game in which the player takes on a particular role, usually one removed from modern reality, such as that of a knight or wizard. <em>MMO</em> is short for <em>MMORPG</em>, as most MMOs are also role-playing games.</p></li>
+<li><p><strong>XP (exp):</strong> Experience, a stat associated with progression systems to represent levels.</p></li>
+</ul>
+</dd>
+</dl>
 </section>
 <section id="features">
 <h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
-<p>Neural MMO includes the following game systems
-- <strong>Terrain:</strong> Procedurally generated maps with obstacles
-- <strong>Resource:</strong> Agents must forage for resources to survive
-- <strong>Combat:</strong> Agent can fight each other
-- <strong>NPC:</strong> Maps are inhabited by mobs of varying friendliness
-- <strong>Progression:</strong> Agents improve various abilities through usage
-- <strong>Item:</strong> Agents can acquire a number of items with distinct uses
-- <strong>Equipment:</strong> Agents can use armor, weapons, and tools
-- <strong>Profession:</strong> Agents can practice distinct jobs
-- <strong>Exchange:</strong> Agents can trade items on a global market</p>
+<dl class="simple">
+<dt>Neural MMO includes the following game systems</dt><dd><ul class="simple">
+<li><p><strong>Terrain:</strong> Procedurally generated maps with obstacles</p></li>
+<li><p><strong>Resource:</strong> Agents must forage for resources to survive</p></li>
+<li><p><strong>Combat:</strong> Agent can fight each other</p></li>
+<li><p><strong>NPC:</strong> Maps are inhabited by mobs of varying friendliness</p></li>
+<li><p><strong>Progression:</strong> Agents improve various abilities through usage</p></li>
+<li><p><strong>Item:</strong> Agents can acquire a number of items with distinct uses</p></li>
+<li><p><strong>Equipment:</strong> Agents can use armor, weapons, and tools</p></li>
+<li><p><strong>Profession:</strong> Agents can practice distinct jobs</p></li>
+<li><p><strong>Exchange:</strong> Agents can trade items on a global market</p></li>
+</ul>
+</dd>
+</dl>
 <p>Each of these sytems may be configured or disabled individually (with some common sense dependencies). This wiki assumes the default configuration with all game systems enabled and does not provide constants (such as the amount of player health) because these are documented separately as part of the environment config.</p>
 </section>
 </section>

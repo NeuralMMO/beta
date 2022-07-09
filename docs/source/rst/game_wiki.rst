@@ -16,25 +16,25 @@ Glossary
 ********
 
 A quick reference of standard game terms:
-- **Tick:** The simulation interval of the server; a timestep. With rendering enabled, the server targets 0.6s/tick.
-- **NPC:** Non-Player Character; any agent not controlled by a user. Sometimes called a *mob*
-- **Spawn:** Entering into the game, e.g. *players spawn with 10 health*
-- **RPG:** Role-Playing Game, e.g. a game in which the player takes on a particular role, usually one removed from modern reality, such as that of a knight or wizard. *MMO* is short for *MMORPG*, as most MMOs are also role-playing games.
-- **XP (exp):** Experience, a stat associated with progression systems to represent levels.
+ - **Tick:** The simulation interval of the server; a timestep. With rendering enabled, the server targets 0.6s/tick.
+ - **NPC:** Non-Player Character; any agent not controlled by a user. Sometimes called a *mob*
+ - **Spawn:** Entering into the game, e.g. *players spawn with 10 health*
+ - **RPG:** Role-Playing Game, e.g. a game in which the player takes on a particular role, usually one removed from modern reality, such as that of a knight or wizard. *MMO* is short for *MMORPG*, as most MMOs are also role-playing games.
+ - **XP (exp):** Experience, a stat associated with progression systems to represent levels.
 
 Features
 ********
 
 Neural MMO includes the following game systems
-- **Terrain:** Procedurally generated maps with obstacles
-- **Resource:** Agents must forage for resources to survive
-- **Combat:** Agent can fight each other
-- **NPC:** Maps are inhabited by mobs of varying friendliness
-- **Progression:** Agents improve various abilities through usage
-- **Item:** Agents can acquire a number of items with distinct uses
-- **Equipment:** Agents can use armor, weapons, and tools
-- **Profession:** Agents can practice distinct jobs
-- **Exchange:** Agents can trade items on a global market
+ - **Terrain:** Procedurally generated maps with obstacles
+ - **Resource:** Agents must forage for resources to survive
+ - **Combat:** Agent can fight each other
+ - **NPC:** Maps are inhabited by mobs of varying friendliness
+ - **Progression:** Agents improve various abilities through usage
+ - **Item:** Agents can acquire a number of items with distinct uses
+ - **Equipment:** Agents can use armor, weapons, and tools
+ - **Profession:** Agents can practice distinct jobs
+ - **Exchange:** Agents can trade items on a global market
 
 Each of these sytems may be configured or disabled individually (with some common sense dependencies). This wiki assumes the default configuration with all game systems enabled and does not provide constants (such as the amount of player health) because these are documented separately as part of the environment config.
 
