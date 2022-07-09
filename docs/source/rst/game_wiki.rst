@@ -213,16 +213,15 @@ Combat
 
 Agents gain access to melee, range, and mage attacks. These obey a rock-paper-scissors dominance relationship: melee beats range beats mage beats melee. Dominance is calculated using the attacker's chosen attack skill and the defender's main combat skill. Attacks inflict damage to the target according to the following formula: *damage = effectiveness multiplier * (attack score - defense score).
 
+**Combat defaults are currently only correctly configured for all systems enabled. The base system information below will be accurate once this is fixed.**
+
 In the base Combat system:
+ - Attacks can inflict damage from 3 squares away
  - Attack score is equal to a flat base damage of 30
  - Defense score is equal to zero
  - The resultant difference is clipped to a minimum of 0
  - Main combat skill is the one an agent has used the most
  - Effective damage multiplier is 1.5 for using the correct style (e.g. mage vs melee) and 1 otherwise
-
-If the Resource system is enabled
- - Damage inflicted drains the same value from the target's food and water, restoring it to the attacker
- - This is a legacy mechanic from early in development and may be revisited as redundant and unintuitive
 
 If the progression system is enabled
  - Base damage is decreased to 25
@@ -233,11 +232,16 @@ If the progression system is enabled
 If the equipment system is enabled
  - Attack score is increased by the attacker's offensive equipment bonus (weapons, ammunition)
  - Defense score is increased by the defender's defensive bonus (armor, tools)
- - See the Item list for the attack/defense bonus of each equipment item
+ - Base attack score (damage) is set to 0
+ - Attack score for a specific style is increased by 15 if wielding a weapon
+ - Attack score is increased by 15 per weapon or ammunition level
+ - Defense score is increased by 30 if wielding a tool
+ - Defense score is increased by 10 per armor level
 
 With all systems enabled:
 
 .. code-block:: python
+
   damage = effectiveness multiplier * ((base damage + attacker level adjustment + attacker equipment adjustment) - (target level adjustment + target equipment adjustment))
 
 This combat formula treats each point of attack as +1 damage and each point of defense as -1 damage. It simply adds damage from all sources and subtracts defense from all sources. The attacker always has an advantage in that they can select the skill strong against the target's main skill. However, the defender can immediately retaliate in the same manner. Additionally, a combat style in which an agent has a higher level and better equipment may outperform one with only the effectiveness multiplier.
@@ -409,7 +413,7 @@ Resource: Shaving
 Usage: Range ammunition
 
 Alchemy
-******
+*******
 
 Tool: Arcane focus
 Resource: Shard
