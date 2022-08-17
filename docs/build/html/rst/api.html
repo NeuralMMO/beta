@@ -138,6 +138,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="updates.html"> Video Demos</a></li>
 <li class="toctree-l1"><a class="reference internal" href="updates.html#icon-publications"> Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updates.html#icon-competitions"> Competitions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="updates.html#icon-presentations"> Presentations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="updates.html#icon-update-slides"> Update Slides</a></li>
 <li class="toctree-l1"><a class="reference internal" href="updates.html#icon-additional-links"> Additional Links</a></li>
@@ -652,6 +653,18 @@ generated automatically.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">LOG_ENV</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em></dt>
+<dd><p>Whether to log env steps (expensive)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">LOG_MILESTONES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em></dt>
+<dd><p>Whether to log server-firsts (semi-expensive)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">LOG_EVENTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em></dt>
 <dd><p>Whether to log events (semi-expensive)</p>
 </dd></dl>
@@ -745,6 +758,12 @@ generated automatically.</p>
 <dd><p>Number of player spawn attempts per tick</p>
 <p>Note that the env will attempt to spawn agents until success
 if the current population size is zero.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">PLAYER_SPAWN_TEAMMATE_DISTANCE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em></dt>
+<dd><p>Buffer tiles between teammates at spawn</p>
 </dd></dl>
 
 <dl class="py property">
@@ -1141,14 +1160,32 @@ if the current population size is zero.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">COMBAT_WEAKNESS_MULTIPLIER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.5</span></em></dt>
-<dd><p>Multiplier for super-effective attacks</p>
+<span class="sig-name descname"><span class="pre">COMBAT_FRIENDLY_FIRE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em></dt>
+<dd><p>Whether agents with the same population index can hit each other</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">COMBAT_MELEE_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em></dt>
-<dd><p>Base Melee attack damage</p>
+<span class="sig-name descname"><span class="pre">COMBAT_SPAWN_IMMUNITY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">20</span></em></dt>
+<dd><p>Agents older than this many ticks cannot attack agents younger than this many ticks</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">COMBAT_WEAKNESS_MULTIPLIER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.5</span></em></dt>
+<dd><p>Multiplier for super-effective attacks</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">COMBAT_DAMAGE_FORMULA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offense</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">defense</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multiplier</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Damage formula</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">COMBAT_MELEE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30</span></em></dt>
+<dd><p>Melee attack damage</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1159,8 +1196,8 @@ if the current population size is zero.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">COMBAT_RANGE_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em></dt>
-<dd><p>Base Range attack damage</p>
+<span class="sig-name descname"><span class="pre">COMBAT_RANGE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30</span></em></dt>
+<dd><p>Range attack damage</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1171,8 +1208,8 @@ if the current population size is zero.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">COMBAT_MAGE_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em></dt>
-<dd><p>Base Mage attack damage</p>
+<span class="sig-name descname"><span class="pre">COMBAT_MAGE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30</span></em></dt>
+<dd><p>Mage attack damage</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1225,25 +1262,49 @@ if the current population size is zero.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">PROGRESSION_MELEE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em></dt>
+<span class="sig-name descname"><span class="pre">PROGRESSION_MELEE_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em></dt>
+<dd><p>Base Melee attack damage</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">PROGRESSION_MELEE_LEVEL_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em></dt>
 <dd><p>Bonus Melee attack damage per level</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">PROGRESSION_RANGE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em></dt>
+<span class="sig-name descname"><span class="pre">PROGRESSION_RANGE_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em></dt>
+<dd><p>Base Range attack damage</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">PROGRESSION_RANGE_LEVEL_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em></dt>
 <dd><p>Bonus Range attack damage per level</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">PROGRESSION_MAGE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em></dt>
+<span class="sig-name descname"><span class="pre">PROGRESSION_MAGE_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em></dt>
+<dd><p>Base Mage attack damage</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">PROGRESSION_MAGE_LEVEL_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em></dt>
 <dd><p>Bonus Mage attack damage per level</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">PROGRESSION_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em></dt>
+<span class="sig-name descname"><span class="pre">PROGRESSION_BASE_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em></dt>
+<dd><p>Base defense</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">PROGRESSION_LEVEL_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em></dt>
 <dd><p>Bonus defense per level</p>
 </dd></dl>
 
@@ -1299,6 +1360,30 @@ if the current population size is zero.</p>
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">NPC_LEVEL_MAX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></em></dt>
 <dd><p>Maximum NPC level</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">NPC_BASE_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em></dt>
+<dd><p>Base NPC defense</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">NPC_LEVEL_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30</span></em></dt>
+<dd><p>Bonus NPC defense per level</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">NPC_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">15</span></em></dt>
+<dd><p>Base NPC damage</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">NPC_LEVEL_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30</span></em></dt>
+<dd><p>Bonus NPC damage per level</p>
 </dd></dl>
 
 </dd></dl>

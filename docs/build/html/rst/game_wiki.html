@@ -128,6 +128,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#"> Overview</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#glossary">Glossary</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#contributing">Contributing</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="#icon-io"> IO</a><ul>
@@ -174,6 +175,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="updates.html"> Video Demos</a></li>
 <li class="toctree-l1"><a class="reference internal" href="updates.html#icon-publications"> Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updates.html#icon-competitions"> Competitions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="updates.html#icon-presentations"> Presentations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="updates.html#icon-update-slides"> Update Slides</a></li>
 <li class="toctree-l1"><a class="reference internal" href="updates.html#icon-additional-links"> Additional Links</a></li>
@@ -294,6 +296,10 @@
 </dd>
 </dl>
 <p>Each of these sytems may be configured or disabled individually (with some common sense dependencies). This wiki assumes the default configuration with all game systems enabled and does not provide constants (such as the amount of player health) because these are documented separately as part of the environment config.</p>
+</section>
+<section id="contributing">
+<h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h2>
+<p>If you find errors or ambiguities in the documentation, please either submit a PR with the associated fixes or, if it is easier, simply point it out on the Discord. Numerical constants sometimes change as we balance the game mechanics: always double-check your config file when making important decisions.</p>
 </section>
 </section>
 <section id="icon-io">
@@ -472,13 +478,12 @@
 <li><p>Attacks can inflict damage from 3 squares away</p></li>
 <li><p>Attack score is equal to a flat base damage of 30</p></li>
 <li><p>Defense score is equal to zero</p></li>
-<li><p>The resultant difference is clipped to a minimum of 0</p></li>
 <li><p>Main combat skill is the one an agent has used the most</p></li>
 <li><p>Effective damage multiplier is 1.5 for using the correct style (e.g. mage vs melee) and 1 otherwise</p></li>
 </ul>
 </dd>
 <dt>If the progression system is enabled</dt><dd><ul class="simple">
-<li><p>Base damage is decreased to 25</p></li>
+<li><p>Base damage is decreased to 0</p></li>
 <li><p>Attack score is increased by 5 for each level of the attacker’s offensive skill</p></li>
 <li><p>Defense is increased by 5 for each level of the defender’s highest skill</p></li>
 <li><p>Main combat skill is the one with the most experience</p></li>
@@ -487,7 +492,6 @@
 <dt>If the equipment system is enabled</dt><dd><ul class="simple">
 <li><p>Attack score is increased by the attacker’s offensive equipment bonus (weapons, ammunition)</p></li>
 <li><p>Defense score is increased by the defender’s defensive bonus (armor, tools)</p></li>
-<li><p>Base attack score (damage) is set to 0</p></li>
 <li><p>Attack score for a specific style is increased by 15 if wielding a weapon</p></li>
 <li><p>Attack score is increased by 15 per weapon or ammunition level</p></li>
 <li><p>Defense score is increased by 30 if wielding a tool</p></li>
@@ -496,10 +500,13 @@
 </dd>
 </dl>
 <p>With all systems enabled:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">damage</span> <span class="o">=</span> <span class="n">effectiveness</span> <span class="n">multiplier</span> <span class="o">*</span> <span class="p">((</span><span class="n">base</span> <span class="n">damage</span> <span class="o">+</span> <span class="n">attacker</span> <span class="n">level</span> <span class="n">adjustment</span> <span class="o">+</span> <span class="n">attacker</span> <span class="n">equipment</span> <span class="n">adjustment</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">target</span> <span class="n">level</span> <span class="n">adjustment</span> <span class="o">+</span> <span class="n">target</span> <span class="n">equipment</span> <span class="n">adjustment</span><span class="p">))</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">offense</span> <span class="o">=</span> <span class="n">base</span> <span class="n">damage</span> <span class="o">+</span> <span class="n">attacker</span> <span class="n">level</span> <span class="n">adjustment</span> <span class="o">+</span> <span class="n">attacker</span> <span class="n">equipment</span> <span class="n">adjustment</span>
+<span class="n">defense</span> <span class="o">=</span> <span class="n">target</span> <span class="n">level</span> <span class="n">adjustment</span> <span class="o">+</span> <span class="n">target</span> <span class="n">equipment</span> <span class="n">adjustment</span>
+<span class="n">raw_damage</span> <span class="o">=</span> <span class="n">effectiveness</span> <span class="n">multiplier</span> <span class="o">*</span> <span class="n">offense</span> <span class="o">*</span> <span class="p">(</span><span class="mi">15</span> <span class="o">/</span> <span class="p">(</span><span class="mi">15</span> <span class="o">+</span> <span class="n">defense</span><span class="p">))</span>
+<span class="n">final_damage</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">damage</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>This combat formula treats each point of attack as +1 damage and each point of defense as -1 damage. It simply adds damage from all sources and subtracts defense from all sources. The attacker always has an advantage in that they can select the skill strong against the target’s main skill. However, the defender can immediately retaliate in the same manner. Additionally, a combat style in which an agent has a higher level and better equipment may outperform one with only the effectiveness multiplier.</p>
+<p>The attacker always has an advantage in that they can select the skill strong against the target’s main skill. However, the defender can immediately retaliate in the same manner. Additionally, a combat style in which an agent has a higher level and better equipment may outperform one with only the effectiveness multiplier.</p>
 </section>
 <section id="npc">
 <h2>NPC<a class="headerlink" href="#npc" title="Permalink to this headline">¶</a></h2>
@@ -514,8 +521,7 @@
 </ul>
 </dd>
 <dt>If the Equipment system is enabled:</dt><dd><ul class="simple">
-<li><p>NPCs spawn with a full set of armor</p></li>
-<li><p>NPCs spawn with a random weapon</p></li>
+<li><p>NPCs spawn with random armor piece</p></li>
 </ul>
 </dd>
 <dt>If the Profession system is enabled:</dt><dd><ul class="simple">
@@ -524,10 +530,7 @@
 </dd>
 <dt>If the Progression system is enabled:</dt><dd><ul class="simple">
 <li><p>NPCs will appear in varying levels</p></li>
-<li><p>One randomly chosen piece of equipment (if present) will be equal to the NPC level</p></li>
-<li><p>All other equipment will be equal to the NPC level minus one</p></li>
-<li><p>If this reduces the equipment to level zero, it is not spawned</p></li>
-<li><p>This means a level 1 NPC will have a single level 1 item while a level 2 agent will have a full set of level 1 gear with one level 2 item</p></li>
+<li><p>Any equipment dropped will be of level equal to the NPC’s level</p></li>
 </ul>
 </dd>
 <dt>If the Exchange system is enabled:</dt><dd><ul class="simple">
@@ -549,7 +552,6 @@
 </ul>
 </dd>
 <dt>If the Combat system is enabled:</dt><dd><ul class="simple">
-<li><p>Base combat damage is reduced to 25 by increased by 5 per level in the appropriate attack skill</p></li>
 <li><p>Agents are awarded 1 XP per attack</p></li>
 </ul>
 </dd>
@@ -558,7 +560,8 @@
 </ul>
 </dd>
 <dt>If the Profession system is enabled</dt><dd><ul class="simple">
-<li><p>Agents are awarded 2 XP per resource gathered</p></li>
+<li><p>Agents are awarded 1 XP per ammunition resource gathered</p></li>
+<li><p>Agents are awarded 5 XP per consumable resource gathered</p></li>
 </ul>
 </dd>
 </dl>
@@ -607,6 +610,11 @@
 <dt>In the base progression system:</dt><dd><ul class="simple">
 <li><p>Prospecting, Carving, Alchemy: gather resources used as ammunition to enhance melee, range, and mage attacks</p></li>
 <li><p>Fishing, Herbalism: gather resources that can be consumed to restore food, water, and health</p></li>
+<li><p>There is a 2.5 percent chance to obtain a weapon while gathering ammunition</p></li>
+<li><p>These drops are intentionally not for the same style as the gathered ammunition</p></li>
+<li><p>Ore (Prospecting) can drop Wands</p></li>
+<li><p>Trees (Carving) can drop Swords</p></li>
+<li><p>Crystals (Alchemy) can drop Bows</p></li>
 </ul>
 </dd>
 </dl>
@@ -621,10 +629,11 @@
 <li><p>The item is immediately removed from the seller’s inventory</p></li>
 <li><p>Other agents can immediately buy that item and receive it</p></li>
 <li><p>If multiple agents attempt to buy the same item at the same time, the market will attempt to fulfill the request from another seller at a price no more than 10% higher.</p></li>
+<li><p>Buy and sell actions are prioritized per-population based on each agent’s entity ID. So if the first agent on a team sells an item, the second agent will have the first chance to buy it. Note that there are some edge cases here, and we would appreciate user feedback.</p></li>
 </ul>
 </dd>
 </dl>
-<p>Note that agents only observe the current best offer for each item of each level. This prevents unbounded blowup of the observation and action spaces.</p>
+<p>Agents only observe the current best offer for each item of each level. This prevents unbounded blowup of the observation and action spaces.</p>
 </section>
 </section>
 <section id="icon-skills">
@@ -689,18 +698,18 @@ Usage: Mage ammunition</p>
 </section>
 <section id="armor-hat-top-bottom">
 <h2>Armor: Hat, Top, Bottom<a class="headerlink" href="#armor-hat-top-bottom" title="Permalink to this headline">¶</a></h2>
-<p>Grants a flat 5 defense per item level</p>
+<p>Grants 10 defense per item level</p>
 <p>Requires at least one skill greater than or equal to the item level to equip</p>
 <p>Also referred to as helmet, chestplate, and platelegs</p>
 </section>
 <section id="weapon-sword-bow-wand">
 <h2>Weapon: Sword, Bow, Wand<a class="headerlink" href="#weapon-sword-bow-wand" title="Permalink to this headline">¶</a></h2>
-<p>Grants a flat 15 attack bonus to the pertinent style (melee, range, mage) per item level</p>
+<p>Grants a flat 15  plus 15 attack bonus per item level to the associated style (melee, range, mage)</p>
 <p>Requires a pertinent skill level greater than or equal to the item level to equip</p>
 </section>
 <section id="tool-rod-gloves-pickaxe-chisel-arcane-focus">
 <h2>Tool: Rod, Gloves, Pickaxe, Chisel, Arcane Focus<a class="headerlink" href="#tool-rod-gloves-pickaxe-chisel-arcane-focus" title="Permalink to this headline">¶</a></h2>
-<p>Grants a flat 15 defense per item level</p>
+<p>Grants a flat 30 defense regardless of item level</p>
 <p>Requires a pertinent skill level (fishing, herbalism, prospecting, carving, alchemy) greater than or equal to the item level to equip</p>
 <p>Enables an agent to collect a pertinent resource (ration, poultice, scrap, shaving, shard) at a level equal to the item level</p>
 </section>

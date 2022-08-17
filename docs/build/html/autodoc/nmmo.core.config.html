@@ -161,6 +161,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../rst/updates.html"> Video Demos</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rst/updates.html#icon-publications"> Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rst/updates.html#icon-competitions"> Competitions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rst/updates.html#icon-presentations"> Presentations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rst/updates.html#icon-update-slides"> Update Slides</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rst/updates.html#icon-additional-links"> Additional Links</a></li>
@@ -359,6 +360,18 @@ generated automatically.</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Config.LOG_ENV">
+<span class="sig-name descname"><span class="pre">LOG_ENV</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#nmmo.core.config.Config.LOG_ENV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to log env steps (expensive)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Config.LOG_MILESTONES">
+<span class="sig-name descname"><span class="pre">LOG_MILESTONES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#nmmo.core.config.Config.LOG_MILESTONES" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to log server-firsts (semi-expensive)</p>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="nmmo.core.config.Config.LOG_EVENTS">
 <span class="sig-name descname"><span class="pre">LOG_EVENTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#nmmo.core.config.Config.LOG_EVENTS" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether to log events (semi-expensive)</p>
@@ -453,6 +466,12 @@ generated automatically.</p>
 <dd><p>Number of player spawn attempts per tick</p>
 <p>Note that the env will attempt to spawn agents until success
 if the current population size is zero.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Config.PLAYER_SPAWN_TEAMMATE_DISTANCE">
+<span class="sig-name descname"><span class="pre">PLAYER_SPAWN_TEAMMATE_DISTANCE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#nmmo.core.config.Config.PLAYER_SPAWN_TEAMMATE_DISTANCE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Buffer tiles between teammates at spawn</p>
 </dd></dl>
 
 <dl class="py property">
@@ -744,15 +763,33 @@ if the current population size is zero.</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Combat.COMBAT_FRIENDLY_FIRE">
+<span class="sig-name descname"><span class="pre">COMBAT_FRIENDLY_FIRE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#nmmo.core.config.Combat.COMBAT_FRIENDLY_FIRE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether agents with the same population index can hit each other</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Combat.COMBAT_SPAWN_IMMUNITY">
+<span class="sig-name descname"><span class="pre">COMBAT_SPAWN_IMMUNITY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">20</span></em><a class="headerlink" href="#nmmo.core.config.Combat.COMBAT_SPAWN_IMMUNITY" title="Permalink to this definition">¶</a></dt>
+<dd><p>Agents older than this many ticks cannot attack agents younger than this many ticks</p>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="nmmo.core.config.Combat.COMBAT_WEAKNESS_MULTIPLIER">
 <span class="sig-name descname"><span class="pre">COMBAT_WEAKNESS_MULTIPLIER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.5</span></em><a class="headerlink" href="#nmmo.core.config.Combat.COMBAT_WEAKNESS_MULTIPLIER" title="Permalink to this definition">¶</a></dt>
 <dd><p>Multiplier for super-effective attacks</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="nmmo.core.config.Combat.COMBAT_DAMAGE_FORMULA">
+<span class="sig-name descname"><span class="pre">COMBAT_DAMAGE_FORMULA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offense</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">defense</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multiplier</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.core.config.Combat.COMBAT_DAMAGE_FORMULA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Damage formula</p>
+</dd></dl>
+
 <dl class="py attribute">
-<dt class="sig sig-object py" id="nmmo.core.config.Combat.COMBAT_MELEE_BASE_DAMAGE">
-<span class="sig-name descname"><span class="pre">COMBAT_MELEE_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#nmmo.core.config.Combat.COMBAT_MELEE_BASE_DAMAGE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base Melee attack damage</p>
+<dt class="sig sig-object py" id="nmmo.core.config.Combat.COMBAT_MELEE_DAMAGE">
+<span class="sig-name descname"><span class="pre">COMBAT_MELEE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30</span></em><a class="headerlink" href="#nmmo.core.config.Combat.COMBAT_MELEE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Melee attack damage</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -762,9 +799,9 @@ if the current population size is zero.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="nmmo.core.config.Combat.COMBAT_RANGE_BASE_DAMAGE">
-<span class="sig-name descname"><span class="pre">COMBAT_RANGE_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#nmmo.core.config.Combat.COMBAT_RANGE_BASE_DAMAGE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base Range attack damage</p>
+<dt class="sig sig-object py" id="nmmo.core.config.Combat.COMBAT_RANGE_DAMAGE">
+<span class="sig-name descname"><span class="pre">COMBAT_RANGE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30</span></em><a class="headerlink" href="#nmmo.core.config.Combat.COMBAT_RANGE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Range attack damage</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -774,9 +811,9 @@ if the current population size is zero.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="nmmo.core.config.Combat.COMBAT_MAGE_BASE_DAMAGE">
-<span class="sig-name descname"><span class="pre">COMBAT_MAGE_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#nmmo.core.config.Combat.COMBAT_MAGE_BASE_DAMAGE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base Mage attack damage</p>
+<dt class="sig sig-object py" id="nmmo.core.config.Combat.COMBAT_MAGE_DAMAGE">
+<span class="sig-name descname"><span class="pre">COMBAT_MAGE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30</span></em><a class="headerlink" href="#nmmo.core.config.Combat.COMBAT_MAGE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mage attack damage</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -829,26 +866,50 @@ if the current population size is zero.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="nmmo.core.config.Progression.PROGRESSION_MELEE_DAMAGE">
-<span class="sig-name descname"><span class="pre">PROGRESSION_MELEE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#nmmo.core.config.Progression.PROGRESSION_MELEE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="nmmo.core.config.Progression.PROGRESSION_MELEE_BASE_DAMAGE">
+<span class="sig-name descname"><span class="pre">PROGRESSION_MELEE_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#nmmo.core.config.Progression.PROGRESSION_MELEE_BASE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base Melee attack damage</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Progression.PROGRESSION_MELEE_LEVEL_DAMAGE">
+<span class="sig-name descname"><span class="pre">PROGRESSION_MELEE_LEVEL_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#nmmo.core.config.Progression.PROGRESSION_MELEE_LEVEL_DAMAGE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bonus Melee attack damage per level</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="nmmo.core.config.Progression.PROGRESSION_RANGE_DAMAGE">
-<span class="sig-name descname"><span class="pre">PROGRESSION_RANGE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#nmmo.core.config.Progression.PROGRESSION_RANGE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="nmmo.core.config.Progression.PROGRESSION_RANGE_BASE_DAMAGE">
+<span class="sig-name descname"><span class="pre">PROGRESSION_RANGE_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#nmmo.core.config.Progression.PROGRESSION_RANGE_BASE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base Range attack damage</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Progression.PROGRESSION_RANGE_LEVEL_DAMAGE">
+<span class="sig-name descname"><span class="pre">PROGRESSION_RANGE_LEVEL_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#nmmo.core.config.Progression.PROGRESSION_RANGE_LEVEL_DAMAGE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bonus Range attack damage per level</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="nmmo.core.config.Progression.PROGRESSION_MAGE_DAMAGE">
-<span class="sig-name descname"><span class="pre">PROGRESSION_MAGE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#nmmo.core.config.Progression.PROGRESSION_MAGE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="nmmo.core.config.Progression.PROGRESSION_MAGE_BASE_DAMAGE">
+<span class="sig-name descname"><span class="pre">PROGRESSION_MAGE_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#nmmo.core.config.Progression.PROGRESSION_MAGE_BASE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base Mage attack damage</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Progression.PROGRESSION_MAGE_LEVEL_DAMAGE">
+<span class="sig-name descname"><span class="pre">PROGRESSION_MAGE_LEVEL_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#nmmo.core.config.Progression.PROGRESSION_MAGE_LEVEL_DAMAGE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bonus Mage attack damage per level</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="nmmo.core.config.Progression.PROGRESSION_DEFENSE">
-<span class="sig-name descname"><span class="pre">PROGRESSION_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#nmmo.core.config.Progression.PROGRESSION_DEFENSE" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="nmmo.core.config.Progression.PROGRESSION_BASE_DEFENSE">
+<span class="sig-name descname"><span class="pre">PROGRESSION_BASE_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#nmmo.core.config.Progression.PROGRESSION_BASE_DEFENSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base defense</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Progression.PROGRESSION_LEVEL_DEFENSE">
+<span class="sig-name descname"><span class="pre">PROGRESSION_LEVEL_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#nmmo.core.config.Progression.PROGRESSION_LEVEL_DEFENSE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bonus defense per level</p>
 </dd></dl>
 
@@ -907,6 +968,30 @@ if the current population size is zero.</p>
 <dd><p>Maximum NPC level</p>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.NPC.NPC_BASE_DEFENSE">
+<span class="sig-name descname"><span class="pre">NPC_BASE_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#nmmo.core.config.NPC.NPC_BASE_DEFENSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base NPC defense</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.NPC.NPC_LEVEL_DEFENSE">
+<span class="sig-name descname"><span class="pre">NPC_LEVEL_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30</span></em><a class="headerlink" href="#nmmo.core.config.NPC.NPC_LEVEL_DEFENSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bonus NPC defense per level</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.NPC.NPC_BASE_DAMAGE">
+<span class="sig-name descname"><span class="pre">NPC_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">15</span></em><a class="headerlink" href="#nmmo.core.config.NPC.NPC_BASE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base NPC damage</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.NPC.NPC_LEVEL_DAMAGE">
+<span class="sig-name descname"><span class="pre">NPC_LEVEL_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30</span></em><a class="headerlink" href="#nmmo.core.config.NPC.NPC_LEVEL_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bonus NPC damage per level</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -953,29 +1038,57 @@ if the current population size is zero.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="nmmo.core.config.Equipment.WEAPON_DROP_PROB">
-<span class="sig-name descname"><span class="pre">WEAPON_DROP_PROB</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.1</span></em><a class="headerlink" href="#nmmo.core.config.Equipment.WEAPON_DROP_PROB" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">WEAPON_DROP_PROB</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.025</span></em><a class="headerlink" href="#nmmo.core.config.Equipment.WEAPON_DROP_PROB" title="Permalink to this definition">¶</a></dt>
 <dd><p>Chance of getting a weapon while harvesting ammunition</p>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="nmmo.core.config.Equipment.EQUIPMENT_AMMUNITION_DAMAGE">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EQUIPMENT_AMMUNITION_DAMAGE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.core.config.Equipment.EQUIPMENT_AMMUNITION_DAMAGE" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Equipment.EQUIPMENT_WEAPON_BASE_DAMAGE">
+<span class="sig-name descname"><span class="pre">EQUIPMENT_WEAPON_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">15</span></em><a class="headerlink" href="#nmmo.core.config.Equipment.EQUIPMENT_WEAPON_BASE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base weapon damage</p>
+</dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="nmmo.core.config.Equipment.EQUIPMENT_ARMOR_DEFENSE">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EQUIPMENT_ARMOR_DEFENSE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.core.config.Equipment.EQUIPMENT_ARMOR_DEFENSE" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Equipment.EQUIPMENT_WEAPON_LEVEL_DAMAGE">
+<span class="sig-name descname"><span class="pre">EQUIPMENT_WEAPON_LEVEL_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">15</span></em><a class="headerlink" href="#nmmo.core.config.Equipment.EQUIPMENT_WEAPON_LEVEL_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Added weapon damage per level</p>
+</dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="nmmo.core.config.Equipment.EQUIPMENT_WEAPON_OFFENSE">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EQUIPMENT_WEAPON_OFFENSE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.core.config.Equipment.EQUIPMENT_WEAPON_OFFENSE" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Equipment.EQUIPMENT_AMMUNITION_BASE_DAMAGE">
+<span class="sig-name descname"><span class="pre">EQUIPMENT_AMMUNITION_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">15</span></em><a class="headerlink" href="#nmmo.core.config.Equipment.EQUIPMENT_AMMUNITION_BASE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base ammunition damage</p>
+</dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="nmmo.core.config.Equipment.EQUIPMENT_TOOL_DEFENSE">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EQUIPMENT_TOOL_DEFENSE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.core.config.Equipment.EQUIPMENT_TOOL_DEFENSE" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Equipment.EQUIPMENT_AMMUNITION_LEVEL_DAMAGE">
+<span class="sig-name descname"><span class="pre">EQUIPMENT_AMMUNITION_LEVEL_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">15</span></em><a class="headerlink" href="#nmmo.core.config.Equipment.EQUIPMENT_AMMUNITION_LEVEL_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Added ammunition damage per level</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Equipment.EQUIPMENT_TOOL_BASE_DEFENSE">
+<span class="sig-name descname"><span class="pre">EQUIPMENT_TOOL_BASE_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30</span></em><a class="headerlink" href="#nmmo.core.config.Equipment.EQUIPMENT_TOOL_BASE_DEFENSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base tool defense</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Equipment.EQUIPMENT_TOOL_LEVEL_DEFENSE">
+<span class="sig-name descname"><span class="pre">EQUIPMENT_TOOL_LEVEL_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#nmmo.core.config.Equipment.EQUIPMENT_TOOL_LEVEL_DEFENSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Added tool defense per level</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Equipment.EQUIPMENT_ARMOR_BASE_DEFENSE">
+<span class="sig-name descname"><span class="pre">EQUIPMENT_ARMOR_BASE_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#nmmo.core.config.Equipment.EQUIPMENT_ARMOR_BASE_DEFENSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base armor defense</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Equipment.EQUIPMENT_ARMOR_LEVEL_DEFENSE">
+<span class="sig-name descname"><span class="pre">EQUIPMENT_ARMOR_LEVEL_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></em><a class="headerlink" href="#nmmo.core.config.Equipment.EQUIPMENT_ARMOR_LEVEL_DEFENSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base equipment defense</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -1099,10 +1212,22 @@ if the current population size is zero.</p>
 <dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nmmo.core.config.</span></span><span class="sig-name descname"><span class="pre">AllGameSystems</span></span><a class="headerlink" href="#nmmo.core.config.AllGameSystems" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nmmo.core.config.Terrain" title="nmmo.core.config.Terrain"><code class="xref py py-class docutils literal notranslate"><span class="pre">nmmo.core.config.Terrain</span></code></a>, <a class="reference internal" href="#nmmo.core.config.Resource" title="nmmo.core.config.Resource"><code class="xref py py-class docutils literal notranslate"><span class="pre">nmmo.core.config.Resource</span></code></a>, <a class="reference internal" href="#nmmo.core.config.Combat" title="nmmo.core.config.Combat"><code class="xref py py-class docutils literal notranslate"><span class="pre">nmmo.core.config.Combat</span></code></a>, <a class="reference internal" href="#nmmo.core.config.NPC" title="nmmo.core.config.NPC"><code class="xref py py-class docutils literal notranslate"><span class="pre">nmmo.core.config.NPC</span></code></a>, <a class="reference internal" href="#nmmo.core.config.Progression" title="nmmo.core.config.Progression"><code class="xref py py-class docutils literal notranslate"><span class="pre">nmmo.core.config.Progression</span></code></a>, <a class="reference internal" href="#nmmo.core.config.Item" title="nmmo.core.config.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">nmmo.core.config.Item</span></code></a>, <a class="reference internal" href="#nmmo.core.config.Equipment" title="nmmo.core.config.Equipment"><code class="xref py py-class docutils literal notranslate"><span class="pre">nmmo.core.config.Equipment</span></code></a>, <a class="reference internal" href="#nmmo.core.config.Profession" title="nmmo.core.config.Profession"><code class="xref py py-class docutils literal notranslate"><span class="pre">nmmo.core.config.Profession</span></code></a>, <a class="reference internal" href="#nmmo.core.config.Exchange" title="nmmo.core.config.Exchange"><code class="xref py py-class docutils literal notranslate"><span class="pre">nmmo.core.config.Exchange</span></code></a>, <a class="reference internal" href="#nmmo.core.config.Communication" title="nmmo.core.config.Communication"><code class="xref py py-class docutils literal notranslate"><span class="pre">nmmo.core.config.Communication</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.COMBAT_DAMAGE_FORMULA">
+<span class="sig-name descname"><span class="pre">COMBAT_DAMAGE_FORMULA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offense</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">defense</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multiplier</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.core.config.AllGameSystems.COMBAT_DAMAGE_FORMULA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Damage formula</p>
+</dd></dl>
+
 <dl class="py attribute">
-<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.COMBAT_MAGE_BASE_DAMAGE">
-<span class="sig-name descname"><span class="pre">COMBAT_MAGE_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.COMBAT_MAGE_BASE_DAMAGE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base Mage attack damage</p>
+<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.COMBAT_FRIENDLY_FIRE">
+<span class="sig-name descname"><span class="pre">COMBAT_FRIENDLY_FIRE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.COMBAT_FRIENDLY_FIRE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether agents with the same population index can hit each other</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.COMBAT_MAGE_DAMAGE">
+<span class="sig-name descname"><span class="pre">COMBAT_MAGE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.COMBAT_MAGE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mage attack damage</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1112,9 +1237,9 @@ if the current population size is zero.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.COMBAT_MELEE_BASE_DAMAGE">
-<span class="sig-name descname"><span class="pre">COMBAT_MELEE_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.COMBAT_MELEE_BASE_DAMAGE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base Melee attack damage</p>
+<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.COMBAT_MELEE_DAMAGE">
+<span class="sig-name descname"><span class="pre">COMBAT_MELEE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.COMBAT_MELEE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Melee attack damage</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1124,15 +1249,21 @@ if the current population size is zero.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.COMBAT_RANGE_BASE_DAMAGE">
-<span class="sig-name descname"><span class="pre">COMBAT_RANGE_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.COMBAT_RANGE_BASE_DAMAGE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base Range attack damage</p>
+<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.COMBAT_RANGE_DAMAGE">
+<span class="sig-name descname"><span class="pre">COMBAT_RANGE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.COMBAT_RANGE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Range attack damage</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.COMBAT_RANGE_REACH">
 <span class="sig-name descname"><span class="pre">COMBAT_RANGE_REACH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.COMBAT_RANGE_REACH" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reach of attacks using the Range skill</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.COMBAT_SPAWN_IMMUNITY">
+<span class="sig-name descname"><span class="pre">COMBAT_SPAWN_IMMUNITY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">20</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.COMBAT_SPAWN_IMMUNITY" title="Permalink to this definition">¶</a></dt>
+<dd><p>Agents older than this many ticks cannot attack agents younger than this many ticks</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1159,15 +1290,29 @@ if the current population size is zero.</p>
 <dd><p>Game system flag</p>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.EQUIPMENT_AMMUNITION_DAMAGE">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EQUIPMENT_AMMUNITION_DAMAGE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.core.config.AllGameSystems.EQUIPMENT_AMMUNITION_DAMAGE" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.EQUIPMENT_AMMUNITION_BASE_DAMAGE">
+<span class="sig-name descname"><span class="pre">EQUIPMENT_AMMUNITION_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">15</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.EQUIPMENT_AMMUNITION_BASE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base ammunition damage</p>
+</dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.EQUIPMENT_ARMOR_DEFENSE">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EQUIPMENT_ARMOR_DEFENSE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.core.config.AllGameSystems.EQUIPMENT_ARMOR_DEFENSE" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.EQUIPMENT_AMMUNITION_LEVEL_DAMAGE">
+<span class="sig-name descname"><span class="pre">EQUIPMENT_AMMUNITION_LEVEL_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">15</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.EQUIPMENT_AMMUNITION_LEVEL_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Added ammunition damage per level</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.EQUIPMENT_ARMOR_BASE_DEFENSE">
+<span class="sig-name descname"><span class="pre">EQUIPMENT_ARMOR_BASE_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.EQUIPMENT_ARMOR_BASE_DEFENSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base armor defense</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.EQUIPMENT_ARMOR_LEVEL_DEFENSE">
+<span class="sig-name descname"><span class="pre">EQUIPMENT_ARMOR_LEVEL_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.EQUIPMENT_ARMOR_LEVEL_DEFENSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base equipment defense</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.EQUIPMENT_SYSTEM_ENABLED">
@@ -1175,15 +1320,29 @@ if the current population size is zero.</p>
 <dd><p>Game system flag</p>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.EQUIPMENT_TOOL_DEFENSE">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EQUIPMENT_TOOL_DEFENSE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.core.config.AllGameSystems.EQUIPMENT_TOOL_DEFENSE" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.EQUIPMENT_TOOL_BASE_DEFENSE">
+<span class="sig-name descname"><span class="pre">EQUIPMENT_TOOL_BASE_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.EQUIPMENT_TOOL_BASE_DEFENSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base tool defense</p>
+</dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.EQUIPMENT_WEAPON_OFFENSE">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EQUIPMENT_WEAPON_OFFENSE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.core.config.AllGameSystems.EQUIPMENT_WEAPON_OFFENSE" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.EQUIPMENT_TOOL_LEVEL_DEFENSE">
+<span class="sig-name descname"><span class="pre">EQUIPMENT_TOOL_LEVEL_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.EQUIPMENT_TOOL_LEVEL_DEFENSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Added tool defense per level</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.EQUIPMENT_WEAPON_BASE_DAMAGE">
+<span class="sig-name descname"><span class="pre">EQUIPMENT_WEAPON_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">15</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.EQUIPMENT_WEAPON_BASE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base weapon damage</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.EQUIPMENT_WEAPON_LEVEL_DAMAGE">
+<span class="sig-name descname"><span class="pre">EQUIPMENT_WEAPON_LEVEL_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">15</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.EQUIPMENT_WEAPON_LEVEL_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Added weapon damage per level</p>
+</dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.EXCHANGE_N_OBS">
@@ -1219,6 +1378,30 @@ if the current population size is zero.</p>
 <dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.ITEM_SYSTEM_ENABLED">
 <span class="sig-name descname"><span class="pre">ITEM_SYSTEM_ENABLED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.ITEM_SYSTEM_ENABLED" title="Permalink to this definition">¶</a></dt>
 <dd><p>Game system flag</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.NPC_BASE_DAMAGE">
+<span class="sig-name descname"><span class="pre">NPC_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">15</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.NPC_BASE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base NPC damage</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.NPC_BASE_DEFENSE">
+<span class="sig-name descname"><span class="pre">NPC_BASE_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.NPC_BASE_DEFENSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base NPC defense</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.NPC_LEVEL_DAMAGE">
+<span class="sig-name descname"><span class="pre">NPC_LEVEL_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.NPC_LEVEL_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bonus NPC damage per level</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.NPC_LEVEL_DEFENSE">
+<span class="sig-name descname"><span class="pre">NPC_LEVEL_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.NPC_LEVEL_DEFENSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bonus NPC defense per level</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1347,6 +1530,12 @@ if the current population size is zero.</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.PROGRESSION_BASE_DEFENSE">
+<span class="sig-name descname"><span class="pre">PROGRESSION_BASE_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.PROGRESSION_BASE_DEFENSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base defense</p>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.PROGRESSION_BASE_XP_SCALE">
 <span class="sig-name descname"><span class="pre">PROGRESSION_BASE_XP_SCALE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.PROGRESSION_BASE_XP_SCALE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base XP awarded for each skill usage – multiplied by skill level</p>
@@ -1365,8 +1554,8 @@ if the current population size is zero.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.PROGRESSION_DEFENSE">
-<span class="sig-name descname"><span class="pre">PROGRESSION_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.PROGRESSION_DEFENSE" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.PROGRESSION_LEVEL_DEFENSE">
+<span class="sig-name descname"><span class="pre">PROGRESSION_LEVEL_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.PROGRESSION_LEVEL_DEFENSE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bonus defense per level</p>
 </dd></dl>
 
@@ -1377,20 +1566,38 @@ if the current population size is zero.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.PROGRESSION_MAGE_DAMAGE">
-<span class="sig-name descname"><span class="pre">PROGRESSION_MAGE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.PROGRESSION_MAGE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.PROGRESSION_MAGE_BASE_DAMAGE">
+<span class="sig-name descname"><span class="pre">PROGRESSION_MAGE_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.PROGRESSION_MAGE_BASE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base Mage attack damage</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.PROGRESSION_MAGE_LEVEL_DAMAGE">
+<span class="sig-name descname"><span class="pre">PROGRESSION_MAGE_LEVEL_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.PROGRESSION_MAGE_LEVEL_DAMAGE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bonus Mage attack damage per level</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.PROGRESSION_MELEE_DAMAGE">
-<span class="sig-name descname"><span class="pre">PROGRESSION_MELEE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.PROGRESSION_MELEE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.PROGRESSION_MELEE_BASE_DAMAGE">
+<span class="sig-name descname"><span class="pre">PROGRESSION_MELEE_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.PROGRESSION_MELEE_BASE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base Melee attack damage</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.PROGRESSION_MELEE_LEVEL_DAMAGE">
+<span class="sig-name descname"><span class="pre">PROGRESSION_MELEE_LEVEL_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.PROGRESSION_MELEE_LEVEL_DAMAGE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bonus Melee attack damage per level</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.PROGRESSION_RANGE_DAMAGE">
-<span class="sig-name descname"><span class="pre">PROGRESSION_RANGE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.PROGRESSION_RANGE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.PROGRESSION_RANGE_BASE_DAMAGE">
+<span class="sig-name descname"><span class="pre">PROGRESSION_RANGE_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.PROGRESSION_RANGE_BASE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base Range attack damage</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.PROGRESSION_RANGE_LEVEL_DAMAGE">
+<span class="sig-name descname"><span class="pre">PROGRESSION_RANGE_LEVEL_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.PROGRESSION_RANGE_LEVEL_DAMAGE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bonus Range attack damage per level</p>
 </dd></dl>
 
@@ -1528,7 +1735,7 @@ if the current population size is zero.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="nmmo.core.config.AllGameSystems.WEAPON_DROP_PROB">
-<span class="sig-name descname"><span class="pre">WEAPON_DROP_PROB</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.1</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.WEAPON_DROP_PROB" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">WEAPON_DROP_PROB</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.025</span></em><a class="headerlink" href="#nmmo.core.config.AllGameSystems.WEAPON_DROP_PROB" title="Permalink to this definition">¶</a></dt>
 <dd><p>Chance of getting a weapon while harvesting ammunition</p>
 </dd></dl>
 
@@ -1564,6 +1771,12 @@ if the current population size is zero.</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Small.LOG_ENV">
+<span class="sig-name descname"><span class="pre">LOG_ENV</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#nmmo.core.config.Small.LOG_ENV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to log env steps (expensive)</p>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="nmmo.core.config.Small.LOG_EVENTS">
 <span class="sig-name descname"><span class="pre">LOG_EVENTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#nmmo.core.config.Small.LOG_EVENTS" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether to log events (semi-expensive)</p>
@@ -1573,6 +1786,12 @@ if the current population size is zero.</p>
 <dt class="sig sig-object py" id="nmmo.core.config.Small.LOG_FILE">
 <span class="sig-name descname"><span class="pre">LOG_FILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#nmmo.core.config.Small.LOG_FILE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Where to write logs (defaults to console)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Small.LOG_MILESTONES">
+<span class="sig-name descname"><span class="pre">LOG_MILESTONES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#nmmo.core.config.Small.LOG_MILESTONES" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to log server-firsts (semi-expensive)</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1710,6 +1929,12 @@ if the current population size is zero.</p>
 <dt class="sig sig-object py" id="nmmo.core.config.Small.PLAYER_SPAWN_FUNCTION">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PLAYER_SPAWN_FUNCTION</span></span><a class="headerlink" href="#nmmo.core.config.Small.PLAYER_SPAWN_FUNCTION" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Small.PLAYER_SPAWN_TEAMMATE_DISTANCE">
+<span class="sig-name descname"><span class="pre">PLAYER_SPAWN_TEAMMATE_DISTANCE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#nmmo.core.config.Small.PLAYER_SPAWN_TEAMMATE_DISTANCE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Buffer tiles between teammates at spawn</p>
+</dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="nmmo.core.config.Small.PLAYER_TEAM_SIZE">
@@ -1890,6 +2115,12 @@ if the current population size is zero.</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Medium.LOG_ENV">
+<span class="sig-name descname"><span class="pre">LOG_ENV</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#nmmo.core.config.Medium.LOG_ENV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to log env steps (expensive)</p>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="nmmo.core.config.Medium.LOG_EVENTS">
 <span class="sig-name descname"><span class="pre">LOG_EVENTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#nmmo.core.config.Medium.LOG_EVENTS" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether to log events (semi-expensive)</p>
@@ -1899,6 +2130,12 @@ if the current population size is zero.</p>
 <dt class="sig sig-object py" id="nmmo.core.config.Medium.LOG_FILE">
 <span class="sig-name descname"><span class="pre">LOG_FILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#nmmo.core.config.Medium.LOG_FILE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Where to write logs (defaults to console)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Medium.LOG_MILESTONES">
+<span class="sig-name descname"><span class="pre">LOG_MILESTONES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#nmmo.core.config.Medium.LOG_MILESTONES" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to log server-firsts (semi-expensive)</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -2036,6 +2273,12 @@ if the current population size is zero.</p>
 <dt class="sig sig-object py" id="nmmo.core.config.Medium.PLAYER_SPAWN_FUNCTION">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PLAYER_SPAWN_FUNCTION</span></span><a class="headerlink" href="#nmmo.core.config.Medium.PLAYER_SPAWN_FUNCTION" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Medium.PLAYER_SPAWN_TEAMMATE_DISTANCE">
+<span class="sig-name descname"><span class="pre">PLAYER_SPAWN_TEAMMATE_DISTANCE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#nmmo.core.config.Medium.PLAYER_SPAWN_TEAMMATE_DISTANCE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Buffer tiles between teammates at spawn</p>
+</dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="nmmo.core.config.Medium.PLAYER_TEAM_SIZE">
@@ -2211,6 +2454,12 @@ if the current population size is zero.</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Large.LOG_ENV">
+<span class="sig-name descname"><span class="pre">LOG_ENV</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#nmmo.core.config.Large.LOG_ENV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to log env steps (expensive)</p>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="nmmo.core.config.Large.LOG_EVENTS">
 <span class="sig-name descname"><span class="pre">LOG_EVENTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#nmmo.core.config.Large.LOG_EVENTS" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether to log events (semi-expensive)</p>
@@ -2220,6 +2469,12 @@ if the current population size is zero.</p>
 <dt class="sig sig-object py" id="nmmo.core.config.Large.LOG_FILE">
 <span class="sig-name descname"><span class="pre">LOG_FILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#nmmo.core.config.Large.LOG_FILE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Where to write logs (defaults to console)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Large.LOG_MILESTONES">
+<span class="sig-name descname"><span class="pre">LOG_MILESTONES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#nmmo.core.config.Large.LOG_MILESTONES" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to log server-firsts (semi-expensive)</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -2357,6 +2612,12 @@ if the current population size is zero.</p>
 <dt class="sig sig-object py" id="nmmo.core.config.Large.PLAYER_SPAWN_FUNCTION">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PLAYER_SPAWN_FUNCTION</span></span><a class="headerlink" href="#nmmo.core.config.Large.PLAYER_SPAWN_FUNCTION" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Large.PLAYER_SPAWN_TEAMMATE_DISTANCE">
+<span class="sig-name descname"><span class="pre">PLAYER_SPAWN_TEAMMATE_DISTANCE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#nmmo.core.config.Large.PLAYER_SPAWN_TEAMMATE_DISTANCE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Buffer tiles between teammates at spawn</p>
+</dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="nmmo.core.config.Large.PLAYER_TEAM_SIZE">
@@ -2506,10 +2767,22 @@ if the current population size is zero.</p>
 <dt class="sig sig-object py" id="nmmo.core.config.Default">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nmmo.core.config.</span></span><span class="sig-name descname"><span class="pre">Default</span></span><a class="headerlink" href="#nmmo.core.config.Default" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nmmo.core.config.Medium" title="nmmo.core.config.Medium"><code class="xref py py-class docutils literal notranslate"><span class="pre">nmmo.core.config.Medium</span></code></a>, <a class="reference internal" href="#nmmo.core.config.AllGameSystems" title="nmmo.core.config.AllGameSystems"><code class="xref py py-class docutils literal notranslate"><span class="pre">nmmo.core.config.AllGameSystems</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nmmo.core.config.Default.COMBAT_DAMAGE_FORMULA">
+<span class="sig-name descname"><span class="pre">COMBAT_DAMAGE_FORMULA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offense</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">defense</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multiplier</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.core.config.Default.COMBAT_DAMAGE_FORMULA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Damage formula</p>
+</dd></dl>
+
 <dl class="py attribute">
-<dt class="sig sig-object py" id="nmmo.core.config.Default.COMBAT_MAGE_BASE_DAMAGE">
-<span class="sig-name descname"><span class="pre">COMBAT_MAGE_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#nmmo.core.config.Default.COMBAT_MAGE_BASE_DAMAGE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base Mage attack damage</p>
+<dt class="sig sig-object py" id="nmmo.core.config.Default.COMBAT_FRIENDLY_FIRE">
+<span class="sig-name descname"><span class="pre">COMBAT_FRIENDLY_FIRE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#nmmo.core.config.Default.COMBAT_FRIENDLY_FIRE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether agents with the same population index can hit each other</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Default.COMBAT_MAGE_DAMAGE">
+<span class="sig-name descname"><span class="pre">COMBAT_MAGE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30</span></em><a class="headerlink" href="#nmmo.core.config.Default.COMBAT_MAGE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mage attack damage</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -2519,9 +2792,9 @@ if the current population size is zero.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="nmmo.core.config.Default.COMBAT_MELEE_BASE_DAMAGE">
-<span class="sig-name descname"><span class="pre">COMBAT_MELEE_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#nmmo.core.config.Default.COMBAT_MELEE_BASE_DAMAGE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base Melee attack damage</p>
+<dt class="sig sig-object py" id="nmmo.core.config.Default.COMBAT_MELEE_DAMAGE">
+<span class="sig-name descname"><span class="pre">COMBAT_MELEE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30</span></em><a class="headerlink" href="#nmmo.core.config.Default.COMBAT_MELEE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Melee attack damage</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -2531,15 +2804,21 @@ if the current population size is zero.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="nmmo.core.config.Default.COMBAT_RANGE_BASE_DAMAGE">
-<span class="sig-name descname"><span class="pre">COMBAT_RANGE_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#nmmo.core.config.Default.COMBAT_RANGE_BASE_DAMAGE" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base Range attack damage</p>
+<dt class="sig sig-object py" id="nmmo.core.config.Default.COMBAT_RANGE_DAMAGE">
+<span class="sig-name descname"><span class="pre">COMBAT_RANGE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30</span></em><a class="headerlink" href="#nmmo.core.config.Default.COMBAT_RANGE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Range attack damage</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="nmmo.core.config.Default.COMBAT_RANGE_REACH">
 <span class="sig-name descname"><span class="pre">COMBAT_RANGE_REACH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#nmmo.core.config.Default.COMBAT_RANGE_REACH" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reach of attacks using the Range skill</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Default.COMBAT_SPAWN_IMMUNITY">
+<span class="sig-name descname"><span class="pre">COMBAT_SPAWN_IMMUNITY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">20</span></em><a class="headerlink" href="#nmmo.core.config.Default.COMBAT_SPAWN_IMMUNITY" title="Permalink to this definition">¶</a></dt>
+<dd><p>Agents older than this many ticks cannot attack agents younger than this many ticks</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -2590,15 +2869,29 @@ if the current population size is zero.</p>
 <dd><p>Emulate a flat observation space</p>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="nmmo.core.config.Default.EQUIPMENT_AMMUNITION_DAMAGE">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EQUIPMENT_AMMUNITION_DAMAGE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.core.config.Default.EQUIPMENT_AMMUNITION_DAMAGE" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Default.EQUIPMENT_AMMUNITION_BASE_DAMAGE">
+<span class="sig-name descname"><span class="pre">EQUIPMENT_AMMUNITION_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">15</span></em><a class="headerlink" href="#nmmo.core.config.Default.EQUIPMENT_AMMUNITION_BASE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base ammunition damage</p>
+</dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="nmmo.core.config.Default.EQUIPMENT_ARMOR_DEFENSE">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EQUIPMENT_ARMOR_DEFENSE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.core.config.Default.EQUIPMENT_ARMOR_DEFENSE" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Default.EQUIPMENT_AMMUNITION_LEVEL_DAMAGE">
+<span class="sig-name descname"><span class="pre">EQUIPMENT_AMMUNITION_LEVEL_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">15</span></em><a class="headerlink" href="#nmmo.core.config.Default.EQUIPMENT_AMMUNITION_LEVEL_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Added ammunition damage per level</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Default.EQUIPMENT_ARMOR_BASE_DEFENSE">
+<span class="sig-name descname"><span class="pre">EQUIPMENT_ARMOR_BASE_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#nmmo.core.config.Default.EQUIPMENT_ARMOR_BASE_DEFENSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base armor defense</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Default.EQUIPMENT_ARMOR_LEVEL_DEFENSE">
+<span class="sig-name descname"><span class="pre">EQUIPMENT_ARMOR_LEVEL_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></em><a class="headerlink" href="#nmmo.core.config.Default.EQUIPMENT_ARMOR_LEVEL_DEFENSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base equipment defense</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="nmmo.core.config.Default.EQUIPMENT_SYSTEM_ENABLED">
@@ -2606,15 +2899,29 @@ if the current population size is zero.</p>
 <dd><p>Game system flag</p>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="nmmo.core.config.Default.EQUIPMENT_TOOL_DEFENSE">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EQUIPMENT_TOOL_DEFENSE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.core.config.Default.EQUIPMENT_TOOL_DEFENSE" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Default.EQUIPMENT_TOOL_BASE_DEFENSE">
+<span class="sig-name descname"><span class="pre">EQUIPMENT_TOOL_BASE_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30</span></em><a class="headerlink" href="#nmmo.core.config.Default.EQUIPMENT_TOOL_BASE_DEFENSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base tool defense</p>
+</dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="nmmo.core.config.Default.EQUIPMENT_WEAPON_OFFENSE">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EQUIPMENT_WEAPON_OFFENSE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.core.config.Default.EQUIPMENT_WEAPON_OFFENSE" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Default.EQUIPMENT_TOOL_LEVEL_DEFENSE">
+<span class="sig-name descname"><span class="pre">EQUIPMENT_TOOL_LEVEL_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#nmmo.core.config.Default.EQUIPMENT_TOOL_LEVEL_DEFENSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Added tool defense per level</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Default.EQUIPMENT_WEAPON_BASE_DAMAGE">
+<span class="sig-name descname"><span class="pre">EQUIPMENT_WEAPON_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">15</span></em><a class="headerlink" href="#nmmo.core.config.Default.EQUIPMENT_WEAPON_BASE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base weapon damage</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Default.EQUIPMENT_WEAPON_LEVEL_DAMAGE">
+<span class="sig-name descname"><span class="pre">EQUIPMENT_WEAPON_LEVEL_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">15</span></em><a class="headerlink" href="#nmmo.core.config.Default.EQUIPMENT_WEAPON_LEVEL_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Added weapon damage per level</p>
+</dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="nmmo.core.config.Default.EXCHANGE_N_OBS">
@@ -2658,6 +2965,12 @@ if the current population size is zero.</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Default.LOG_ENV">
+<span class="sig-name descname"><span class="pre">LOG_ENV</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#nmmo.core.config.Default.LOG_ENV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to log env steps (expensive)</p>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="nmmo.core.config.Default.LOG_EVENTS">
 <span class="sig-name descname"><span class="pre">LOG_EVENTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#nmmo.core.config.Default.LOG_EVENTS" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether to log events (semi-expensive)</p>
@@ -2667,6 +2980,12 @@ if the current population size is zero.</p>
 <dt class="sig sig-object py" id="nmmo.core.config.Default.LOG_FILE">
 <span class="sig-name descname"><span class="pre">LOG_FILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#nmmo.core.config.Default.LOG_FILE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Where to write logs (defaults to console)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Default.LOG_MILESTONES">
+<span class="sig-name descname"><span class="pre">LOG_MILESTONES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#nmmo.core.config.Default.LOG_MILESTONES" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to log server-firsts (semi-expensive)</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -2733,6 +3052,30 @@ if the current population size is zero.</p>
 <dt class="sig sig-object py" id="nmmo.core.config.Default.MAP_SIZE">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MAP_SIZE</span></span><a class="headerlink" href="#nmmo.core.config.Default.MAP_SIZE" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Default.NPC_BASE_DAMAGE">
+<span class="sig-name descname"><span class="pre">NPC_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">15</span></em><a class="headerlink" href="#nmmo.core.config.Default.NPC_BASE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base NPC damage</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Default.NPC_BASE_DEFENSE">
+<span class="sig-name descname"><span class="pre">NPC_BASE_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#nmmo.core.config.Default.NPC_BASE_DEFENSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base NPC defense</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Default.NPC_LEVEL_DAMAGE">
+<span class="sig-name descname"><span class="pre">NPC_LEVEL_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30</span></em><a class="headerlink" href="#nmmo.core.config.Default.NPC_LEVEL_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bonus NPC damage per level</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Default.NPC_LEVEL_DEFENSE">
+<span class="sig-name descname"><span class="pre">NPC_LEVEL_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30</span></em><a class="headerlink" href="#nmmo.core.config.Default.NPC_LEVEL_DEFENSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bonus NPC defense per level</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="nmmo.core.config.Default.NPC_LEVEL_MAX">
@@ -2890,6 +3233,12 @@ if the current population size is zero.</p>
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PLAYER_SPAWN_FUNCTION</span></span><a class="headerlink" href="#nmmo.core.config.Default.PLAYER_SPAWN_FUNCTION" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Default.PLAYER_SPAWN_TEAMMATE_DISTANCE">
+<span class="sig-name descname"><span class="pre">PLAYER_SPAWN_TEAMMATE_DISTANCE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#nmmo.core.config.Default.PLAYER_SPAWN_TEAMMATE_DISTANCE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Buffer tiles between teammates at spawn</p>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="nmmo.core.config.Default.PLAYER_TEAM_SIZE">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PLAYER_TEAM_SIZE</span></span><a class="headerlink" href="#nmmo.core.config.Default.PLAYER_TEAM_SIZE" title="Permalink to this definition">¶</a></dt>
@@ -2985,6 +3334,12 @@ if the current population size is zero.</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Default.PROGRESSION_BASE_DEFENSE">
+<span class="sig-name descname"><span class="pre">PROGRESSION_BASE_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#nmmo.core.config.Default.PROGRESSION_BASE_DEFENSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base defense</p>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="nmmo.core.config.Default.PROGRESSION_BASE_XP_SCALE">
 <span class="sig-name descname"><span class="pre">PROGRESSION_BASE_XP_SCALE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#nmmo.core.config.Default.PROGRESSION_BASE_XP_SCALE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base XP awarded for each skill usage – multiplied by skill level</p>
@@ -3003,8 +3358,8 @@ if the current population size is zero.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="nmmo.core.config.Default.PROGRESSION_DEFENSE">
-<span class="sig-name descname"><span class="pre">PROGRESSION_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#nmmo.core.config.Default.PROGRESSION_DEFENSE" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="nmmo.core.config.Default.PROGRESSION_LEVEL_DEFENSE">
+<span class="sig-name descname"><span class="pre">PROGRESSION_LEVEL_DEFENSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#nmmo.core.config.Default.PROGRESSION_LEVEL_DEFENSE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bonus defense per level</p>
 </dd></dl>
 
@@ -3015,20 +3370,38 @@ if the current population size is zero.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="nmmo.core.config.Default.PROGRESSION_MAGE_DAMAGE">
-<span class="sig-name descname"><span class="pre">PROGRESSION_MAGE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#nmmo.core.config.Default.PROGRESSION_MAGE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="nmmo.core.config.Default.PROGRESSION_MAGE_BASE_DAMAGE">
+<span class="sig-name descname"><span class="pre">PROGRESSION_MAGE_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#nmmo.core.config.Default.PROGRESSION_MAGE_BASE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base Mage attack damage</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Default.PROGRESSION_MAGE_LEVEL_DAMAGE">
+<span class="sig-name descname"><span class="pre">PROGRESSION_MAGE_LEVEL_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#nmmo.core.config.Default.PROGRESSION_MAGE_LEVEL_DAMAGE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bonus Mage attack damage per level</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="nmmo.core.config.Default.PROGRESSION_MELEE_DAMAGE">
-<span class="sig-name descname"><span class="pre">PROGRESSION_MELEE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#nmmo.core.config.Default.PROGRESSION_MELEE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="nmmo.core.config.Default.PROGRESSION_MELEE_BASE_DAMAGE">
+<span class="sig-name descname"><span class="pre">PROGRESSION_MELEE_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#nmmo.core.config.Default.PROGRESSION_MELEE_BASE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base Melee attack damage</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Default.PROGRESSION_MELEE_LEVEL_DAMAGE">
+<span class="sig-name descname"><span class="pre">PROGRESSION_MELEE_LEVEL_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#nmmo.core.config.Default.PROGRESSION_MELEE_LEVEL_DAMAGE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bonus Melee attack damage per level</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="nmmo.core.config.Default.PROGRESSION_RANGE_DAMAGE">
-<span class="sig-name descname"><span class="pre">PROGRESSION_RANGE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#nmmo.core.config.Default.PROGRESSION_RANGE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="nmmo.core.config.Default.PROGRESSION_RANGE_BASE_DAMAGE">
+<span class="sig-name descname"><span class="pre">PROGRESSION_RANGE_BASE_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#nmmo.core.config.Default.PROGRESSION_RANGE_BASE_DAMAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base Range attack damage</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.core.config.Default.PROGRESSION_RANGE_LEVEL_DAMAGE">
+<span class="sig-name descname"><span class="pre">PROGRESSION_RANGE_LEVEL_DAMAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#nmmo.core.config.Default.PROGRESSION_RANGE_LEVEL_DAMAGE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bonus Range attack damage per level</p>
 </dd></dl>
 
@@ -3199,7 +3572,7 @@ if the current population size is zero.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="nmmo.core.config.Default.WEAPON_DROP_PROB">
-<span class="sig-name descname"><span class="pre">WEAPON_DROP_PROB</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.1</span></em><a class="headerlink" href="#nmmo.core.config.Default.WEAPON_DROP_PROB" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">WEAPON_DROP_PROB</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.025</span></em><a class="headerlink" href="#nmmo.core.config.Default.WEAPON_DROP_PROB" title="Permalink to this definition">¶</a></dt>
 <dd><p>Chance of getting a weapon while harvesting ammunition</p>
 </dd></dl>
 

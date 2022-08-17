@@ -162,6 +162,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../rst/updates.html"> Video Demos</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rst/updates.html#icon-publications"> Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rst/updates.html#icon-competitions"> Competitions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rst/updates.html#icon-presentations"> Presentations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rst/updates.html#icon-update-slides"> Update Slides</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rst/updates.html#icon-additional-links"> Additional Links</a></li>
@@ -263,22 +264,22 @@
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="nmmo.lib.log.EventLogger">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nmmo.lib.log.</span></span><span class="sig-name descname"><span class="pre">EventLogger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.lib.log.EventLogger" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="nmmo.lib.log.MilestoneLogger">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nmmo.lib.log.</span></span><span class="sig-name descname"><span class="pre">MilestoneLogger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.lib.log.MilestoneLogger" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nmmo.lib.log.Logger" title="nmmo.lib.log.Logger"><code class="xref py py-class docutils literal notranslate"><span class="pre">nmmo.lib.log.Logger</span></code></a></p>
 <dl class="py method">
-<dt class="sig sig-object py" id="nmmo.lib.log.EventLogger.log_min">
-<span class="sig-name descname"><span class="pre">log_min</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.lib.log.EventLogger.log_min" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="nmmo.lib.log.MilestoneLogger.log_min">
+<span class="sig-name descname"><span class="pre">log_min</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.lib.log.MilestoneLogger.log_min" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="nmmo.lib.log.EventLogger.log_max">
-<span class="sig-name descname"><span class="pre">log_max</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.lib.log.EventLogger.log_max" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="nmmo.lib.log.MilestoneLogger.log_max">
+<span class="sig-name descname"><span class="pre">log_max</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.lib.log.MilestoneLogger.log_max" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="nmmo.lib.log.EventLogger.log">
-<span class="sig-name descname"><span class="pre">log</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.lib.log.EventLogger.log" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="nmmo.lib.log.MilestoneLogger.log">
+<span class="sig-name descname"><span class="pre">log</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.lib.log.MilestoneLogger.log" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -287,6 +288,11 @@
 <dt class="sig sig-object py" id="nmmo.lib.log.Quill">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nmmo.lib.log.</span></span><span class="sig-name descname"><span class="pre">Quill</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.lib.log.Quill" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nmmo.lib.log.Quill.register">
+<span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fn</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.lib.log.Quill.register" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="nmmo.lib.log.Quill.log_env">
 <span class="sig-name descname"><span class="pre">log_env</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.lib.log.Quill.log_env" title="Permalink to this definition">¶</a></dt>
