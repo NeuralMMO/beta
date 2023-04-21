@@ -46,6 +46,7 @@ extensions = [
       'sphinx.ext.autodoc', 
       'sphinx.ext.coverage', 
       'sphinx.ext.napoleon',
+      'sphinx_design',
       'sphinxcontrib.youtube',
    ]
 

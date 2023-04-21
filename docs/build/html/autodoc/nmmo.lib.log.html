@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" type="text/css" />
 
   
   
@@ -36,6 +37,7 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/design-tabs.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -90,7 +92,8 @@
             
               <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../rst/landing.html"> Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rst/landing.html"> NeurIPS 2023 NMMO Competition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rst/landing.html#about-nmmo">About NMMO</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rst/landing.html#icon-installation"> Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rst/landing.html#icon-gallery"> Gallery</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rst/landing.html#icon-call-for-collaborations"> Call for Collaborations</a></li>
@@ -124,6 +127,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../rst/api.html#icon-reference"> Reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="nmmo.html">nmmo package</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="nmmo.core.html">nmmo.core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nmmo.datastore.html">nmmo.datastore package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nmmo.entity.html">nmmo.entity package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nmmo.io.html">nmmo.io package</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="nmmo.lib.html">nmmo.lib package</a><ul class="current">
@@ -134,15 +138,12 @@
 <li class="toctree-l4"><a class="reference internal" href="nmmo.lib.priorityqueue.html">nmmo.lib.priorityqueue module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nmmo.lib.rating.html">nmmo.lib.rating module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nmmo.lib.spawn.html">nmmo.lib.spawn module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nmmo.lib.task.html">nmmo.lib.task module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nmmo.lib.utils.html">nmmo.lib.utils module</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="nmmo.systems.html">nmmo.systems package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nmmo.emulation.html">nmmo.emulation module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nmmo.infrastructure.html">nmmo.infrastructure module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nmmo.integrations.html">nmmo.integrations module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nmmo.overlay.html">nmmo.overlay module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nmmo.scripting.html">nmmo.scripting module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nmmo.version.html">nmmo.version module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nmmo.websocket.html">nmmo.websocket module</a></li>
 </ul>
@@ -285,43 +286,72 @@
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="nmmo.lib.log.Quill">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nmmo.lib.log.</span></span><span class="sig-name descname"><span class="pre">Quill</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.lib.log.Quill" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="nmmo.lib.log.EventCode">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nmmo.lib.log.</span></span><span class="sig-name descname"><span class="pre">EventCode</span></span><a class="headerlink" href="#nmmo.lib.log.EventCode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="nmmo.lib.log.Quill.register">
-<span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fn</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.lib.log.Quill.register" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.lib.log.EventCode.EAT_FOOD">
+<span class="sig-name descname"><span class="pre">EAT_FOOD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#nmmo.lib.log.EventCode.EAT_FOOD" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="nmmo.lib.log.Quill.log_env">
-<span class="sig-name descname"><span class="pre">log_env</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.lib.log.Quill.log_env" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.lib.log.EventCode.DRINK_WATER">
+<span class="sig-name descname"><span class="pre">DRINK_WATER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#nmmo.lib.log.EventCode.DRINK_WATER" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="nmmo.lib.log.Quill.log_player">
-<span class="sig-name descname"><span class="pre">log_player</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.lib.log.Quill.log_player" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.lib.log.EventCode.SCORE_HIT">
+<span class="sig-name descname"><span class="pre">SCORE_HIT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">11</span></em><a class="headerlink" href="#nmmo.lib.log.EventCode.SCORE_HIT" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="nmmo.lib.log.Quill.packet">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">packet</span></span><a class="headerlink" href="#nmmo.lib.log.Quill.packet" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.lib.log.EventCode.PLAYER_KILL">
+<span class="sig-name descname"><span class="pre">PLAYER_KILL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">12</span></em><a class="headerlink" href="#nmmo.lib.log.EventCode.PLAYER_KILL" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="nmmo.lib.log.Benchmarker">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">nmmo.lib.log.</span></span><span class="sig-name descname"><span class="pre">Benchmarker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logdir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.lib.log.Benchmarker" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="nmmo.lib.log.Benchmarker.wrap">
-<span class="sig-name descname"><span class="pre">wrap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.lib.log.Benchmarker.wrap" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.lib.log.EventCode.CONSUME_ITEM">
+<span class="sig-name descname"><span class="pre">CONSUME_ITEM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">21</span></em><a class="headerlink" href="#nmmo.lib.log.EventCode.CONSUME_ITEM" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="nmmo.lib.log.Benchmarker.bench">
-<span class="sig-name descname"><span class="pre">bench</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tick</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.lib.log.Benchmarker.bench" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.lib.log.EventCode.GIVE_ITEM">
+<span class="sig-name descname"><span class="pre">GIVE_ITEM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">22</span></em><a class="headerlink" href="#nmmo.lib.log.EventCode.GIVE_ITEM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.lib.log.EventCode.DESTROY_ITEM">
+<span class="sig-name descname"><span class="pre">DESTROY_ITEM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">23</span></em><a class="headerlink" href="#nmmo.lib.log.EventCode.DESTROY_ITEM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.lib.log.EventCode.HARVEST_ITEM">
+<span class="sig-name descname"><span class="pre">HARVEST_ITEM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">24</span></em><a class="headerlink" href="#nmmo.lib.log.EventCode.HARVEST_ITEM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.lib.log.EventCode.GIVE_GOLD">
+<span class="sig-name descname"><span class="pre">GIVE_GOLD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">31</span></em><a class="headerlink" href="#nmmo.lib.log.EventCode.GIVE_GOLD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.lib.log.EventCode.LIST_ITEM">
+<span class="sig-name descname"><span class="pre">LIST_ITEM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">32</span></em><a class="headerlink" href="#nmmo.lib.log.EventCode.LIST_ITEM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.lib.log.EventCode.EARN_GOLD">
+<span class="sig-name descname"><span class="pre">EARN_GOLD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">33</span></em><a class="headerlink" href="#nmmo.lib.log.EventCode.EARN_GOLD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.lib.log.EventCode.BUY_ITEM">
+<span class="sig-name descname"><span class="pre">BUY_ITEM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">34</span></em><a class="headerlink" href="#nmmo.lib.log.EventCode.BUY_ITEM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmmo.lib.log.EventCode.LEVEL_UP">
+<span class="sig-name descname"><span class="pre">LEVEL_UP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">41</span></em><a class="headerlink" href="#nmmo.lib.log.EventCode.LEVEL_UP" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>

@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" type="text/css" />
 
   
   
@@ -36,14 +37,15 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/design-tabs.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="nmmo.core.realm module" href="nmmo.core.realm.html" />
-    <link rel="prev" title="nmmo.core.env module" href="nmmo.core.env.html" /> 
+    <link rel="next" title="nmmo.core.observation module" href="nmmo.core.observation.html" />
+    <link rel="prev" title="nmmo.core.log_helper module" href="nmmo.core.log_helper.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -90,7 +92,8 @@
             
               <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../rst/landing.html"> Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rst/landing.html"> NeurIPS 2023 NMMO Competition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rst/landing.html#about-nmmo">About NMMO</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rst/landing.html#icon-installation"> Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rst/landing.html#icon-gallery"> Gallery</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rst/landing.html#icon-call-for-collaborations"> Call for Collaborations</a></li>
@@ -127,21 +130,23 @@
 <li class="toctree-l4"><a class="reference internal" href="nmmo.core.agent.html">nmmo.core.agent module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nmmo.core.config.html">nmmo.core.config module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nmmo.core.env.html">nmmo.core.env module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nmmo.core.log_helper.html">nmmo.core.log_helper module</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">nmmo.core.map module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nmmo.core.observation.html">nmmo.core.observation module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nmmo.core.realm.html">nmmo.core.realm module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nmmo.core.render_helper.html">nmmo.core.render_helper module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nmmo.core.replay.html">nmmo.core.replay module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nmmo.core.replay_helper.html">nmmo.core.replay_helper module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nmmo.core.terrain.html">nmmo.core.terrain module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nmmo.core.tile.html">nmmo.core.tile module</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="nmmo.datastore.html">nmmo.datastore package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nmmo.entity.html">nmmo.entity package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nmmo.io.html">nmmo.io package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nmmo.lib.html">nmmo.lib package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nmmo.systems.html">nmmo.systems package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nmmo.emulation.html">nmmo.emulation module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nmmo.infrastructure.html">nmmo.infrastructure module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nmmo.integrations.html">nmmo.integrations module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nmmo.overlay.html">nmmo.overlay module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nmmo.scripting.html">nmmo.scripting module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nmmo.version.html">nmmo.version module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nmmo.websocket.html">nmmo.websocket module</a></li>
 </ul>
@@ -271,7 +276,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="nmmo.core.map.Map.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">realm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idx</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.core.map.Map.reset" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">map_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#nmmo.core.map.Map.reset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reuse the current tile objects to load a new map</p>
 </dd></dl>
 
@@ -297,8 +302,8 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="nmmo.core.realm.html" class="btn btn-neutral float-right" title="nmmo.core.realm module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="nmmo.core.env.html" class="btn btn-neutral float-left" title="nmmo.core.env module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="nmmo.core.observation.html" class="btn btn-neutral float-right" title="nmmo.core.observation module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="nmmo.core.log_helper.html" class="btn btn-neutral float-left" title="nmmo.core.log_helper module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

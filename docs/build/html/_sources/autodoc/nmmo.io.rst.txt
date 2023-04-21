@@ -12,4 +12,3 @@ nmmo.io package
    :maxdepth: 4
 
    nmmo.io.action
-   nmmo.io.stimulus

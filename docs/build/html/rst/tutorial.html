@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" type="text/css" />
 
   
   
@@ -36,6 +37,7 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/design-tabs.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -90,7 +92,8 @@
             
               <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="landing.html"> Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="landing.html"> NeurIPS 2023 NMMO Competition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="landing.html#about-nmmo">About NMMO</a></li>
 <li class="toctree-l1"><a class="reference internal" href="landing.html#icon-installation"> Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="landing.html#icon-gallery"> Gallery</a></li>
 <li class="toctree-l1"><a class="reference internal" href="landing.html#icon-call-for-collaborations"> Call for Collaborations</a></li>
@@ -231,73 +234,6 @@
 <section id="icon-minimal-example">
 <h1><img alt="icon" src="../_images/icon_pixel.png" /> Minimal Example<a class="headerlink" href="#icon-minimal-example" title="Permalink to this headline">¶</a></h1>
 <p>Simulates and renders a small environment inhabited by scripted agents. This example should be self-explanatory to those familiar with the standard OpenAI gym interface – with a few exceptions. First, the environment itself computes actions for scripted agents. This is to enable easier usage with RLlib and will likely change once RLlib provides better support for scripted models. Second, the env.terminal() function returns additional logging information about the simulation. This will be explored in later examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&#39;&#39;&#39;Documented at neuralmmo.github.io&#39;&#39;&#39;</span>
-
-<span class="kn">from</span> <span class="nn">pdb</span> <span class="kn">import</span> <span class="n">set_trace</span> <span class="k">as</span> <span class="n">T</span>
-
-<span class="kn">import</span> <span class="nn">nmmo</span>
-
-<span class="c1"># Scripted models included with the baselines repository</span>
-<span class="kn">from</span> <span class="nn">scripted</span> <span class="kn">import</span> <span class="n">baselines</span>
-
-
-<span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">render</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">horizon</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)):</span>
-    <span class="sd">&#39;&#39;&#39;Simulate an environment for a fixed horizon&#39;&#39;&#39;</span>
-
-    <span class="c1"># Environment accepts a config object</span>
-    <span class="n">env</span> <span class="o">=</span> <span class="n">env</span><span class="p">(</span><span class="n">config</span><span class="p">())</span>
-    <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
-
-    <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">render</span><span class="p">:</span>
-            <span class="n">env</span><span class="o">.</span><span class="n">render</span><span class="p">()</span>
-
-        <span class="c1"># Scripted API computes actions</span>
-        <span class="n">obs</span><span class="p">,</span> <span class="n">rewards</span><span class="p">,</span> <span class="n">dones</span><span class="p">,</span> <span class="n">infos</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">({})</span>
-
-        <span class="c1"># Later examples will use a fixed horizon</span>
-        <span class="n">t</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="n">horizon</span><span class="p">:</span>
-            <span class="k">break</span>
-
-    <span class="c1"># Called at the end of simulation to obtain logs</span>
-    <span class="k">return</span> <span class="n">env</span><span class="o">.</span><span class="n">terminal</span><span class="p">()</span>
-
-
-<span class="k">class</span> <span class="nc">Config</span><span class="p">(</span><span class="n">nmmo</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">Medium</span><span class="p">,</span> <span class="n">nmmo</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">AllGameSystems</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Config objects subclass a nmmo.config.{Small, Medium, Large} template</span>
-
-<span class="sd">    Can also specify config game systems to enable various features&#39;&#39;&#39;</span>
-
-    <span class="c1"># Agents will be instantiated using templates included with the baselines</span>
-    <span class="c1"># Meander: randomly wanders around</span>
-    <span class="c1"># Forage: explicitly searches for food and water</span>
-    <span class="c1"># Combat: forages and actively fights other agents</span>
-    <span class="n">SPECIALIZE</span> <span class="o">=</span> <span class="kc">True</span>
-
-    <span class="n">PLAYERS</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">baselines</span><span class="o">.</span><span class="n">Fisher</span><span class="p">,</span> <span class="n">baselines</span><span class="o">.</span><span class="n">Herbalist</span><span class="p">,</span> <span class="n">baselines</span><span class="o">.</span><span class="n">Prospector</span><span class="p">,</span> <span class="n">baselines</span><span class="o">.</span><span class="n">Carver</span><span class="p">,</span> <span class="n">baselines</span><span class="o">.</span><span class="n">Alchemist</span><span class="p">,</span>
-            <span class="n">baselines</span><span class="o">.</span><span class="n">Melee</span><span class="p">,</span> <span class="n">baselines</span><span class="o">.</span><span class="n">Range</span><span class="p">,</span> <span class="n">baselines</span><span class="o">.</span><span class="n">Mage</span><span class="p">]</span>
-
-    <span class="n">PLAYER_N</span> <span class="o">=</span> <span class="mi">128</span>
-
-    <span class="n">PLAYER_DEATH_FOG</span> <span class="o">=</span> <span class="mi">512</span>
-
-    <span class="c1">#Set a unique path for demo maps</span>
-    <span class="n">PATH_MAPS</span> <span class="o">=</span> <span class="s1">&#39;maps/demos&#39;</span>
-
-    <span class="c1">#Enable rendering</span>
-    <span class="n">RENDER</span> <span class="o">=</span> <span class="kc">True</span>
-
-    <span class="c1">#Force terrain generation -- avoids unexpected behavior from caching</span>
-    <span class="n">MAP_FORCE_GENERATION</span> <span class="o">=</span> <span class="kc">True</span>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">simulate</span><span class="p">(</span><span class="n">nmmo</span><span class="o">.</span><span class="n">Env</span><span class="p">,</span> <span class="n">Config</span><span class="p">,</span> <span class="n">render</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
 <p>Run the example script from /baselines:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">demos</span><span class="o">.</span><span class="n">minimal</span>
 </pre></div>
@@ -360,52 +296,6 @@
 <div class="toctree-wrapper compound">
 </div>
 <p>As an example, we implement a simple scripted agent that jumps into lava upon spawning:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LavaAgent</span><span class="p">(</span><span class="n">nmmo</span><span class="o">.</span><span class="n">Agent</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Likes to jump in lava&#39;&#39;&#39;</span>
-
-    <span class="c1"># Color of rendered agents</span>
-    <span class="n">color</span>    <span class="o">=</span> <span class="n">colors</span><span class="o">.</span><span class="n">Neon</span><span class="o">.</span><span class="n">RED</span>
-
-    <span class="c1"># Required flag indicates scripted/neural</span>
-    <span class="n">scripted</span> <span class="o">=</span> <span class="kc">True</span>
-
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obs</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Override __call__ to specify agent behavior&#39;&#39;&#39;</span>
-
-        <span class="c1"># Wrapper that extracts data from tensorized obs</span>
-        <span class="n">ob</span>    <span class="o">=</span> <span class="n">nmmo</span><span class="o">.</span><span class="n">scripting</span><span class="o">.</span><span class="n">Observation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="n">obs</span><span class="p">)</span>
-
-        <span class="c1"># Vector representation of the current agent</span>
-        <span class="n">agent</span> <span class="o">=</span> <span class="n">ob</span><span class="o">.</span><span class="n">agent</span>
-
-        <span class="c1"># Static fn extracts attributes from vector objects</span>
-        <span class="n">attribute</span> <span class="o">=</span> <span class="n">nmmo</span><span class="o">.</span><span class="n">scripting</span><span class="o">.</span><span class="n">Observation</span><span class="o">.</span><span class="n">attribute</span>
-
-        <span class="n">Tile</span>      <span class="o">=</span> <span class="n">nmmo</span><span class="o">.</span><span class="n">Serialized</span><span class="o">.</span><span class="n">Tile</span>
-        <span class="n">lava</span>      <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">Lava</span><span class="o">.</span><span class="n">index</span>
-
-        <span class="c1"># ob.tile: extract single tile from observation</span>
-        <span class="c1"># attribute: extract Index attribute from vector</span>
-        <span class="n">direction</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="n">attribute</span><span class="p">(</span><span class="n">ob</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">Tile</span><span class="o">.</span><span class="n">Index</span><span class="p">)</span> <span class="o">==</span> <span class="n">lava</span><span class="p">:</span>
-            <span class="n">direction</span> <span class="o">=</span> <span class="n">nmmo</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">North</span>
-
-        <span class="k">if</span> <span class="n">attribute</span><span class="p">(</span><span class="n">ob</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">Tile</span><span class="o">.</span><span class="n">Index</span><span class="p">)</span> <span class="o">==</span> <span class="n">lava</span><span class="p">:</span>
-            <span class="n">direction</span> <span class="o">=</span> <span class="n">nmmo</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">South</span>
-
-        <span class="k">if</span> <span class="n">attribute</span><span class="p">(</span><span class="n">ob</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">Tile</span><span class="o">.</span><span class="n">Index</span><span class="p">)</span> <span class="o">==</span> <span class="n">lava</span><span class="p">:</span>
-            <span class="n">direction</span> <span class="o">=</span> <span class="n">nmmo</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">East</span>
-
-        <span class="k">if</span> <span class="n">attribute</span><span class="p">(</span><span class="n">ob</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">Tile</span><span class="o">.</span><span class="n">Index</span><span class="p">)</span> <span class="o">==</span> <span class="n">lava</span><span class="p">:</span>
-            <span class="n">direction</span> <span class="o">=</span> <span class="n">nmmo</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">West</span>
-
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">direction</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{}</span>
-
-        <span class="c1"># Actions and arg names specified in nmmo.action</span>
-        <span class="k">return</span> <span class="p">{</span><span class="n">nmmo</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">Move</span><span class="p">:</span> <span class="p">{</span><span class="n">nmmo</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">Direction</span><span class="p">:</span> <span class="n">direction</span><span class="p">}}</span>
-</pre></div>
-</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">demos</span><span class="o">.</span><span class="n">scripted</span>
 </pre></div>
 </div>
@@ -414,43 +304,7 @@
 <section id="icon-rewards-tasks">
 <h1><img alt="icon" src="../_images/icon_pixel.png" /> Rewards &amp; Tasks<a class="headerlink" href="#icon-rewards-tasks" title="Permalink to this headline">¶</a></h1>
 <p>By default, Neural MMO provides a reward signal of -1 for dying and 0 for everything else. You may override this reward function and have full access to game and player state in doing so. For example, to add an additional reward signal of 0.1 per player defeated:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PlayerKillRewardEnv</span><span class="p">(</span><span class="n">nmmo</span><span class="o">.</span><span class="n">Env</span><span class="p">,</span> <span class="n">nmmo</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">Combat</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Reward 0.1 per player defeated, -1 for death&#39;&#39;&#39;</span>
-    <span class="k">def</span> <span class="nf">reward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">player</span><span class="p">):</span>
-        <span class="c1"># Default -1 reward for death</span>
-        <span class="c1"># Infos returns per-task rewards</span>
-        <span class="n">reward</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">reward</span><span class="p">(</span><span class="n">player</span><span class="p">)</span>
-
-        <span class="c1"># Inject new attribute</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">player</span><span class="p">,</span> <span class="s1">&#39;kills&#39;</span><span class="p">):</span>
-            <span class="n">player</span><span class="o">.</span><span class="n">kills</span> <span class="o">=</span> <span class="mi">0</span>
-
-        <span class="c1"># Historical kills already in player state</span>
-        <span class="n">kills</span> <span class="o">=</span> <span class="n">player</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">playerKills</span>
-
-        <span class="c1"># Only reward for new kills</span>
-        <span class="k">if</span> <span class="n">kills</span> <span class="o">&gt;</span> <span class="n">player</span><span class="o">.</span><span class="n">kills</span><span class="p">:</span>
-            <span class="n">reward</span> <span class="o">+=</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="p">(</span><span class="n">kills</span> <span class="o">-</span> <span class="n">player</span><span class="o">.</span><span class="n">kills</span><span class="p">)</span>
-            <span class="n">player</span><span class="o">.</span><span class="n">kills</span> <span class="o">=</span> <span class="n">kills</span>
-
-        <span class="k">return</span> <span class="n">reward</span><span class="p">,</span> <span class="n">info</span>
-</pre></div>
-</div>
 <p>One drawback of such definitions is the potential for reward farming. For example, agents may learn to do nothing but fight other weaker agents, completely ignoring other interesting elements of the environment. At the same time, combat could be difficult to learn without a dedicated signal. Our task API resolves this problem by enabling you to set fixed milestones instead of repeatedly farmable rewards:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">player_kills</span><span class="p">(</span><span class="n">realm</span><span class="p">,</span> <span class="n">player</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Total number of players defeated&#39;&#39;&#39;</span>
-    <span class="k">return</span> <span class="n">player</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">playerKills</span>
-</pre></div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PlayerKillTaskConfig</span><span class="p">(</span><span class="n">minimal</span><span class="o">.</span><span class="n">Config</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Assign reward 1 for the first and third kills&#39;&#39;&#39;</span>
-    <span class="n">PLAYERS</span> <span class="o">=</span> <span class="p">[</span><span class="n">baselines</span><span class="o">.</span><span class="n">Range</span><span class="p">]</span>
-
-    <span class="c1"># Task params: reward fn, score to complete, completion reward</span>
-    <span class="n">TASKS</span>  <span class="o">=</span> <span class="p">[</span><span class="n">Task</span><span class="p">(</span><span class="n">player_kills</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">reward</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
-              <span class="n">Task</span><span class="p">(</span><span class="n">player_kills</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">reward</span><span class="o">=</span><span class="mi">2</span><span class="p">)]</span>
-</pre></div>
-</div>
 <p>Agents will now receive a reward of 2 for defeating one and three players – a strong incentive to score a kill and a weaker incentive to continue down the path of combat, which must then be balanced against other competing incentives. This reward will be added to the reward() method and also to the infos dict returned by step() for use with methods requiring per-task information.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">demos</span><span class="o">.</span><span class="n">rewards_and_tasks</span>
 </pre></div>
@@ -465,46 +319,7 @@
 <p>Absolute reward is a poor metric of performance in open-ended multiagent settings because environment difficulty is dependent on the skill of other agents. Skill ranking algorithms allow us to instead compute the relative performance of different policies within the same shared world.</p>
 <p>OpenSkill wrapper for estimating rank from a series of scores from different policies:</p>
 <p>The results of each environment simulation are treated as a single game, and several are required to obtain reasonable skill rating estimates. We therefore include a quick ray wrapper for running several environments in parallel:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">parallel_simulations</span><span class="p">(</span><span class="n">cores</span><span class="p">,</span> <span class="n">horizon</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Simulate environments in parallel and compute skill ratings</span>
-
-<span class="sd">    Runs one environment per core for horizon steps, then uses</span>
-<span class="sd">    the nmmo.OpenSkillRating wrapper to estimate per-policy skill&#39;&#39;&#39;</span>
-    <span class="n">nmmo</span><span class="o">.</span><span class="n">MapGenerator</span><span class="p">(</span><span class="n">Config</span><span class="p">())</span><span class="o">.</span><span class="n">generate_all_maps</span><span class="p">()</span>
-
-    <span class="c1"># Parallel sim using base ray</span>
-    <span class="n">all_stats</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">get</span><span class="p">([</span>
-            <span class="n">ray</span><span class="o">.</span><span class="n">remote</span><span class="p">(</span><span class="n">minimal</span><span class="o">.</span><span class="n">simulate</span><span class="p">)</span><span class="o">.</span><span class="n">remote</span><span class="p">(</span>
-                    <span class="n">nmmo</span><span class="o">.</span><span class="n">Env</span><span class="p">,</span> <span class="n">Config</span><span class="p">,</span> <span class="n">horizon</span><span class="o">=</span><span class="n">horizon</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">worker</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cores</span><span class="p">)])</span>
-
-    <span class="c1"># NMMO OpenSkill wrapper for computing SR</span>
-    <span class="n">sr</span> <span class="o">=</span> <span class="n">nmmo</span><span class="o">.</span><span class="n">OpenSkillRating</span><span class="p">(</span><span class="n">Config</span><span class="o">.</span><span class="n">PLAYERS</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="n">baselines</span><span class="o">.</span><span class="n">Range</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">stats</span> <span class="ow">in</span> <span class="n">all_stats</span><span class="p">:</span>
-        <span class="n">stats</span> <span class="o">=</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;Stats&#39;</span><span class="p">]</span>
-
-        <span class="c1"># SR updates take a list of policy IDs and scores for all agents</span>
-        <span class="n">ratings</span> <span class="o">=</span> <span class="n">sr</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
-                <span class="n">policy_ids</span><span class="o">=</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;PolicyID&#39;</span><span class="p">],</span>
-                <span class="n">scores</span><span class="o">=</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;Task_Reward&#39;</span><span class="p">])</span>
-
-        <span class="c1"># Prettify results</span>
-        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">agent</span><span class="p">,</span> <span class="n">rating</span> <span class="ow">in</span> <span class="n">ratings</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">agent</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">rating</span><span class="o">.</span><span class="n">mu</span><span class="p">)[:</span><span class="mi">6</span><span class="p">]</span><span class="si">:</span><span class="s1">.6s</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;   &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">results</span><span class="p">))</span>
-</pre></div>
-</div>
 <p>We use a larger scale config to more closely match the baseline setting:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Config</span><span class="p">(</span><span class="n">nmmo</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">Default</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Default baseline config with only scripted agents&#39;&#39;&#39;</span>
-    <span class="n">PLAYERS</span> <span class="o">=</span> <span class="p">[</span><span class="n">baselines</span><span class="o">.</span><span class="n">Meander</span><span class="p">,</span> <span class="n">baselines</span><span class="o">.</span><span class="n">Forage</span><span class="p">,</span> <span class="n">baselines</span><span class="o">.</span><span class="n">Range</span><span class="p">]</span>
-    <span class="n">TASKS</span>   <span class="o">=</span> <span class="n">tasks</span><span class="o">.</span><span class="n">All</span>
-
-    <span class="c1"># Share maps with baseline evaluations</span>
-    <span class="n">PATH_MAPS</span> <span class="o">=</span> <span class="s1">&#39;maps/medium/evaluation/&#39;</span>
-</pre></div>
-</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">demos</span><span class="o">.</span><span class="n">evaluate_sr</span>
 </pre></div>
 </div>
@@ -525,47 +340,7 @@
 <section id="icon-terrain-generation">
 <h1><img alt="icon" src="../_images/icon_pixel.png" /> Terrain Generation<a class="headerlink" href="#icon-terrain-generation" title="Permalink to this headline">¶</a></h1>
 <p>Neural MMO provides a config hook for custom terrain generaton. Override the base class and single-map generation method:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CustomMapGenerator</span><span class="p">(</span><span class="n">nmmo</span><span class="o">.</span><span class="n">MapGenerator</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Subclass the base NMMO Map Generator&#39;&#39;&#39;</span>
-    <span class="k">def</span> <span class="nf">generate_map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Override the default per-map generation method&#39;&#39;&#39;</span>
-        <span class="n">config</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span>
-        <span class="n">size</span>    <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">MAP_SIZE</span>
-
-        <span class="c1"># Create fractal and material placeholders</span>
-        <span class="n">fractal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">size</span><span class="p">,</span> <span class="n">size</span><span class="p">))</span> <span class="c1">#Unused in demo</span>
-        <span class="n">matl</span>    <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">size</span><span class="p">,</span> <span class="n">size</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
-
-        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
-                <span class="n">linf</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="n">size</span><span class="o">//</span><span class="mi">2</span><span class="p">),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">c</span> <span class="o">-</span> <span class="n">size</span> <span class="o">//</span> <span class="mi">2</span><span class="p">))</span>
-
-                <span class="c1"># Set per-tile materials</span>
-                <span class="k">if</span> <span class="n">linf</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
-                    <span class="n">matl</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">nmmo</span><span class="o">.</span><span class="n">Terrain</span><span class="o">.</span><span class="n">STONE</span>
-                <span class="k">elif</span> <span class="n">linf</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">:</span>
-                    <span class="n">matl</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">nmmo</span><span class="o">.</span><span class="n">Terrain</span><span class="o">.</span><span class="n">WATER</span>
-                <span class="k">elif</span> <span class="n">linf</span> <span class="o">&lt;</span> <span class="mi">12</span><span class="p">:</span>
-                    <span class="n">matl</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">nmmo</span><span class="o">.</span><span class="n">Terrain</span><span class="o">.</span><span class="n">FOREST</span>
-                <span class="k">elif</span> <span class="n">linf</span> <span class="o">&lt;=</span> <span class="n">size</span><span class="o">//</span><span class="mi">2</span> <span class="o">-</span> <span class="n">config</span><span class="o">.</span><span class="n">MAP_BORDER</span><span class="p">:</span>
-                    <span class="n">matl</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">nmmo</span><span class="o">.</span><span class="n">Terrain</span><span class="o">.</span><span class="n">GRASS</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">matl</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">nmmo</span><span class="o">.</span><span class="n">Terrain</span><span class="o">.</span><span class="n">LAVA</span>
-
-        <span class="c1"># Return signature includes fractal and material</span>
-        <span class="c1"># Pass a zero array if fractal is not relevant</span>
-        <span class="k">return</span> <span class="n">fractal</span><span class="p">,</span> <span class="n">matl</span>
-</pre></div>
-</div>
 <p>Note that the nmmo.Terrain class is populated with materials at runtime – these properties are not available before instantiating a map generator. Finally, set the MAP_GENERATOR property to your custom class and run the demo:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CustomTerrainGeneration</span><span class="p">(</span><span class="n">minimal</span><span class="o">.</span><span class="n">Config</span><span class="p">):</span>
-    <span class="c1"># Enable custom generator</span>
-    <span class="n">MAP_GENERATOR</span>         <span class="o">=</span> <span class="n">CustomMapGenerator</span>
-
-    <span class="c1"># Render preview to maps/custom</span>
-    <span class="n">GENERATE_MAP_PREVIEWS</span> <span class="o">=</span> <span class="kc">True</span>
-</pre></div>
-</div>
 <p>Run the demo:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">demos</span><span class="o">.</span><span class="n">terrain_generation</span>
 </pre></div>
@@ -592,34 +367,7 @@
 <h1><img alt="icon" src="../_images/icon_pixel.png" /> Rendering and Overlays<a class="headerlink" href="#icon-rendering-and-overlays" title="Permalink to this headline">¶</a></h1>
 <p>Neural MMO opens a WebSocket server upon the first call to env.render() which connects to the Unity3D client. The client loads game map data upon connection, which may take up to a minute (but typically only a few seconds if you open the client after launching the server).</p>
 <p>The Neural MMO client provides several overlays as tools to help users understand both how their agents are behaving and how they interpret the world. You can write your own using the overlay API:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Lifetime</span><span class="p">(</span><span class="n">nmmo</span><span class="o">.</span><span class="n">overlay</span><span class="o">.</span><span class="n">Overlay</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Renders tiles that have been occupied by long-lived</span>
-<span class="sd">    agents in green and tiles that have not in red&#39;&#39;&#39;</span>
-    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obs</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Called once per env step to update overlay data&#39;&#39;&#39;</span>
-        <span class="k">for</span> <span class="n">player</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">realm</span><span class="o">.</span><span class="n">realm</span><span class="o">.</span><span class="n">players</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-            <span class="n">lifetime</span> <span class="o">=</span> <span class="n">player</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">timeAlive</span><span class="o">.</span><span class="n">val</span>
-            <span class="n">r</span><span class="p">,</span> <span class="n">c</span>     <span class="o">=</span> <span class="n">player</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">pos</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">lifetime</span>
-
-    <span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obs</span><span class="p">):</span>
-        <span class="c1"># Postprocessing function that converts to a color map</span>
-        <span class="n">overlay</span> <span class="o">=</span> <span class="n">nmmo</span><span class="o">.</span><span class="n">lib</span><span class="o">.</span><span class="n">overlay</span><span class="o">.</span><span class="n">twoTone</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">preprocess</span><span class="o">=</span><span class="s1">&#39;clip&#39;</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="s1">&#39;True&#39;</span><span class="p">)</span>
-
-        <span class="c1"># Tells the environment to send the overlay to the client</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">realm</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">overlay</span><span class="p">)</span>
-</pre></div>
-</div>
 <p>Include custom overlays by subclassing the environment as follows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LifetimeOverlayEnv</span><span class="p">(</span><span class="n">nmmo</span><span class="o">.</span><span class="n">Env</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
-
-        <span class="c1"># Add Lifetime overlay to the overlay registry</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">overlays</span><span class="p">[</span><span class="s1">&#39;lifetime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Lifetime</span>
-</pre></div>
-</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">demos</span><span class="o">.</span><span class="n">overlays</span>
 </pre></div>
 </div>

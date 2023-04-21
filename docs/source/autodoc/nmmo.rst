@@ -12,6 +12,7 @@ nmmo package
    :maxdepth: 4
 
    nmmo.core
+   nmmo.datastore
    nmmo.entity
    nmmo.io
    nmmo.lib
@@ -21,10 +22,6 @@ nmmo package
 .. toctree::
    :maxdepth: 4
 
-   nmmo.emulation
-   nmmo.infrastructure
-   nmmo.integrations
    nmmo.overlay
-   nmmo.scripting
    nmmo.version
    nmmo.websocket

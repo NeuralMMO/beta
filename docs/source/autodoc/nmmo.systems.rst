@@ -20,7 +20,6 @@ nmmo.systems package
    nmmo.systems.achievement
    nmmo.systems.combat
    nmmo.systems.droptable
-   nmmo.systems.equipment
    nmmo.systems.exchange
    nmmo.systems.experience
    nmmo.systems.inventory

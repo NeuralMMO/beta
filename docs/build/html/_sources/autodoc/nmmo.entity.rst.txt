@@ -12,5 +12,6 @@ nmmo.entity package
    :maxdepth: 4
 
    nmmo.entity.entity
+   nmmo.entity.entity_manager
    nmmo.entity.npc
    nmmo.entity.player

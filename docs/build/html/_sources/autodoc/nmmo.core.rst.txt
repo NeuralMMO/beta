@@ -14,7 +14,12 @@ nmmo.core package
    nmmo.core.agent
    nmmo.core.config
    nmmo.core.env
+   nmmo.core.log_helper
    nmmo.core.map
+   nmmo.core.observation
    nmmo.core.realm
+   nmmo.core.render_helper
+   nmmo.core.replay
+   nmmo.core.replay_helper
    nmmo.core.terrain
    nmmo.core.tile
