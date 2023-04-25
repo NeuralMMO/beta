@@ -215,7 +215,7 @@ In case of ties, ranking scores look at how many of your Agents survived to the 
  - Agents are awarded 1 XP per ammunition resource gathered
  - Agents are awarded 5 XP per consumable resource gathered
  
-  - All items except gold will appear in varying levels
+ - All items except gold will appear in varying levels
   
 **Items and Equipment**
  - All items appear in level 1-10 variants. 
