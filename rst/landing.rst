@@ -215,12 +215,23 @@ Agents stay alive by:
   - Drinking water
   - Protecting HP in combat
 
-*Discuss how Food and Water resources as well as mining function mechanistically.*
+**Tile Spaces**
+
+Each environment contains an automatically generated tile-based game map of 128 x 128 tiles. Tiles come in three types:
+  - Water (resource for water; for movement is an **obstacle**)
+  - Stone (resource for battle performance in Mellee and Magic styles; for movement is an **obstacle**)
+  - Grass (resource for food, HP, and battle performance in range style; for movement is **passable**)
+
 Agents have food / water bars starting on 100
+
 Walk on food tile - regain full food. Tile disappears. Will respawn later, at a random time and same place. 
 If you adjacent to water tile - regain full water. Done.
 Skills - prospecting, carving, alchemy - walk on resource tile. Get the resource. Will respawn later, same place. Will be a different quality/level of resource, depending on Agent levels/tools.
 
+.. dropdown:: About the tile generation algorithm
+    
+    The default tile generation algorithm is more sophisticated than typical Perlin noise -- it stretches the space of one Perlin fractal using a second Perlin fractal. It further attempts to scale spacial frequency to be higher at the edges of the map and lower at the center. This effect is not noticable in small maps but creates large deviations in local terrain structure in larger maps.
+    
 About HP
 ********
 
@@ -232,6 +243,37 @@ If above half food and half water, regain 10 HP per tick
 
 
 Combat - is parrying back and forth, one attack per tick. Taking turns. Damage is a randomized function of confluence of factors. Include: Fighting style; combat skill level; weapon level; armor levels. 
+
+Observation Space
+*****************
+
+Each agent observes a groups of entities comprising nearby tiles and agents, its own inventory, and the market. Continuous and discrete tensors of attributes parametrize each entity group. An extra variable *N* counts the number of entities per group.
+
+.. code-block:: python
+  :caption: Observation space of a single agent
+
+  observation_space(agent_idx) = {
+      'Tile': {
+          'Continuous': ...,
+          'Discrete': ...,
+          'N': ...,
+      },
+      'Entity': {
+          'Continuous': ...,
+          'Discrete': ...,
+          'N': ...,
+      }, 
+      'Item': {
+          'Continuous': ...,
+          'Discrete': ...,
+          'N': ...,
+      }, 
+      'Market': {
+          'Continuous': ...,
+          'Discrete': ...,
+          'N': ...,
+      }, 
+  }
 
 
 Attack range is 3 tiles. 
@@ -304,13 +346,6 @@ There are 8 Professions that Agents can learn and level up in. Agents can improv
 Competition Environment 
 ***********************
 
-
-Tile Spaces
-Each environment contains an automatically generated tile-based game map of 128 x 128 tiles. Tiles come in three types:
-  - Water (resource for water; for movement is an obstacle.)
-  - Stone (obstacle)
-  - Grass (passable)
-
 Agents on Tiles
 ***************
 
@@ -354,6 +389,57 @@ Prices are set by **Explain market pricing here
 Agents set their own prices and receive gold when someone is willing to accept their price. Within the same team, can gift to one another. 
 
 **TODO**
+
+Each agent may take multiple actions per tick -- one from each category. Each action accepts arguments.
+
+.. code-block:: python
+  :caption: Action space of a single agent
+
+  action_space(agent_idx) = {
+      nmmo.action.Move: {
+          nmmo.action.Direction: {
+              nmmo.action.North,
+              nmmo.action.South,
+              nmmo.action.East,
+              nmmo.action.West,
+          },
+      },
+      nmmo.action.Attack: {
+          nmmo.action.Style: {
+              nmmo.action.Melee,
+              nmmo.action.Range,
+              nmmo.action.Mage,
+          },
+          nmmo.action.Target: {
+              Entity Pointer,
+          }
+      },
+      nmmo.action.Use: {
+          nmmo.action.Item: {
+              Inventory Pointer,
+          },
+      },
+      nmmo.action.Sell: {
+          nmmo.action.Item: {
+              Inventory Pointer,
+          },
+          nmmo.action.Price: {
+              Discrete Value,
+          },
+      },
+      nmmo.action.Buy: {
+          nmmo.action.Item: {
+              Market Pointer,
+          },
+      },
+      nmmo.action.Comm: {
+          nmmo.action.Token: {
+              Discrete Value,
+          },
+      },
+  }
+
+Pointer actions refer to a selection from the observation space. For example, to purchase an item, an agent should select the corresponding item from the observation space. This works by computing a similarity score against entity embeddings and is already handled by the baseline model.
 
 
 |icon| Tasks
@@ -441,4 +527,13 @@ Overhead Render
 
 .. figure:: /resource/image/rendered_map.png
 
-| 
+|icon| Glossary
+##############
+
+A quick reference of standard game terms:
+ - **Tick:** The simulation interval of the server; a timestep. With rendering enabled, the server targets 0.6s/tick.
+ - **NPC:** Non-Player Character; any agent not controlled by a user. Sometimes called a *mob*
+ - **Spawn:** Entering into the game, e.g. *players spawn with 10 health*
+ - **RPG:** Role-Playing Game, e.g. a game in which the player takes on a particular role, usually one removed from modern reality, such as that of a knight or wizard. *MMO* is short for *MMORPG*, as most MMOs are also role-playing games.
+ - **XP (exp):** Experience, a stat associated with progression systems to represent levels.
+
