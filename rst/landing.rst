@@ -94,7 +94,7 @@ All submissions receive A100 compute credits for training sponsored by Stability
       - **Jack Garbus:** Major contributions to the logging framework, feedback on the documentation and tutorials
       - **@tdimeola:** Feedback on the documentation and tutorials
       - **@cehinson:** Mac build of the Unity3D client
-
+      - **Yilun Du:** Assisted with experiments for 1.0 at OpenAI
 
 .. dropdown:: BibTex Citation
 
@@ -178,9 +178,9 @@ General features of NMMO
   - Map has Water, Stone, and Grass tiles in a 128 x 128 array
   - A team has 8 Agents
   - There are 7 other teams competing in each round, each with 8 Agents as well
-  - Goal is to have longest surviving Agent/s in gameplay round
+  - Map is also populated by Non-Playable Characters (NPCs) of varying hostility
   - Agents survive if they have HP
-
+  - Goal is to complete tasks
 
 |icon| Agent Teams 
 ##################
@@ -192,7 +192,7 @@ Your team of 8 Agents:
   - Have 8 individual professions that help them collect resources 
   - Use resources to increase Food, Water, and HP levels.
   - Collect resources to make ammunition 
-  - Use ammunition to increase weapon power. You do more damage if you have ammo; ammo has levels; higher level ammo does more damage than lower. See Game Wiki**
+  - Use ammunition to increase weapon power. You do more damage if you have ammo; ammo has levels; higher level ammo does more damage than lower. 
   - Wear armor to protect themselves in combat
   - Defend or attack enemy Agents in combat using one of three styles (Range, Melee, Magic)
   - Buy and sell tools, consumables, armors, ammunitions, and weapons
@@ -201,16 +201,32 @@ Your team of 8 Agents:
   - Kill both NPC and enemy agents to gain items and increase score
   - Die when they run out of HP
 
-
-The longest-lasting Agent in your team is the most important factor in your ranking score. How many kills your Agents complete is the second. 
+**In NMMO, Agent teams that complete the most assigned tasks win.**
 
 There are 128 Agents at play at the start of a game round, making 16 teams of 8. Everyone plays at least 1000 rounds of the game, with assorted opponent teams assigned based on a matchmaking algorithm which optimizes for opponent teams of similar skill level. 
 
-Your team is made up of 8 agents. Your ranking as a player after a round of gameplay is based on these factors:
-  - Your Agent that stays alive longest
-  - How many enemy Agents your team kills
-
 In case of ties, ranking scores look at how many of your Agents survived to the end, and how healthy they were then. 
+
+.. dropdown:: About Levels and XP
+
+**Agents**
+ - Levels range from 1 to 10
+ - Agents spawn with all skills at level 1 (0 XP)
+ - Level x+1 requires 10*2^x* XP
+
+ - Agents are awarded 1 XP per attack
+
+ - Agents are awarded 1 XP per ammunition resource gathered
+ - Agents are awarded 5 XP per consumable resource gathered
+ 
+ - All items except gold will appear in varying levels
+  
+**Items and Equipment**
+ - All items appear in level 1-10 variants. 
+ - Agents can equip armor up to the level of their highest skill
+ - Agents can equip weapons up to the level of the associated skill
+ - Agents can equip ammunition and tools up to the level of the associated skill
+
 
 Keeping Agents Alive
 ********************
@@ -220,12 +236,23 @@ Agents stay alive by:
   - Drinking water
   - Protecting HP in combat
 
-*Discuss how Food and Water resources as well as mining function mechanistically.*
+**Tile Spaces**
+
+Each environment contains an automatically generated tile-based game map of 128 x 128 tiles. Tiles come in three types:
+  - Water (resource for water; for movement is an **obstacle**)
+  - Stone (resource for battle performance in Mellee and Magic styles; for movement is an **obstacle**)
+  - Grass (resource for food, HP, and battle performance in range style; for movement is **passable**)
+
 Agents have food / water bars starting on 100
+
 Walk on food tile - regain full food. Tile disappears. Will respawn later, at a random time and same place. 
 If you adjacent to water tile - regain full water. Done.
 Skills - prospecting, carving, alchemy - walk on resource tile. Get the resource. Will respawn later, same place. Will be a different quality/level of resource, depending on Agent levels/tools.
 
+.. dropdown:: About the tile generation algorithm
+    
+    The default tile generation algorithm is more sophisticated than typical Perlin noise -- it stretches the space of one Perlin fractal using a second Perlin fractal. It further attempts to scale spacial frequency to be higher at the edges of the map and lower at the center. This effect is not noticable in small maps but creates large deviations in local terrain structure in larger maps.
+    
 About HP
 ********
 
@@ -235,8 +262,51 @@ Scales: Lose 5 Food and 5 Water per game tick. Start with 100.
 Lose 10 HP per tick if out of food. Lose 10 HP per tick if out of water. Lose 20 HP per tick if out of both food and water.
 If above half food and half water, regain 10 HP per tick
 
+About Combat
+************
 
 Combat - is parrying back and forth, one attack per tick. Taking turns. Damage is a randomized function of confluence of factors. Include: Fighting style; combat skill level; weapon level; armor levels. 
+
+Agents select from Melee, Range, and Mage style attacks. These obey a rock-paper-scissors dominance relationship: 
+Melee beats Range beats Mage beats Melee. 
+Dominance is calculated using the attacker's chosen attack skill and the defender's main combat skill.
+
+The attacker always has an advantage in that they can select the skill strong against the target's main skill. However, the defender can immediately retaliate in the same manner. Additionally, a combat style in which an agent has a higher level and better equipment may outperform one with only the effectiveness multiplier.
+
+Armor requires at least one skill greater than or equal to the item level to equip. Armor provides defense that increases with equipment level.
+Weapons require an associated fighting style skill level greater than or equal to the item level to equip. Weapons boost attacks; boost is enhanced by weapon level.
+Tools grant a flat defense regardless of item level.
+
+Observation Space
+*****************
+
+Each agent observes a groups of entities comprising nearby tiles and agents, its own inventory, and the market. Continuous and discrete tensors of attributes parametrize each entity group. An extra variable *N* counts the number of entities per group.
+
+.. code-block:: python
+  :caption: Observation space of a single agent
+
+  observation_space(agent_idx) = {
+      'Tile': {
+          'Continuous': ...,
+          'Discrete': ...,
+          'N': ...,
+      },
+      'Entity': {
+          'Continuous': ...,
+          'Discrete': ...,
+          'N': ...,
+      }, 
+      'Item': {
+          'Continuous': ...,
+          'Discrete': ...,
+          'N': ...,
+      }, 
+      'Market': {
+          'Continuous': ...,
+          'Discrete': ...,
+          'N': ...,
+      }, 
+  }
 
 
 Attack range is 3 tiles. 
@@ -244,7 +314,6 @@ Visible tile range is 7 tiles.
 View is full sweep:
 
 **Also, multiple enemy Agents can attack you in a given tick, while you can only attack one enemy in a tick. 
-
 
 .. code-block:: python
 
@@ -283,7 +352,9 @@ You give up
 About Professions
 *****************
 
-There are 8 Professions that Agents can learn and level up in. Agents can improve their skills in multiple Professions, but will not be able to progress in all Professions. As such, how Professions are distributed across Agent teams is a part of game strategy.
+There are 8 Professions that Agents can learn and level up in. Agents can improve their skills in multiple Professions, but will not be able to progress in all Professions. As such, how Professions are distributed across Agent teams is a part of game strategy. 
+
+Agents have an inventory that can hold 12 items.
 
 +----------------+-------------+---------+-----------------+------------+------------------+------------------+
 | Type           | Profession  | Tool    | Level up method | HP Effect  | Food/Water Level | Market Buy/Sell  |
@@ -305,16 +376,25 @@ There are 8 Professions that Agents can learn and level up in. Agents can improv
 |                | Alchemy     | Arcane  |                 |            |                  | Arcane & Shards  |
 +----------------+-------------+---------+-----------------+------------+------------------+------------------+
 
+Tools
+*****
+All Tools provide a flat 30 defense regardless of item level.
+Tools need a pertinent skill level (fishing, herbalism, prospecting, carving, alchemy) > or = the item level to equip.
+Tools enable an agent to collect an associated resource (ration, poultice, scrap, shaving, shard) at a level equal to the item level.
+
+Rations
+*******
+Consume to restore 5 food and water per item level.
+Requires at least one skill greater than or equal to the item level to use.
+
+Poultices
+*********
+Consume to restore 5 health per item level.
+Requires at least one skill greater than or equal to the item level to use.
+
 
 Competition Environment 
 ***********************
-
-
-Tile Spaces
-Each environment contains an automatically generated tile-based game map of 128 x 128 tiles. Tiles come in three types:
-  - Water (resource for water; for movement is an obstacle.)
-  - Stone (obstacle)
-  - Grass (passable)
 
 Agents on Tiles
 ***************
@@ -328,17 +408,22 @@ Agents can occupy the same tile as other Agents. Other Agents can be their own t
 
 **Time and Gameplay**
 The gameplay consists of time units called “ticks.” Each tick provides the opportunity for every Agent and NPC** to do any, all or none of the following actions:
+   
    - Move **1 tile in any available direction.**
       - Agents cannot move off of the game space, or **into water.** 
       - As the game progresses, the action space becomes constrained as a fog encircles the board. Agents cannot be in tiles covered in fog, and all gradually move towards the center of the game space.
-   - Attack an Agent - either NPC or from another team.
+  
+  - Attack an Agent - either NPC or from another team.
       - Attack can only be against one other Agent or NPC
       - To attack, your Agent must be within three tiles as the opponent -- actually within a 7x7 square around your Agent.**
+   
    - Buy OR Sell
       - **explanation of market system**
-   - Give an Item to a Teammate
+  
+  - Give an Item to a Teammate
       - Giving items to other Agents is not permitted
-   - Destroy an Item
+   
+   - Remove an Item from Inventory
       - *Reasons to sell an item - 
          - Item has no gameplay utility at that juncture, including no market value
          - Item would take too long to sell, and opportunity cost of space being occupied in inventory is higher
@@ -348,6 +433,7 @@ The gameplay consists of time units called “ticks.” Each tick provides the o
 
 **Tile Resources**
 On these tiles are various important resources. Access resources and stay alive in the game - EAT, DRINK and COMBAT.
+There is a 2.5 percent chance to obtain a weapon while gathering ammunition on a tile.
 
 **TODO: Port table**
 
@@ -358,8 +444,85 @@ Gold is the currency for buying and selling goods in NMMO. Gold comes in full un
 Prices are set by **Explain market pricing here
 Agents set their own prices and receive gold when someone is willing to accept their price. Within the same team, can gift to one another. 
 
+##Line 400 and 421 on gifting in teams contradict. Which is correct? If teammates can gift - is it only if on the same tile?
+
+ - Agents place sell offers on the market for one of their items at a desired price
+ - The item is immediately removed from the seller's inventory
+ - Other agents can immediately buy that item and receive it
+ - If multiple agents attempt to buy the same item at the same time, the market will attempt to fulfill the request from another seller at a price no more than 10% higher.
+
+Agents only observe the current best offer for each item of each level. This bounds the observation and action spaces.
+
 **TODO**
 
+Each agent may take multiple actions per tick -- one from each category. Each action accepts arguments.
+
+.. code-block:: python
+  :caption: Action space of a single agent
+
+  action_space(agent_idx) = {
+      nmmo.action.Move: {
+          nmmo.action.Direction: {
+              nmmo.action.North,
+              nmmo.action.South,
+              nmmo.action.East,
+              nmmo.action.West,
+          },
+      },
+      nmmo.action.Attack: {
+          nmmo.action.Style: {
+              nmmo.action.Melee,
+              nmmo.action.Range,
+              nmmo.action.Mage,
+          },
+          nmmo.action.Target: {
+              Entity Pointer,
+          }
+      },
+      nmmo.action.Use: {
+          nmmo.action.Item: {
+              Inventory Pointer,
+          },
+      },
+      nmmo.action.Sell: {
+          nmmo.action.Item: {
+              Inventory Pointer,
+          },
+          nmmo.action.Price: {
+              Discrete Value,
+          },
+      },
+      nmmo.action.Buy: {
+          nmmo.action.Item: {
+              Market Pointer,
+          },
+      },
+      nmmo.action.Comm: {
+          nmmo.action.Token: {
+              Discrete Value,
+          },
+      },
+  }
+
+Pointer actions refer to a selection from the observation space. For example, to purchase an item, an agent should select the corresponding item from the observation space. This works by computing a similarity score against entity embeddings and is handled by the baseline model.
+
+|icon| NPCs
+************
+
+**Characteristics**
+ - NPCs are controlled by one of three scripted AIs
+ - Passive NPCs wander randomly and cannot attack
+ - Neutral NPCs wander randomly but will attack aggressors and give chase using a Dijkstra's algorithm based pathing routine
+ - Hostile NPCs will actively hunt down and attack other NPCs and players using the same pathing algorithm
+ - NPCs will appear in varying levels
+
+**NPC Items**
+ - NPCs spawn with random armor piece
+ - NPCs spawn with a random tool
+ - Any equipment dropped will be of level equal to the NPC's level
+ - NPCs spawn with gold equal to their level
+
+Generally, Passive NPCs will spawn towards the edges of the map, Hostile NPCs spawn in the middle, and Neutral NPCs spawn somewhere between.
 
 |icon| Tasks
 ************
