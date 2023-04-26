@@ -84,6 +84,7 @@ html_theme_options = {
         "color-card-border": "#1a1c1e",
         "color-card-background": foreground,
         "color-card-marginals-background": "#1e2124ff",
+        "color-inline-code-background": "#00000000", # Download background
     }
 }
 

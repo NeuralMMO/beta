@@ -3,9 +3,7 @@
 .. role:: python(code)
     :language: python
 
-.. figure:: /resource/banner.png
-
-|
+.. figure:: /resource/poster.png
 
 .. grid:: 3
 
@@ -40,9 +38,6 @@
       :link: https://twitter.com/jsuarez5341
 
       Follow the developer on Twitter
-
-|icon| NeurIPS 2023 NMMO Competition
-####################################
 
 Your objective is to train a team of agents to complete tasks they have never seen before against opponents they have never seen before on maps they have never seen before. 
 
@@ -92,6 +87,15 @@ All submissions receive A100 compute credits for training sponsored by Stability
 
          Deploy both RL and Curriculum approaches to create the ultimate 8 Agent team policy. All methods are open and no constraints on (self-provided) compute. Only restrictions are: no hacking or unauthorized modifications of the game or other submissions. 
 
+.. dropdown:: Contributors
+
+   Open source contributors, listed by time since latest contribution. Discord handle have been used for individuals who have not granted explicit permission to display their real names:
+      - **Thomas Cloarec:** Developed the dynamic programming backend for scripted baseline agents
+      - **Jack Garbus:** Major contributions to the logging framework, feedback on the documentation and tutorials
+      - **@tdimeola:** Feedback on the documentation and tutorials
+      - **@cehinson:** Mac build of the Unity3D client
+
+
 .. dropdown:: BibTex Citation
 
    .. code-block:: text
@@ -106,7 +110,6 @@ All submissions receive A100 compute credits for training sponsored by Stability
          volume = {1},
          year = {2021}
       }
-
 
 .. tab-set::
    
@@ -141,6 +144,8 @@ All submissions receive A100 compute credits for training sponsored by Stability
          echo YOUR_WANDB_API_KEY > baselines/wandb_api_key
          cd environment && pip install -e .[all]
 
+.. card::
+   :img-background: /../_static/banner.png
 
 |icon| About NMMO
 #################
@@ -411,34 +416,3 @@ Teammate: Specific member of your team can’t die
 Eliminate(team, direction) - Eliminate the team that spawns to your right
 Team: ID # of team
 Direction: Left; Right
-
-|icon| Gallery
-##############
-
-Perspective and UI
-******************
-
-.. figure:: /resource/image/minimal.png
-
-| 
-
-Overlays
-********
-
-.. figure:: /resource/image/overlays.png
-
-| 
-
-Multiscale Terrain Generation
-*****************************
-
-.. figure:: /resource/image/large_map.png
-
-|
-
-Overhead Render
-***************
-
-.. figure:: /resource/image/rendered_map.png
-
-| 
