@@ -36,7 +36,6 @@ Agents stay alive by:
 
 
 
-
 **Tile Spaces**
 
 Each environment contains an automatically generated tile-based game map of 128 x 128 tiles. Tiles come in three types:
@@ -66,17 +65,36 @@ If above half food and half water, regain 10 HP per tick
 About Combat
 ************
 
-Combat - is parrying back and forth, one attack per tick. Taking turns. Damage is a randomized function of confluence of factors. Include: Fighting style; combat skill level; weapon level; armor levels. 
+**Combat is turn-based, one attack per opponent, per tick.**
 
-Agents select from Melee, Range, and Mage style attacks. These obey a rock-paper-scissors dominance relationship: 
-Melee beats Range beats Mage beats Melee. 
-Dominance is calculated using the attacker's chosen attack skill and the defender's main combat skill.
+**Damage** is a randomized function based on several factors, including:
+ - Fighting style
+ - Combat skill level
+ - Weapon level
+ - Armor levels
 
-The attacker always has an advantage in that they can select the skill strong against the target's main skill. However, the defender can immediately retaliate in the same manner. Additionally, a combat style in which an agent has a higher level and better equipment may outperform one with only the effectiveness multiplier.
+Agents select from Melee, Range, and Mage style attacks. 
+Dominance is calculated using the attacker's *chosen* attack skill and the defender's main combat skill.
 
-Armor requires at least one skill greater than or equal to the item level to equip. Armor provides defense that increases with equipment level.
-Weapons require an associated fighting style skill level greater than or equal to the item level to equip. Weapons boost attacks; boost is enhanced by weapon level.
-Tools grant a flat defense regardless of item level.
+Attack skills obey a rock-paper-scissors dominance relationship: 
+ - Melee beats Range 
+ - Range beats Mage 
+ - Mage beats Melee
+
+   .. tab-set::
+
+      .. tab-item:: Choosing an attack style
+      
+         The attacker always has an advantage in that they can select the skill strong against the target's            main skill. However, the defender can immediately retaliate in the same manner. Additionally, a                combat style in which an agent has a higher level and better equipment may outperform one with only            the effectiveness multiplier.
+
+      .. tab-item:: Armor
+      
+         Armor requires at least one skill ≥ the item level to equip. Armor provides defense that increases            with equipment level.
+
+      .. tab-item:: Weapons
+      
+         Weapons require an associated fighting style skill level ≥ the item level to equip. Weapons boost attacks; higher level weapons provide more boost.
+         Tools grant a flat defense regardless of item level.
 
 Observation Space
 *****************
