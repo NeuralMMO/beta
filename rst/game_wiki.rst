@@ -81,11 +81,14 @@ Attack skills obey a rock-paper-scissors dominance relationship:
  - Range beats Mage 
  - Mage beats Melee
 
+In a given tick, multiple enemy Agents can attack a single Agent. That Agent can only attack one opponent.
+
    .. tab-set::
 
-      .. tab-item:: Choosing an attack style
+      .. tab-item:: Choosing attack style
       
-         The attacker always has an advantage in that they can select the skill strong against the target's            main skill. However, the defender can immediately retaliate in the same manner. Additionally, a                combat style in which an agent has a higher level and better equipment may outperform one with only            the effectiveness multiplier.
+         The attacker always has an advantage. They can select the skill strong against the target's            main skill. This multiplies the effectiveness of their attach. However, the defender can immediately retaliate in the same way. 
+         An agent whose combat style has a higher level and better equipment may outperform an attacker who only benefits from the attack dominance effectiveness multiplier.
 
       .. tab-item:: Armor
       
@@ -96,13 +99,49 @@ Attack skills obey a rock-paper-scissors dominance relationship:
          Weapons require an associated fighting style skill level ≥ the item level to equip. Weapons boost attacks; higher level weapons provide more boost.
          Tools grant a flat defense regardless of item level.
 
-Observation Space
-*****************
+      .. tab-item:: Observation Space
 
-Each agent observes a groups of entities comprising nearby tiles and agents, its own inventory, and the market. Continuous and discrete tensors of attributes parametrize each entity group. An extra variable *N* counts the number of entities per group.
+         Attack range is 3 tiles. 
+         Visibility range is 7 tiles.
+         View is full sweep: 
+         **TODO - insert image**
 
-.. code-block:: python
-  :caption: Observation space of a single agent
+.. dropdown:: A story of two Agents combatting
+
+    Start:
+*Agent You:* 100 HP, poor armor and weapons
+*Agent Them:* 75 HP, good armor and weapons
+
+Tick 1:
+You attack them. They lose 18 HP
+They attack you. You lose 27 HP
+
+
+Tick 2:
+You attack them. They lose 14 HP
+They attack you. You lose 32 HP
+
+
+Tick 3: 
+You attack them. They lose 18 HP
+They run
+
+
+Tick 4: You chase and attack them. They lose 15 HP.
+They consume a poultice to regain 50 HP and run some more.
+
+
+This continues for some time, with your opponent running away, and you chasing them. 
+Eventually, you give up and let them go. Your HP is low, and they had to consume a poultice. 
+
+Fortunately, this was only a training run, and you now can reconsider your strategy for the next round.
+
+.. dropdown:: More about the Observation Space
+
+    Each agent observes a groups of entities comprising nearby tiles and agents, its own inventory, and the market. Continuous and discrete tensors of attributes parametrize each entity group. An extra variable *N* counts the number of entities per group.
+
+    .. code-block:: python
+        :caption: Observation space of a single agent
 
   observation_space(agent_id) = {
         'AgentId': Discrete(1),
@@ -113,11 +152,6 @@ Each agent observes a groups of entities comprising nearby tiles and agents, its
         'Tile': Box(-1048576.0, 1048576.0, (225, 3), float32)
     }
 
-Attack range is 3 tiles. 
-Visible tile range is 7 tiles.
-View is full sweep:
-
-**Also, multiple enemy Agents can attack you in a given tick, while you can only attack one enemy in a tick. 
 
 .. code-block:: python
 
@@ -125,32 +159,7 @@ View is full sweep:
       '''Damage formula'''
       return int(multiplier * (offense * (15 / (15 + defense))))
 
-Start:
-You: 100 HP, bad armor and weapons
-Them: 75 HP, good armor and weapons
 
-
-Tick 1:
-You attack them. They lose 28 HP
-They attack you. You lose 37 HP
-
-
-Tick 2:
-You attack them. They lose 24 HP
-They attack you. You lose 42 HP
-
-
-Tick 1: 
-You attack them. They lose 28 HP
-They run
-
-
-Tick 2: You attack them. They lose 25 HP.
-They consume a poultice to regain 50 HP and run
-
-
-This continues for some time
-You give up
 
 
 About Professions
