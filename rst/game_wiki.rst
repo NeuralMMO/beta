@@ -45,8 +45,10 @@ Each environment contains an automatically generated tile-based game map of 128 
 
 Agents have food / water bars starting on 100
 
-Walk on food tile - regain full food. Tile disappears. Will respawn later, at a random time and same place. 
-If you adjacent to water tile - regain full water. Done.
+Agent walks on a food tile - regains full food. Tile disappears. Will respawn later, at a random time in the same place. 
+
+Agent is adjacent to a water tile - regains full water.
+
 Skills - prospecting, carving, alchemy - walk on resource tile. Get the resource. Will respawn later, same place. Will be a different quality/level of resource, depending on Agent levels/tools.
 
 .. dropdown:: About the tile generation algorithm
@@ -110,24 +112,32 @@ In a given tick, multiple enemy Agents can attack a single Agent. That Agent can
 
     Start:
 *Agent You:* 100 HP, poor armor and weapons
+
 *Agent Them:* 75 HP, good armor and weapons
 
 Tick 1:
+
 You attack them. They lose 18 HP
+
 They attack you. You lose 27 HP
 
 
 Tick 2:
+
 You attack them. They lose 14 HP
+
 They attack you. You lose 32 HP
 
 
 Tick 3: 
+
 You attack them. They lose 18 HP
+
 They run
 
 
 Tick 4: You chase and attack them. They lose 15 HP.
+
 They consume a poultice to regain 50 HP and run some more.
 
 
