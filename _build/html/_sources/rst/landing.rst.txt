@@ -39,15 +39,13 @@
 
       Follow the developer on Twitter
 
-Your objective is to train a team of agents to complete tasks they have never seen before against opponents they have never seen before on maps they have never seen before. 
+Neural MMO is a computationally accessible, open-source research platform designed to simulate populations of agents in virtual worlds. Your objective is to train a team of agents to complete tasks they have never seen before against opponents they have never seen before on maps they have never seen before. 
 
-Successfully complete the most tasks to win! 
-At stake are $20,000 in prizes sponsored by Parametrix.ai.
-All submissions receive A100 compute credits for training sponsored by Stability.ai. 
+**2023 Competition:** Successfully complete the most tasks to win! At stake are $20,000 in prizes sponsored by Parametrix.ai. All submissions receive A100 compute credits for training sponsored by Stability.ai. 
 
 .. dropdown:: Track Details
 
-   NMMO has Three Tracks to Compete and Win. In all tracks, the objective is for Agent teams to accomplish tasks. Gameplay is over thousands of rounds, with increasing task and competitor difficulty. For the RL and Curriculum tracks, all entrants receive up to 8 hours of free A100 compute time per submission to train. For No Holds Barred, competitors bring on their own, non-limited compute power.
+   NMMO has three tracks to compete and win. In all tracks, the objective is for Agent teams to accomplish tasks. Gameplay is over thousands of rounds, with increasing task and competitor difficulty. For the RL and Curriculum tracks, all entrants receive up to 8 hours of free A100 compute time per submission to train. For the No Holds Barred track, competitors bring on their own, non-limited compute power. This track is intended for larger labs and companies looking to push the boundaries 
 
    .. tab-set::
 
@@ -55,21 +53,17 @@ All submissions receive A100 compute credits for training sponsored by Stability
 
          Train teams of agents using RL to complete tasks. Customize the RL algorithm, model, and reward structure, but leverage a fixed baseline curriculum of tasks for training.
 
-         This is an opportunity for RL enthusiasts to test your skills building agents that can survive and thrive in a massively multi-agent environment full of potential adversaries. Your task is to implement an RL learned policy that defines how your 8 Agent team performs within a novel environment. At the outset of each game, your team will receive a random, generated task. Completing the task scores points. The winner scores the most points across thousands of game rounds.  
+         This is an opportunity for you RL enthusiasts to test your skills building agents that can survive and thrive in a massively multi-agent environment full of potential adversaries. Your task is to implement a *policy* that defines how your 8 Agent team performs within a novel environment. At the outset of each game, your team will receive a randomly generated task. Complete the task to score a point. We will evaluate submissions against each other over thousands of games. Whoever scores the most points wins.
 
-         Reinforcement Learning track includes control over the RL algorithm, environment rewards signal, observation featurization, and the neural network architecture. The presentation and sampling of tasks are provided by the baseline and are treated as constants. All RL Agent Teams are trained on the same baseline task curriculum. While hybrid methods are allowed, with the new emphasis on tasks, it is unlikely that pure traditional scripting will be effective.
+         The RL track includes control over the RL algorithm, environment rewards signal, observation featurization, and the neural network architecture. The presentation and sampling of tasks are provided by the baseline and are treated as constants. All RL agent teams are trained on the same baseline task curriculum. While hybrid methods are allowed, with the new emphasis on tasks, it is unlikely that pure traditional scripting will be effective.
 
       .. tab-item:: Curriculum Generation
 
-         Design unique and useful curricula for training successful teams on tasks. RL experience is not required. Design the task generator, task sampler, and reward using Python. NMMO particularly encourages approaches leveraging ELM (link) and provides a code generation model with the baselines.
+         The Curriculum track is a great way for programmers to compete and participate, without the need for advanced knowledge of AI. In this track, you will design unique and useful curricula for training successful teams on tasks. A curriculum is a structured set of tasks presented to the RL algorithm intelligently to maximize learning. Design the task generator, task sampler, and reward using Python.
 
-         The Curriculum track is a great way for coders to compete and participate, without the need for RL or AI/ML! Link to Curriculum Track.
+         All submitted curricula will be applied to the same baseline RL policy to control a team of agents. Your objective is to create a curriculum of tasks that results in better, more robust learning such that agents are able to complete tasks not seen during training. You will receive performance metrics to see how effective the curriculum is and iterate your training curriculum. The reinforcement learning algorithm, observation featurization, and neural network architecture are provided by the baseline and remain constant across teams.
 
-         All curriculum developers are paired with identical baseline policy RL Agent teams. Your objective is to create a curriculum of tasks for the Agent team to evaluate or train on. You will receive performance metrics to see how effective the curriculum is and iterate your training curriculum. The reinforcement learning algorithm, observation featurization, and neural network architecture are provided by the baseline and remain constant across teams.
-
-         Once trained on your curriculum, your Agent team policy will compete to complete novel, held-out tasks in live competition across over a thousand rounds of increasing difficulty. 
-
-         .. code-block:: python
+        .. code-block:: python
 
             # Insert actual code here:
             metrics = train_on_tasks(tasks)
@@ -81,20 +75,37 @@ All submissions receive A100 compute credits for training sponsored by Stability
             if tasks_are_good:
                train_on_tasks(tasks)
 
-      .. tab-item:: No Holds Barred
+         Once trained on your curriculum, your Agent team policy will compete to complete novel, held-out tasks in live competition across over a thousand rounds of increasing difficulty.For researchers and advanced users, we encourage approaches leveraging `ELM <https://arxiv.org/abs/2206.08896>`_ and provide a code generation model with the baselines.
 
-         Combine RL and curriculum approaches. Entrants provide their own compute to win via any way possible - except hacking NMMO’s servers!
+       .. tab-item:: No Holds Barred
 
-         Deploy both RL and Curriculum approaches to create the ultimate 8 Agent team policy. All methods are open and no constraints on (self-provided) compute. Only restrictions are: no hacking or unauthorized modifications of the game or other submissions. 
+         Combine RL and curriculum approaches. Entrants provide their own compute to win via any way possible - just don't hack our servers!
+
+         Deploy both RL and Curriculum approaches to create the ultimate 8 Agent team policy. All methods are open and no constraints on (self-provided) compute. Only restrictions are: no unauthorized modifications of the game or other submissions. 
 
 .. dropdown:: Contributors
 
-   Open source contributors, listed by time since latest contribution. Discord handle have been used for individuals who have not granted explicit permission to display their real names:
-      - **Thomas Cloarec:** Developed the dynamic programming backend for scripted baseline agents
-      - **Jack Garbus:** Major contributions to the logging framework, feedback on the documentation and tutorials
-      - **@tdimeola:** Feedback on the documentation and tutorials
-      - **@cehinson:** Mac build of the Unity3D client
-      - **Yilun Du:** Assisted with experiments for 1.0 at OpenAI
+   **Joseph Suarez**: Creator and lead developer of Neural MMO.
+
+   CarperAI team for NMMO 2.0:
+    - **David Bloomin**: Rewrite of the engine for 2.0, port and development of the RL baseline
+    - **Kyoung Whan Choe**: Rewrite of Neural MMO game code and logging for 2.0, contributions to the RL baseline and task system
+    - **Hao Xiang Li**: Neural MMO 2.0 task system
+    - **Ryan Sullivan**: Integration with Syllabus for the curriculum learning baseline
+    - **Nishaanth Kanna**: Co-developer of the ELM curriculum baseline
+    - **Daniel Scott**: Co-developer of the ELM curriculum baseline
+    - **Rose S. Shuman**: Technical writing for this documentation site and for the competition
+    - **Herbie Bradley**: Supervision of the curriculum generation baseline with OpenELM
+    - **Louis Castricato**: Co-founder and team lead of Carper AI; supervisor of Carper AI development efforts.
+
+   **Sara Earle**: Created 3D assets and 2D icons for items in NMMO 2.0. Hire her on UpWork if you like what you see here.
+
+   Previous open source contributors, listed by time since latest contribution. Discord handle have been used for individuals who have not granted explicit permission to display their real names:
+      - **Thomas Cloarec**: Developed the dynamic programming backend for scripted baseline agents
+      - **Jack Garbus**: Major contributions to the logging framework, feedback on the documentation and tutorials
+      - **@tdimeola**: Feedback on the documentation and tutorials
+      - **@cehinson**: Mac build of the Unity3D client
+      - **Yilun Du**: Assisted with experiments for 1.0 at OpenAI
 
 .. dropdown:: BibTex Citation
 
@@ -147,12 +158,12 @@ All submissions receive A100 compute credits for training sponsored by Stability
 .. card::
    :img-background: /../_static/banner.png
 
-|icon| About NMMO
-#################
+|icon| About Neural MMO
+#######################
 
-Neural MMO is an open-source research platform that is computationally accessible. It enables populations of agents to be simulated in procedurally generated virtual worlds. A procedurally-generated world uses algorithms to generate unique landscapes, NPCs, and resources that change each round.
+Neural MMO is a computationally accessible, open-source research platform designed to simulate populations of agents in virtual worlds. Each instance of Neural MMO uses procedural generation algorithms to create unique landscapes, NPCs, and resources.
 
-NMMO is inspired by classic Massively Multiplayer Online Role-Playing Games. An MMO can be any online video game in which a player interacts with a large number of other players. NMMO stands for Neural MMO. It is a platform for intelligent agent creation, which are typically parameterized by a neural network. 
+Neural MMO is inspired by classic Massively Multiplayer Online Role-Playing Games. An MMO can be any online video game in which a player interacts with a large number of other players. NMMO stands for Neural MMO. It is a platform for intelligent agent creation, which are typically parameterized by a neural network. 
 
 In NMMO, Agents in teams must forage for resources to stay alive and to mine materials to increase their combat and task completion capabilities. Agents can level up their fighting styles and equipment, practice different professions, and engage in trade based on market demand. The world is also populated by non-player characters (NPCs) of varying friendliness. 
 
@@ -173,7 +184,8 @@ NMMO as a platform supports basic foraging tasks involving a few agents for a co
 
 Environments provide a standard PettingZoo API. Join our community Discord or WeChat and post in #support for help (do not raise Github issues for support). See the quick links for source code, baselines, latest publications, social media, and news!
 
-General features of NMMO
+.. dropdown:: General features of NMMO
+
   - Gameplay is on a map
   - Map has Water, Stone, and Grass tiles in a 128 x 128 array
   - A team has 8 Agents
@@ -285,29 +297,14 @@ Each agent observes a groups of entities comprising nearby tiles and agents, its
 .. code-block:: python
   :caption: Observation space of a single agent
 
-  observation_space(agent_idx) = {
-      'Tile': {
-          'Continuous': ...,
-          'Discrete': ...,
-          'N': ...,
-      },
-      'Entity': {
-          'Continuous': ...,
-          'Discrete': ...,
-          'N': ...,
-      }, 
-      'Item': {
-          'Continuous': ...,
-          'Discrete': ...,
-          'N': ...,
-      }, 
-      'Market': {
-          'Continuous': ...,
-          'Discrete': ...,
-          'N': ...,
-      }, 
-  }
-
+  observation_space(agent_id) = {
+        'AgentId': Discrete(1),
+        'Entity' :Box(-1048576.0, 1048576.0, (100, 22), float32),
+        'Inventory': Box(-1048576.0, 1048576.0, (12, 16), float32),
+        'Market': Box(-1048576.0, 1048576.0, (640, 16), float32),
+        'Tick': Box(-1048576.0, 1048576.0, (1, 1), float32),
+        'Tile': Box(-1048576.0, 1048576.0, (225, 3), float32)
+    }
 
 Attack range is 3 tiles. 
 Visible tile range is 7 tiles.
