@@ -77,7 +77,7 @@ Neural MMO is a computationally accessible, open-source research platform design
 
          Once trained on your curriculum, your Agent team policy will compete to complete novel, held-out tasks in live competition across over a thousand rounds of increasing difficulty.For researchers and advanced users, we encourage approaches leveraging `ELM <https://arxiv.org/abs/2206.08896>`_ and provide a code generation model with the baselines.
 
-       .. tab-item:: No Holds Barred
+      .. tab-item:: No Holds Barred
 
          Combine RL and curriculum approaches. Entrants provide their own compute to win via any way possible - just don't hack our servers!
 
@@ -126,34 +126,41 @@ Neural MMO is a computationally accessible, open-source research platform design
    
    .. tab-item:: Pip Package
 
+      Official support for Ubuntu 20.04/22.04, WSL, and MacOS. PufferTank recommended to avoid dependency conflicts.
+
       .. code-block:: python
-         :caption: Packaged installation. Officially supports Ubuntu 20.04/22.04, WSL, and MacOS. Tested with Anaconda Python 3.9
-         
-         # Install NMMO with baseline dependencies (quotes for mac compatibility).
-         pip install "nmmo[cleanrl]"
+
+         # Quotes for mac compatibility.
+         pip install "nmmo"
          
          # Clone baselines repository. Optional but recommended: setup WanDB integration.
-         git clone https://github.com/neuralmmo/baselines nmmo-baselines
-         echo YOUR_WANDB_API_KEY > nmmo-baselines/wandb_api_key
+         git clone https://github.com/neuralmmo/baselines
+         echo YOUR_WANDB_API_KEY > baselines/wandb_api_key
 
-         #Run a quick demo (download client below)
-         python -m demos.minimal
+         #Run training
+         python -m tools.train
 
    .. tab-item:: Source
 
-      Download the latest client `here <https://github.com/neuralmmo/client/releases>`_ (WSL users: do this on your Windows host). Start the demo and run the executable for your platform in client/UnityClient/. After a few seconds, the demo console will show a connection message and the client will load the map. The on-screen instructions demonstrate how to pan and zoom. You can also click on agents to examine their skill levels. The in-game console (which you can toggle with tab) gives you access to a number of overlay visualiztions.
-
       .. code-block:: python
-         :caption: Setup from source for developers (slow without --depth=1)
 
          mkdir neural-mmo && cd neural-mmo
 
          git clone https://github.com/neuralmmo/environment
          git clone https://github.com/neuralmmo/baselines
+
+         # WSL users: run this part on Windows. Client opens in Cocos2D.
          git clone https://github.com/neuralmmo/client
          
          echo YOUR_WANDB_API_KEY > baselines/wandb_api_key
-         cd environment && pip install -e .[all]
+         cd environment && pip install -e .
+
+   .. tab-item:: PufferTank
+
+      .. code-block:: python
+
+         mkdir neural-mmo && cd neural-mmo
+
 
 .. card::
    :img-background: /../_static/banner.png

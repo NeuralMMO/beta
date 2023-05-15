@@ -14,15 +14,15 @@ Welcome to Neural MMO's documentation!
 
 .. toctree::
    :maxdepth: 8
-   :caption: Game Wiki
-
-   rst/game_wiki
-
-.. toctree::
-   :maxdepth: 8
    :caption: API
 
    rst/api
+
+.. toctree::
+   :maxdepth: 8
+   :caption: Game Wiki
+
+   rst/game_wiki
 
 .. toctree::
    :maxdepth: 8
