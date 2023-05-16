@@ -8,10 +8,10 @@ TODO - WIKI INTRO/OVERVIEW
 Keeping Agents Alive
 ********************
 
-    Agents stay alive by:
-      - Eating food
-      - Drinking water
-      - Protecting HP in combat
+Agents stay alive by:
+     - Eating food
+     - Drinking water
+     - Protecting HP in combat
 
     .. tab-set::
 
