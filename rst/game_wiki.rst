@@ -258,7 +258,42 @@ The gameplay consists of time units called “ticks.” Each tick provides the o
 On these tiles are various important resources. Access resources and stay alive in the game - EAT, DRINK and COMBAT.
 There is a 2.5 percent chance to obtain a weapon while gathering ammunition on a tile.
 
-**TODO: Port table**
++--------------------+------------------------+--------------------+
+| Resource           | Purpose                | Obtaining          |
++====================+========================+====================+
+| WATER Tile Resources                                             |
++--------------------+------------------------+--------------------+
+| WATER              | WATER to DRINK         | Stand next to WATER|
+|                    |                        | to DRINK           | 
++--------------------+------------------------+--------------------+
+| FISH               | RATION item to EAT     | ROD to HARVEST     |
+|                    |                        |                    | 
++--------------------+------------------------+--------------------+
+| GRASS Tile Resources                                             |
++--------------------+------------------------+--------------------+
+| FOOD               | FOOD to EAT            | Stand on FOOD      |
+|                    |                        | to EAT             | 
++--------------------+------------------------+--------------------+
+| HERB               | POTION item to         | GLOVES to HARVEST  |
+|                    | increase HEALTH        |                    | 
++--------------------+------------------------+--------------------+
+| TREE               | ARROWS boost BOW       | AXE to HARVEST     |
+|                    | damage of RANGE combat |                    |
++--------------------+------------------------+--------------------+
+| STONE Tile Resources                                             |
++--------------------+------------------------+--------------------+
+| ORE                | WHETSTONES boost SWORD | PICKAXE to HARVEST |
+|                    | damage of MELEE combat |                    |
++--------------------+------------------------+--------------------+
+| CRYSTAL            | RUNES boost WAND       | CHISEL to HARVEST  |
+|                    | damage of MAGIC combat |                    |
++--------------------+------------------------+--------------------+
+| Other Resources                                                  |
++--------------------+------------------------+--------------------+
+| GOLD               | BUY items from other   | SELL items. DEFEAT |
+|                    | players on the MARKET  | NPCs.              |
++--------------------+------------------------+--------------------+
+
 
 **Market: Buy and Sell Resources**
 
@@ -276,7 +311,27 @@ Agents set their own prices and receive gold when someone is willing to accept t
 
 Agents only observe the current best offer for each item of each level. This bounds the observation and action spaces.
 
-**TODO**
++--------------------------------------------------------------------------------------+
+| BUY and SELL with GOLD                                                               |
++======================================================================================+
+| COMBAT items                                                                         |
++--------------------+------------------------+--------------------+-------------------+
+| Tools              | Ammunitions            | Weapons            | Armors            |
++--------------------+------------------------+--------------------+-------------------+
+| AXE                | Wood ARROWS            | BOW                | HAT               |
++--------------------+------------------------+--------------------+-------------------+
+| PICKAXE            | Rock WHETSTONES        | SWORD              | TOP               |
++--------------------+------------------------+--------------------+-------------------+
+| CHISEL             | Magic RUNES            | WAND               | BOTTOM            |
++--------------------+------------------------+--------------------+-------------------+
+| Health items                                                                         |
++--------------------+-----------------------------------------------------------------+
+| Tools              | Consumables                                                     |
++--------------------+-----------------------------------------------------------------+
+| ROD                | HARVEST fish to produce RATION items (restore water and food)   |
++--------------------+-----------------------------------------------------------------+
+| GLOVES             | HARVEST herbs to produce POTION items (restore health)          |
++--------------------+-----------------------------------------------------------------+
 
 Each agent may take multiple actions per tick -- one from each category. Each action accepts arguments.
 

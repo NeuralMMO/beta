@@ -39,13 +39,15 @@
 
       Follow the developer on Twitter
 
+**News:** 2.0 is now in soft-launch. The environment is stable and a working version of the RL baseline is available, but not everything has been fully tuned and documented.
+
 Neural MMO is a computationally accessible, open-source research platform designed to simulate populations of agents in virtual worlds. Your objective is to train a team of agents to complete tasks they have never seen before against opponents they have never seen before on maps they have never seen before. 
 
-**2023 Competition:** Successfully complete the most tasks to win! At stake are $20,000 in prizes sponsored by Parametrix.ai. All submissions receive A100 compute credits for training sponsored by Stability.ai. 
+**2023 Competition:** Successfully complete the most tasks to win! At stake are $20,000 in prizes sponsored by Parametrix.ai. All submissions receive A100 compute credits for training sponsored by Stability.ai. The competition is currently planned for the start of July 2023.
 
 .. dropdown:: Track Details
 
-   NMMO has three tracks to compete and win. In all tracks, the objective is for Agent teams to accomplish tasks. Gameplay is over thousands of rounds, with increasing task and competitor difficulty. For the RL and Curriculum tracks, all entrants receive up to 8 hours of free A100 compute time per submission to train. For the No Holds Barred track, competitors bring on their own, non-limited compute power. This track is intended for larger labs and companies looking to push the boundaries 
+   NMMO has three tracks to compete and win. In all tracks, the objective is for your team of 8 agents to accomplish tasks. Gameplay is over thousands of rounds, with increasing task and competitor difficulty. For the RL and Curriculum tracks, all entrants receive up to 8 hours of free A100 compute time per submission to train. For the No Holds Barred track, competitors bring on their own, non-limited compute power. This track is intended for larger labs and companies looking to push the boundaries. Your submission will compete to complete novel, held-out tasks in live competition across over a thousand rounds of increasing difficulty.
 
    .. tab-set::
 
@@ -56,6 +58,14 @@ Neural MMO is a computationally accessible, open-source research platform design
          This is an opportunity for you RL enthusiasts to test your skills building agents that can survive and thrive in a massively multi-agent environment full of potential adversaries. Your task is to implement a *policy* that defines how your 8 Agent team performs within a novel environment. At the outset of each game, your team will receive a randomly generated task. Complete the task to score a point. We will evaluate submissions against each other over thousands of games. Whoever scores the most points wins.
 
          The RL track includes control over the RL algorithm, environment rewards signal, observation featurization, and the neural network architecture. The presentation and sampling of tasks are provided by the baseline and are treated as constants. All RL agent teams are trained on the same baseline task curriculum. While hybrid methods are allowed, with the new emphasis on tasks, it is unlikely that pure traditional scripting will be effective.
+
+         We release a baseline repository that includes a model adapted from NetEase's winning submission to the NeurIPS 2022 competition, a fixed curriculum of procedurally generated tasks, a single-file CleanRL PPO implementation, PufferLib integration for simpler training, and WandB for logging and visualization. The baseline is designed to be easy to use and modify. We encourage you to use it as a starting point for your own submissions.
+
+         To get started:
+           - tools/train.py contains the main training file. Modify hyperprameters and scale here.
+           - cleanrl_ppo_lstm.py contains the CleanRL PPO implementation. Modify it to alter the training algorithm. This version includes PufferLib integration and asynchronous environment execution.
+           - /models contains the network definition. This is an advanced architecture with a custom featurizer and multiple subnetworks dedicated to processing different types of information.
+           - /featurizer preprocesses observations from the environment before they are passed to the network. It separately processes the map, inventory, and market observations.
 
       .. tab-item:: Curriculum Generation
 
@@ -75,13 +85,15 @@ Neural MMO is a computationally accessible, open-source research platform design
             if tasks_are_good:
                train_on_tasks(tasks)
 
-         Once trained on your curriculum, your Agent team policy will compete to complete novel, held-out tasks in live competition across over a thousand rounds of increasing difficulty.For researchers and advanced users, we encourage approaches leveraging `ELM <https://arxiv.org/abs/2206.08896>`_ and provide a code generation model with the baselines.
+         The baseline for this track includes a fixed curriculum of tasks and OpenELM integration. For researchers and advanced users, we encourage approaches leveraging `ELM <https://arxiv.org/abs/2206.08896>`_ and provide a code generation model with the baselines.
 
       .. tab-item:: No Holds Barred
 
          Combine RL and curriculum approaches. Entrants provide their own compute to win via any way possible - just don't hack our servers!
 
-         Deploy both RL and Curriculum approaches to create the ultimate 8 Agent team policy. All methods are open and no constraints on (self-provided) compute. Only restrictions are: no unauthorized modifications of the game or other submissions. 
+         Deploy both RL and Curriculum approaches to create the ultimate 8 Agent team policy. All methods are open and no constraints on (self-provided) compute. Only restrictions are: no unauthorized modifications of the game or other submissions.
+
+         If you are here, you know how to get started. Use any of the above baselines or build your own from scratch. This is the only track that does not strictly require winners to open-source their code. However, we strongly encourage you to do so.
 
 .. dropdown:: Contributors
 

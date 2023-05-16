@@ -702,7 +702,66 @@ The gameplay consists of time units called “ticks.” Each tick provides the o
 <p><strong>Tile Resources</strong>
 On these tiles are various important resources. Access resources and stay alive in the game - EAT, DRINK and COMBAT.
 There is a 2.5 percent chance to obtain a weapon while gathering ammunition on a tile.</p>
-<p><strong>TODO: Port table</strong></p>
+<div class="table-wrapper docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Resource</p></th>
+<th class="head"><p>Purpose</p></th>
+<th class="head"><p>Obtaining</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td colspan="3"><p>WATER Tile Resources</p></td>
+</tr>
+<tr class="row-odd"><td><p>WATER</p></td>
+<td><p>WATER to DRINK</p></td>
+<td><p>Stand next to WATER
+to DRINK</p></td>
+</tr>
+<tr class="row-even"><td><p>FISH</p></td>
+<td><p>RATION item to EAT</p></td>
+<td><p>ROD to HARVEST</p></td>
+</tr>
+<tr class="row-odd"><td colspan="3"><p>GRASS Tile Resources</p></td>
+</tr>
+<tr class="row-even"><td><p>FOOD</p></td>
+<td><p>FOOD to EAT</p></td>
+<td><p>Stand on FOOD
+to EAT</p></td>
+</tr>
+<tr class="row-odd"><td><p>HERB</p></td>
+<td><p>POTION item to
+increase HEALTH</p></td>
+<td><p>GLOVES to HARVEST</p></td>
+</tr>
+<tr class="row-even"><td><p>TREE</p></td>
+<td><p>ARROWS boost BOW
+damage of RANGE combat</p></td>
+<td><p>AXE to HARVEST</p></td>
+</tr>
+<tr class="row-odd"><td colspan="3"><p>STONE Tile Resources</p></td>
+</tr>
+<tr class="row-even"><td><p>ORE</p></td>
+<td><p>WHETSTONES boost SWORD
+damage of MELEE combat</p></td>
+<td><p>PICKAXE to HARVEST</p></td>
+</tr>
+<tr class="row-odd"><td><p>CRYSTAL</p></td>
+<td><p>RUNES boost WAND
+damage of MAGIC combat</p></td>
+<td><p>CHISEL to HARVEST</p></td>
+</tr>
+<tr class="row-even"><td colspan="3"><p>Other Resources</p></td>
+</tr>
+<tr class="row-odd"><td><p>GOLD</p></td>
+<td><p>BUY items from other
+players on the MARKET</p></td>
+<td><p>SELL items. DEFEAT
+NPCs.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 <p><strong>Market: Buy and Sell Resources</strong></p>
 <p>Gold is the currency for buying and selling goods in NMMO. Gold comes in full units, and cannot be sub-divided. Gold is acquired by selling items, and used for buying items.</p>
 <p>Prices are set by <a href="#id9"><span class="problematic" id="id10">**</span></a>Explain market pricing here
@@ -717,7 +776,49 @@ Agents set their own prices and receive gold when someone is willing to accept t
 </ul>
 </div></blockquote>
 <p>Agents only observe the current best offer for each item of each level. This bounds the observation and action spaces.</p>
-<p><strong>TODO</strong></p>
+<div class="table-wrapper docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head" colspan="4"><p>BUY and SELL with GOLD</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td colspan="4"><p>COMBAT items</p></td>
+</tr>
+<tr class="row-odd"><td><p>Tools</p></td>
+<td><p>Ammunitions</p></td>
+<td><p>Weapons</p></td>
+<td><p>Armors</p></td>
+</tr>
+<tr class="row-even"><td><p>AXE</p></td>
+<td><p>Wood ARROWS</p></td>
+<td><p>BOW</p></td>
+<td><p>HAT</p></td>
+</tr>
+<tr class="row-odd"><td><p>PICKAXE</p></td>
+<td><p>Rock WHETSTONES</p></td>
+<td><p>SWORD</p></td>
+<td><p>TOP</p></td>
+</tr>
+<tr class="row-even"><td><p>CHISEL</p></td>
+<td><p>Magic RUNES</p></td>
+<td><p>WAND</p></td>
+<td><p>BOTTOM</p></td>
+</tr>
+<tr class="row-odd"><td colspan="4"><p>Health items</p></td>
+</tr>
+<tr class="row-even"><td><p>Tools</p></td>
+<td colspan="3"><p>Consumables</p></td>
+</tr>
+<tr class="row-odd"><td><p>ROD</p></td>
+<td colspan="3"><p>HARVEST fish to produce RATION items (restore water and food)</p></td>
+</tr>
+<tr class="row-even"><td><p>GLOVES</p></td>
+<td colspan="3"><p>HARVEST herbs to produce POTION items (restore health)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 <p>Each agent may take multiple actions per tick – one from each category. Each action accepts arguments.</p>
 <div class="literal-block-wrapper docutils container" id="id14">
 <div class="code-block-caption"><span class="caption-text">Action space of a single agent</span><a class="headerlink" href="#id14" title="Permalink to this code">#</a></div>
