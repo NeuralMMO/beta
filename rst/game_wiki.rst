@@ -9,9 +9,9 @@ Keeping Agents Alive
 ********************
 
 Agents stay alive by:
-     - Eating food
-     - Drinking water
-     - Protecting HP in combat
+ - Eating food
+ - Drinking water
+ - Protecting HP in combat
 
     .. tab-set::
 
