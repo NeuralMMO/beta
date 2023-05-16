@@ -7,32 +7,31 @@ TODO - WIKI INTRO/OVERVIEW
 
 .. dropdown:: Keeping Agents Alive
 
-Agents stay alive by:
-  - Eating food
-  - Drinking water
-  - Protecting HP in combat
+    Agents stay alive by:
+      - Eating food
+      - Drinking water
+      - Protecting HP in combat
 
-   .. tab-set::
+    .. tab-set::
 
       .. tab-item:: Agent Levels
 
          - Levels range from 1 to 10
- - Agents spawn with all skills at level 1 (0 XP)
- - Level x+1 requires 10*2^x* XP
+         - Agents spawn with all skills at level 1 (0 XP)
+         - Level x+1 requires 10*2^x* XP
+         - Agents are awarded 1 XP per attack
 
- - Agents are awarded 1 XP per attack
-
- - Agents are awarded 1 XP per ammunition resource gathered
- - Agents are awarded 5 XP per consumable resource gathered
+         - Agents are awarded 1 XP per ammunition resource gathered
+         - Agents are awarded 5 XP per consumable resource gathered
  
- - All items except gold will appear in varying levels
+         - All items except gold will appear in varying levels
 
       .. tab-item:: Items and Equipment Levels
 
-        - All items appear in level 1-10 variants. 
- - Agents can equip armor up to the level of their highest skill
- - Agents can equip weapons up to the level of the associated skill
- - Agents can equip ammunition and tools up to the level of the associated skill
+         - All items appear in level 1-10 variants. 
+         - Agents can equip armor up to the level of their highest skill
+         - Agents can equip weapons up to the level of the associated skill
+         - Agents can equip ammunition and tools up to the level of the associated skill
 
 
 
