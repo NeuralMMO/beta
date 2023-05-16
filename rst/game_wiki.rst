@@ -34,41 +34,39 @@ Agents stay alive by:
          - Agents can equip weapons up to the level of the associated skill
          - Agents can equip ammunition and tools up to the level of the associated skill
 
-
-
 Tiles Provide Resources
 ***********************
 
-Each environment contains an automatically generated tile-based game map of 128 x 128 tiles. Tiles come in three types:
-  - Water (resource for Water; for movement is an **obstacle**)
-  - Stone (resource for battle performance in Mellee and Magic styles; for movement is an **obstacle**)
-  - Grass (resource for Food, HP, and battle performance in Range style; for movement is **passable**)
+Each environment contains an automatically generated tile-based game map of 128 x 128 tiles. 
+Tiles come in three types:
 
-**Food, Water and HP Levels**
+  - Water (resource for Water; for movement is an **obstacle**)
+  - Grass (resource for Food, HP, and battle performance in Range style; for movement is **passable**)
+  - Stone (resource for battle performance in Mellee and Magic styles; for movement is an **obstacle**)
+
+**Food, Water, HP and Skill Levels**
 
 *Food and Water*
+
 Agents have food / water bars starting at 100.
 Lose 5 Food and 5 Water per game tick.
 
+Agent walks on a food tile - regains full food. Tile disappears and will respawn at a random time in the same place. 
+Agent is adjacent to a water tile - regains full water.
+
 *HP*
+
 If above half food and half water, regain 10 HP per tick
 Lose 10 HP per tick if out of food. Lose 10 HP per tick if out of water. Lose 20 HP per tick if out of both food and water.
 
+*Skills*
 
-Agent walks on a food tile - regains full food. Tile disappears. Will respawn later, at a random time in the same place. 
-
-Agent is adjacent to a water tile - regains full water.
-
-Skills - prospecting, carving, alchemy - walk on resource tile. Get the resource. Will respawn later, same place. Will be a different quality/level of resource, depending on Agent levels/tools.
+For Skills Prospecting, Carving, and Alchemy - walk on resource tile to get the resource. Agent receives a different quality/level of resource, depending on Agent levels/tools. Resource tile will respawn later in the same place. 
 
 .. dropdown:: About the tile generation algorithm
     
     The default tile generation algorithm is more sophisticated than typical Perlin noise -- it stretches the space of one Perlin fractal using a second Perlin fractal. It further attempts to scale spacial frequency to be higher at the edges of the map and lower at the center. This effect is not noticable in small maps but creates large deviations in local terrain structure in larger maps.
     
-About HP
-********
-
-
 
 About Combat
 ************
