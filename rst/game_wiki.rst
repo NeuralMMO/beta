@@ -118,40 +118,41 @@ In a given tick, multiple enemy Agents can attack a single Agent. That Agent can
 .. dropdown:: A story of two Agents combatting
 
     Start:
-*Agent You:* 100 HP, poor armor and weapons
+    *Agent You:* 100 HP, poor armor and weapons
 
-*Agent Them:* 75 HP, good armor and weapons
-
-Tick 1:
-
-You attack them. They lose 18 HP
-
-They attack you. You lose 27 HP
+    *Agent Them:* 75 HP, good armor and weapons
 
 
-Tick 2:
+    Tick 1:
 
-You attack them. They lose 14 HP
+    You attack them. They lose 18 HP
 
-They attack you. You lose 32 HP
-
-
-Tick 3: 
-
-You attack them. They lose 18 HP
-
-They run
+    They attack you. You lose 27 HP
 
 
-Tick 4: You chase and attack them. They lose 15 HP.
+    Tick 2:
 
-They consume a poultice to regain 50 HP and run some more.
+    You attack them. They lose 14 HP
+
+    They attack you. You lose 32 HP
 
 
-This continues for some time, with your opponent running away, and you chasing them. 
-Eventually, you give up and let them go. Your HP is low, and they had to consume a poultice. 
+    Tick 3: 
 
-Fortunately, this was only a training run, and you now can reconsider your strategy for the next round.
+    You attack them. They lose 18 HP
+
+    They run
+
+
+    Tick 4: You chase and attack them. They lose 15 HP.
+
+    They consume a poultice to regain 50 HP and run some more.
+
+
+    This continues for some time, with your opponent running away, and you chasing them. 
+    Eventually, you give up and let them go. Your HP is low, and they had to consume a poultice. 
+
+    Fortunately, this was only a training run, and you now can reconsider your strategy for the next round.
 
 .. dropdown:: More about the Observation Space
 
@@ -179,26 +180,26 @@ Fortunately, this was only a training run, and you now can reconsider your strat
 
 
 
-About Professions
-*****************
+About Professions, Tools, and Items
+***********************************
 
-There are 8 Professions that Agents can learn and level up in. Agents can improve their skills in multiple Professions, but will not be able to progress in all Professions. As such, how Professions are distributed across Agent teams is a part of game strategy. 
+There are 8 Professions that Agents can learn and level up in. Agents can improve their skills in multiple Professions, but will not be able to progress in all Professions. How Professions are distributed across Agent teams is a part of game strategy. 
 
-Agents have an inventory that can hold 12 items.
+**Agents have an inventory that can hold 12 items.**
 
 +----------------+-------------+---------+-----------------+------------+------------------+------------------+
-| Type           | Profession  | Tool    | Level up method | HP Effect  | Food/Water Level | Market Buy/Sell  |
+| **Type**       |*Profession* |*Tool*   |*Level up method*|*HP Effect* |*Food/Water Level*|*Market Buy/Sell* |
 +================+=============+=========+=================+============+==================+==================+
 |                | Mage        | Wand    | Hitting and     | \-HP level |                  | Wand             |
 |                +-------------+---------+ damaging        | unless you |                  +------------------+
-| Combat         | Melee       | Sword   | NPCs and        | take no    |                  | Sword            |
+|**Combat**      | Melee       | Sword   | NPCs and        | take no    |                  | Sword            |
 |                +-------------+---------+ Enemies         | damage     |                  +------------------+
 |                | Range       | Bow     |                 |            |                  | Bow              |
 +----------------+-------------+---------+-----------------+------------+------------------+------------------+
 |                | Fishing     | Rod     | Level up via    | \+HP level | \+Food &         | Fish Ration      |
-| Gathering      +-------------+---------+ experience      +------------+ Water level      +------------------+
+|**Gathering**   +-------------+---------+ experience      +------------+ Water level      +------------------+
 |                | Herbalism   | Gloves  | and use         | \+HP level |                  | Poultice         |
-+----------------+-------------+---------+-----------------+------------+------------------+------------------+
++                +-------------+---------+                 +------------+------------------+------------------+
 |                | Carving     | Chisel  |                 | \+HP level |                  | Chisel & Shaving |
 |                +-------------+---------+                 +------------+                  +------------------+
 |                | Prospecting | Pickaxe |                 | \+HP level |                  | Pickaxe & Scrap  |
@@ -262,9 +263,9 @@ On these tiles are various important resources. Access resources and stay alive 
 There is a 2.5 percent chance to obtain a weapon while gathering ammunition on a tile.
 
 +--------------------+------------------------+--------------------+
-| Resource           | Purpose                | Obtaining          |
+|**Resource**        |**Purpose**             |**Obtaining**       |
 +====================+========================+====================+
-| WATER Tile Resources                                             |
+| **WATER Tile Resources**                                         |
 +--------------------+------------------------+--------------------+
 | WATER              | WATER to DRINK         | Stand next to WATER|
 |                    |                        | to DRINK           | 
@@ -272,7 +273,7 @@ There is a 2.5 percent chance to obtain a weapon while gathering ammunition on a
 | FISH               | RATION item to EAT     | ROD to HARVEST     |
 |                    |                        |                    | 
 +--------------------+------------------------+--------------------+
-| GRASS Tile Resources                                             |
+| **GRASS Tile Resources**.                                        |
 +--------------------+------------------------+--------------------+
 | FOOD               | FOOD to EAT            | Stand on FOOD      |
 |                    |                        | to EAT             | 
@@ -283,7 +284,7 @@ There is a 2.5 percent chance to obtain a weapon while gathering ammunition on a
 | TREE               | ARROWS boost BOW       | AXE to HARVEST     |
 |                    | damage of RANGE combat |                    |
 +--------------------+------------------------+--------------------+
-| STONE Tile Resources                                             |
+| **STONE Tile Resources**                                         |
 +--------------------+------------------------+--------------------+
 | ORE                | WHETSTONES boost SWORD | PICKAXE to HARVEST |
 |                    | damage of MELEE combat |                    |
@@ -291,7 +292,7 @@ There is a 2.5 percent chance to obtain a weapon while gathering ammunition on a
 | CRYSTAL            | RUNES boost WAND       | CHISEL to HARVEST  |
 |                    | damage of MAGIC combat |                    |
 +--------------------+------------------------+--------------------+
-| Other Resources                                                  |
+| **GOLD Resources**                                               |
 +--------------------+------------------------+--------------------+
 | GOLD               | BUY items from other   | SELL items. DEFEAT |
 |                    | players on the MARKET  | NPCs.              |
@@ -315,11 +316,11 @@ Agents set their own prices and receive gold when someone is willing to accept t
 Agents only observe the current best offer for each item of each level. This bounds the observation and action spaces.
 
 +--------------------------------------------------------------------------------------+
-| BUY and SELL with GOLD                                                               |
+| **BUY and SELL with GOLD**                                                           |
 +======================================================================================+
-| COMBAT items                                                                         |
+| **COMBAT items**                                                                     |
 +--------------------+------------------------+--------------------+-------------------+
-| Tools              | Ammunitions            | Weapons            | Armors            |
+| *Tools*            | *Ammunitions*          | *Weapons*          | *Armors*          |
 +--------------------+------------------------+--------------------+-------------------+
 | AXE                | Wood ARROWS            | BOW                | HAT               |
 +--------------------+------------------------+--------------------+-------------------+
@@ -327,9 +328,9 @@ Agents only observe the current best offer for each item of each level. This bou
 +--------------------+------------------------+--------------------+-------------------+
 | CHISEL             | Magic RUNES            | WAND               | BOTTOM            |
 +--------------------+------------------------+--------------------+-------------------+
-| Health items                                                                         |
+| **Health items**                                                                     |
 +--------------------+-----------------------------------------------------------------+
-| Tools              | Consumables                                                     |
+| *Tools*            | *Consumables*                                                   |
 +--------------------+-----------------------------------------------------------------+
 | ROD                | HARVEST fish to produce RATION items (restore water and food)   |
 +--------------------+-----------------------------------------------------------------+
