@@ -124,9 +124,20 @@ Neural MMO is a computationally accessible, open-source research platform design
 
 .. tab-set::
    
+   .. tab-item:: PufferTank
+
+      Docker `container <https://github.com/PufferAI/PufferTank>`_ including Neural MMO and baselines. Guarantees correct dependencies and environment setup. Recommended for all users. Use the pip package if you really want a local setup.
+
+      .. code-block:: text
+
+        Install Docker Hub, VSCode, and the VSCode dev containers plugin.
+        Clone PufferTank on Linux/MacOS/WSL
+        VSCode: F1 -> "Remote-Containers: Open Folder in Container" -> Select PufferTank folder
+        You now have a fully functional GPU dev environment.
+
    .. tab-item:: Pip Package
 
-      Official support for Ubuntu 20.04/22.04, WSL, and MacOS. PufferTank recommended to avoid dependency conflicts.
+      Official support for Ubuntu 20.04/22.04, WSL, and MacOS
 
       .. code-block:: python
 
@@ -142,6 +153,8 @@ Neural MMO is a computationally accessible, open-source research platform design
 
    .. tab-item:: Source
 
+      Only recommended for developers of Neural MMO who can't run PufferTank.
+
       .. code-block:: python
 
          mkdir neural-mmo && cd neural-mmo
@@ -155,41 +168,43 @@ Neural MMO is a computationally accessible, open-source research platform design
          echo YOUR_WANDB_API_KEY > baselines/wandb_api_key
          cd environment && pip install -e .
 
-   .. tab-item:: PufferTank
-
-      .. code-block:: python
-
-         mkdir neural-mmo && cd neural-mmo
-
-
 .. card::
    :img-background: /../_static/banner.png
 
 |icon| About Neural MMO
 #######################
 
-Neural MMO is a computationally accessible, open-source research platform designed to simulate populations of agents in virtual worlds. Each instance of Neural MMO uses procedural generation algorithms to create unique landscapes, NPCs, and resources.
+Neural MMO is a computationally accessible, open-source research platform designed to simulate populations of agents in virtual worlds. Each instance of Neural MMO uses procedural generation algorithms to create unique landscapes, NPCs, and resources. The project is inspired by classic Massively Multiplayer Online Role-Playing Games (MMOs) - a genre defined by interaction with a large number of other players. NMMO stands for Neural MMO. It is a platform for creating intelligent agent that are typically parameterized by a neural network. 
 
-Neural MMO is inspired by classic Massively Multiplayer Online Role-Playing Games. An MMO can be any online video game in which a player interacts with a large number of other players. NMMO stands for Neural MMO. It is a platform for intelligent agent creation, which are typically parameterized by a neural network. 
+In NMMO, Agents in teams must forage for resources to stay alive and to mine materials to increase their combat and task completion capabilities. Agents can level up their fighting styles and equipment, practice different professions, and engage in trade based on market demand. The world is also populated by non-player characters (NPCs) of varying friendliness. MMO settings allow player teams to interact in interesting ways and use entirely different strategies. 
 
-In NMMO, Agents in teams must forage for resources to stay alive and to mine materials to increase their combat and task completion capabilities. Agents can level up their fighting styles and equipment, practice different professions, and engage in trade based on market demand. The world is also populated by non-player characters (NPCs) of varying friendliness. 
-
-NMMO as a platform supports basic foraging tasks involving a few agents for a couple of minutes, thousand-agent joint survival + exploration + combat over multiple hours, and everything between. MMO settings allow player teams to interact in interesting ways and use entirely different strategies. 
-
-**Our goal is to support a broad base of multiagent research that would be impractical or impossible to conduct using other environments.** Unlike other game genres typically used in research, MMOs simulate persistent worlds that support rich player interactions and a wider variety of progression strategies. These properties seem important to intelligence in the real world. An objective of this competition and platform is to spur research towards increasingly general and cognitively realistic environments. 
+Our goal is to support a broad base of multiagent research that would be impractical or impossible to conduct using other environments. Unlike other game genres typically used in research, MMOs simulate persistent worlds that support rich player interactions and a wider variety of progression strategies. These properties seem important to intelligence in the real world. An objective of this competition and platform is to spur research towards increasingly general and cognitively realistic environments. 
 
 .. code-block:: python
 
    from nmmo import Env
 
-   env = Env(config=None) # Default environment. Keep reading for config options
+   # Default environment. Keep reading for config options
+   env = Env(config=None)
    obs = env.reset()
 
    while True:
       actions = {} # Compute with your model
       obs, rewards, dones, infos = env.step(actions)
 
-Environments provide a standard PettingZoo API. Join our community Discord or WeChat and post in #support for help (do not raise Github issues for support). See the quick links for source code, baselines, latest publications, social media, and news!
+Environments provide a standard PettingZoo API. Join our community Discord and post in #support for help (do not raise Github issues for support). See the cards at the top of this page for source code, baselines, latest publications, social media, and news!
+
+.. dropdown:: General features of NMMO
+
+  - **Terrain:** Procedurally generated maps with obstacles
+  - **Resource:** Agents must forage for resources to survive
+  - **Combat:** Agent can fight each other
+  - **NPC:** Maps are inhabited by mobs of varying friendliness
+  - **Progression:** Agents improve various abilities through usage
+  - **Item:** Agents can acquire a number of items with distinct uses
+  - **Equipment:** Agents can use armor, weapons, and tools
+  - **Profession:** Agents can practice distinct jobs
+  - **Exchange:** Agents can trade items on a global market
 
 .. dropdown:: General features of NMMO
 
@@ -201,14 +216,19 @@ Environments provide a standard PettingZoo API. Join our community Discord or We
   - Agents survive if they have HP
   - Goal is to complete tasks
 
-|icon| Agent Teams 
-##################
+|icon| Your Objective
+#####################
+
+You control a team of 8 agents. The ultimate goal is to score more points by completing more challenge tasks across the 1024 games than all other teams in that round. Agents must collect food and water to survive and have 8 individual professions that help them collect resources. Resources can be used to create consumable items that restore food, water and heath as well as to create ammunition that increases damage in combat. Higher level resources create better consumables and ammunition. Agents may aquire armor to protect themselves in combat and weapons to increase their damage output. Agents can also trade items on a global market. Combat is turn based and Agents can attack each other using one of three styles: Melee, Range, and Magic. Agents can level up their skills in each style and in each profession. The world is populated by NPCs that can be defeated to obtain items and increase power.
+
+**In NMMO, Agent teams that complete the most assigned tasks win.** There are 128 Agents in play at the start of a game round, making 16 teams of 8. Everyone plays at least 1000 rounds of the game, with assorted opponent teams assigned based on a matchmaking algorithm which optimizes for opponent teams of similar skill level. In case of ties, ranking scores look at how many of your Agents survived to the end, and how healthy they were then. 
+
+|icon| Wiki Content
+###################
 
 **What do Agents Do?**
 
 Your team of 8 Agents:
-  - The ultimate goal is to score more points by completing more challenge tasks across the 1024 games than all other teams in that round.**
-  - Have 8 individual professions that help them collect resources 
   - Use resources to increase Food, Water, and HP levels.
   - Collect resources to make ammunition 
   - Use ammunition to increase weapon power. You do more damage if you have ammo; ammo has levels; higher level ammo does more damage than lower. 
