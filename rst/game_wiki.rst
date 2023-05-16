@@ -13,9 +13,9 @@ Agents stay alive by:
  - Drinking water
  - Protecting HP in combat
 
-    .. tab-set::
+.. tab-set::
 
-      .. tab-item:: Agent Levels
+    .. tab-item:: Agent Levels
 
          - Levels range from 1 to 10
          - Agents spawn with all skills at level 1 (0 XP)
@@ -27,7 +27,7 @@ Agents stay alive by:
  
          - All items except gold will appear in varying levels
 
-      .. tab-item:: Items and Equipment Levels
+    .. tab-item:: Items and Equipment Levels
 
          - All items appear in level 1-10 variants. 
          - Agents can equip armor up to the level of their highest skill
@@ -36,15 +36,24 @@ Agents stay alive by:
 
 
 
-Tile Spaces
-***********
+Tiles Provide Resources
+***********************
 
 Each environment contains an automatically generated tile-based game map of 128 x 128 tiles. Tiles come in three types:
-  - Water (resource for water; for movement is an **obstacle**)
+  - Water (resource for Water; for movement is an **obstacle**)
   - Stone (resource for battle performance in Mellee and Magic styles; for movement is an **obstacle**)
-  - Grass (resource for food, HP, and battle performance in range style; for movement is **passable**)
+  - Grass (resource for Food, HP, and battle performance in Range style; for movement is **passable**)
 
+**Food, Water and HP Levels**
+
+*Food and Water*
 Agents have food / water bars starting at 100.
+Lose 5 Food and 5 Water per game tick.
+
+*HP*
+If above half food and half water, regain 10 HP per tick
+Lose 10 HP per tick if out of food. Lose 10 HP per tick if out of water. Lose 20 HP per tick if out of both food and water.
+
 
 Agent walks on a food tile - regains full food. Tile disappears. Will respawn later, at a random time in the same place. 
 
@@ -59,11 +68,7 @@ Skills - prospecting, carving, alchemy - walk on resource tile. Get the resource
 About HP
 ********
 
-If not taking damage, not hungry/thirsty will slowly regain HP
-Food/Water levels go down each time tick. 
-Scales: Lose 5 Food and 5 Water per game tick. Start with 100.
-Lose 10 HP per tick if out of food. Lose 10 HP per tick if out of water. Lose 20 HP per tick if out of both food and water.
-If above half food and half water, regain 10 HP per tick
+
 
 About Combat
 ************
