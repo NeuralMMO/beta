@@ -40,24 +40,27 @@ Tiles Provide Resources
 Each environment contains an automatically generated tile-based game map of 128 x 128 tiles. 
 Tiles come in three types:
 
-  - Water (resource for Water; for movement is an **obstacle**)
-  - Grass (resource for Food, HP, and battle performance in Range style; for movement is **passable**)
-  - Stone (resource for battle performance in Mellee and Magic styles; for movement is an **obstacle**)
+- Water (resource for Water; for movement is an **obstacle**)
+- Grass (resource for Food, HP, and battle performance in Range style; for movement is **passable**)
+- Stone (resource for battle performance in Mellee and Magic styles; for movement is an **obstacle**)
 
 **Food, Water, HP and Skill Levels**
 
 *Food and Water*
 
-Agents have food / water bars starting at 100.
-Lose 5 Food and 5 Water per game tick.
+- Agents have food / water bars starting at 100.
+- Lose 5 Food and 5 Water per game tick.
 
-Agent walks on a food tile - regains full food. Tile disappears and will respawn at a random time in the same place. 
-Agent is adjacent to a water tile - regains full water.
+Agent walks on a Food tile - regains full food. Tile disappears and will respawn at a random time in the same place. 
+
+Agent is adjacent to a Water tile - regains full water.
 
 *HP*
 
-If above half food and half water, regain 10 HP per tick
-Lose 10 HP per tick if out of food. Lose 10 HP per tick if out of water. Lose 20 HP per tick if out of both food and water.
+- If above half food and half water, regain 10 HP per tick
+- Lose 10 HP per tick if out of food
+- Lose 10 HP per tick if out of water
+- Lose 20 HP per tick if out of both food and water
 
 *Skills*
 
