@@ -5,7 +5,8 @@
 
 TODO - WIKI INTRO/OVERVIEW
 
-.. dropdown:: Keeping Agents Alive
+Keeping Agents Alive
+********************
 
     Agents stay alive by:
       - Eating food
@@ -35,14 +36,15 @@ TODO - WIKI INTRO/OVERVIEW
 
 
 
-**Tile Spaces**
+Tile Spaces
+***********
 
 Each environment contains an automatically generated tile-based game map of 128 x 128 tiles. Tiles come in three types:
   - Water (resource for water; for movement is an **obstacle**)
   - Stone (resource for battle performance in Mellee and Magic styles; for movement is an **obstacle**)
   - Grass (resource for food, HP, and battle performance in range style; for movement is **passable**)
 
-Agents have food / water bars starting on 100
+Agents have food / water bars starting at 100.
 
 Agent walks on a food tile - regains full food. Tile disappears. Will respawn later, at a random time in the same place. 
 
@@ -218,9 +220,6 @@ Requires at least one skill greater than or equal to the item level to use.
 Competition Environment 
 ***********************
 
-Agents on Tiles
-***************
-
 At the start of a game, all Agents on all teams spawn together around the perimeter of the map on the same tile. Agent teams are evenly dispersed around the perimeter. 
 
 
@@ -230,26 +229,25 @@ Agents can occupy the same tile as other Agents. Other Agents can be their own t
 
 **Time and Gameplay**
 The gameplay consists of time units called “ticks.” Each tick provides the opportunity for every Agent and NPC** to do any, all or none of the following actions:
-   
-   - Move **1 tile in any available direction.**
-      - Agents cannot move off of the game space, or **into water.** 
-      - As the game progresses, the action space becomes constrained as a fog encircles the board. Agents cannot be in tiles covered in fog, and all gradually move towards the center of the game space.
-  
-  - Attack an Agent - either NPC or from another team.
-      - Attack can only be against one other Agent or NPC
-      - To attack, your Agent must be within three tiles as the opponent -- actually within a 7x7 square around your Agent.**
-   
-   - Buy OR Sell
-      - **explanation of market system**
-  
-  - Give an Item to a Teammate
-      - Giving items to other Agents is not permitted
-   
-   - Remove an Item from Inventory
-      - *Reasons to sell an item - 
-         - Item has no gameplay utility at that juncture, including no market value
-         - Item would take too long to sell, and opportunity cost of space being occupied in inventory is higher
-         - Inventory capacity is 12 items, including armor, weapon, tools, and consumables.
+
+.. grid:: 3
+
+    .. grid-item-card::  Move 1 tile in any available direction
+
+        - Agents cannot move off of the game space, or **into water.** 
+        - As the game progresses, the action space becomes constrained as a fog encircles the board. Agents cannot be in tiles covered in fog, and all gradually move towards the center of the game space.
+
+    .. grid-item-card::  Attack an Agent - either NPC or from another team
+
+        - Attack can only be against one other Agent or NPC
+        - To attack, your Agent must be within three tiles as the opponent -- actually within a 7x7 square around your Agent.**
+ 
+ .. grid-item-card::  Inventory Management
+        Inventory capacity is 12 items, including armor, weapon, tools, and consumables.
+        - Buy or Sell in the Market
+        - Destroy an item if no market value
+        - **Giving an item to a team mate is not permitted**
+
 
 **TBD - whether one can Buy/Sell; Give and Destroy simultaneously
 
