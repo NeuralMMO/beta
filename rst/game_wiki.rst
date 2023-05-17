@@ -5,6 +5,82 @@
 
 TODO - WIKI INTRO/OVERVIEW
 
+The Game Map
+************
+
+Each instance of Neural MMO contains an automatically generated tile-based game map of 128 x 128 tiles. 
+
+Tiles are broadly categorized as follows:
+- *Passable* tiles can be walked on while *obstacle* tiles block movement
+- *Resouce* tiles can be harvested while *non-resource* can not.
+
+*Resource* tiles 
+
+
+Tiles may either be *passable* or *obstacles* and may be either *resource* or *non-resource*.
+
+*Passable* tiles may be walked on.
+*Obstacle* tiles 
+
+*Passable resource* tiles may be walked on and provide resources to the agent walking over them. The tile is then replaced with a *passable non-resource* tile, but it will regenerate the resource randomly over time.
+
+*Passable non-resource* tiles may be walked on and do not provide any resources to the agent.
+
+*Obstacle resource* tiles block movement but provide resources to the agent walking adjacent to them. The tile is then replaced with an *obstacle non-resouce* tile, but it will regenerate the resource randomly over time. The only exception is the Water tile, which provides unlimited resource.
+
+Tiles come in three types:
+
+- Water (resource for Water; for movement is an **obstacle**)
+- Grass (resource for Food, HP, and battle performance  Range style; for movement is **passable**)
+- Stone (resource for battle performance in Mellee and Magic styles; for movement is an **obstacle**)
+
+**Food, Water, HP and Skill Levels**
+
+*Food and Water*
+
+- Agents have food / water bars starting at 100.
+- Lose 5 Food and 5 Water per game tick.
+
+Agent walks on a Food tile - regains full food. Tile disappears and will respawn at a random time in the same place. 
+
+Agent is adjacent to a Water tile - regains full water.
+
+*HP*
+
+- If above half food and half water, regain 10 HP per tick
+- Lose 10 HP per tick if out of food
+- Lose 10 HP per tick if out of water
+- Lose 20 HP per tick if out of both food and water
+
+*Skills*
+
+For Skills Prospecting, Carving, and Alchemy - walk on resource tile to get the resource. Agent receives a different quality/level of resource, depending on Agent levels/tools. Resource tile will respawn later in the same place. 
+
+.. dropdown:: About the tile generation algorithm
+    
+    The default tile generation algorithm is more sophisticated than typical Perlin noise -- it stretches the space of one Perlin fractal using a second Perlin fractal. It further attempts to scale spacial frequency to be higher at the edges of the map and lower at the center. This effect is not noticable in small maps but creates large deviations in local terrain structure in larger maps.
+    
+
+About Combat
+************
+
+*
+|icon| Survival
+###############
+
+Agents have health, food, and water. These are displayed overhead as green, gold, and blue bars respectively. Agents must stay full, hydrated, and healthy in order to survive.
+
+Losing and gaining resources:
+- Health, food, and water start at 100
+- Agents lose 5 food and 5 water per game tick
+- Agents lose 10 health per tick if out of food
+- Agents lose 10 health per tick if out of water
+- These values add - lose 20 health if out of food and water per tick
+- If above half food and half water, agents regain 10 health per tick
+
+Agents can collect food and water. Walking on a foliage tile restores food to 100. The foliage tile then decays and will respawn at a random time in the same place. Walking adjacent to a water tile restores water to 100. Water tiles do not decay.
+
+
 Keeping Agents Alive
 ********************
 
