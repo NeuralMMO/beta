@@ -3,8 +3,304 @@
 .. card::
     :img-background: /../_static/banner.png
 
-TODO - WIKI INTRO/OVERVIEW
 
+
+|icon| Overview
+***************
+
+Pointer actions refer to a selection from the observation space. For example, to purchase an item, an agent should select the corresponding item from the observation space. This works by computing a similarity score against entity embeddings and is handled by the baseline model.
+
+Enumerating the exact features behind each of these systems would be neither practical nor informative. The documentation contains this information verbatim as a wiki-style reference in which users can quickly look up how each specific mechanic works, but reading that page start to bottom would not provide a good high-level overview of what happens in a typical game of NMMO. As an explanatory example, instead consider that we have a team of 8 agents trying to survive. Agents spawn around the edges of a large, square map. A potentially hostile team will spawn to the right and to the left of our team. Immediately, we have a few options. We can attempt to rush into the center of the map and get away from nearby teams. However, we can only see a limited distance ahead, and it is possible that we will get stuck on some obstacles and be attacked by both nearby teams at the same time. We could instead attempt to rush and eliminate the team either directly to our right or to our left, which could result in a better than even chance of victory if we catch them off guard. However, we are likely to lose several agents on our team if we do that. A third option is to send 1-2 agents to each the right and the left to scout and distract the nearby teams. If they behave passively, the scouts can return to the main team safely. If the scouts are caught and perish, they have at least bought some time for the rest of the team to escape into the rest of the map. This was the strategy learned by the winning agents of the most recent competition. This also represents only the opening 15-30 seconds of play in a 10-minute game.
+
+The next step of play is to establish an advantage verses the competition. Agents have access to 8 different professions which can be improved through practice. All of these in some way confer a benefit to offensive or defensive capabilities that allow agents to protect themselves. The team must now decide which agents on the team will spend their time improving which skills. For example, one agent could practice ranged combat by fighting weak NPCs that roam the map while another agent practices fletching to provide the former with powerful ammunition. One agent could practice herbalism, allowing them to make potions to heal the rest of the team. One agent could practice Magic, which is a powerful counter to hostile opponents using Melee combat. Multiple agents could practice different forms of combat and aggressively challenge more powerful NPCs in order to acquire defensive equipment as loot to share with the rest of the team. Agents should spread out to search for resources but stay together to create safety in numbers. Agents should diversify their skills but do not have the time to cover all their bases. Agents may sell unneeded items on a global market but should be wary of giving the competition an edge. Agents should proactively seek out potential enemies but only if they catch them unawares or otherwise have a strategic advantage. Ultimately, these decisions are a matter of strategy and opportunism - plans may change to become more aggressive or conservative depending on what resources agents are able to harvest early in the game. This stage of play occupies the next few minutes.
+
+At this stage, the edges of the map become dangerous. Agents will begin taking damage from "poisonous fog" if they do not move towards the center of the map. This fog slowly expands to occupy all but the center of the map - a mechanic borrowed from the battle royale genre of games. The idea is to force encounters between agents. If our team did not fight before, it will almost certainly have to now. By this stage, most if not all teams will lose at least a couple of agents, but strategically better teams still maintain positional advantage, either by having more agents remaining or by having acquired better equipment.
+
+At the end of the game, the fog closes to a tight final area. Assuming our team is still alive, we should assess our situation and determine whether we are better or worse equipped than the remaining team(s). If we think we have the advantage, we should aggressively challenge and encircle any weaker opponents attempting to evade us while being wary of attacks by a third party. If we think we are at a disadvantage, we should attempt to evade and lure opponents into exposing themselves to a third party. These are all tactics we saw emerge in the previous competition, and they are rather reminiscent of the strategies human players employ in many battle royale games.
+
+The Game Map
+************
+
+Each instance of Neural MMO contains an automatically generated tile-based game map of 128 x 128 tiles. The map is surrounded by Void. Agents that attempt to walk into the void dissapear never to be seen again.
+
+Tiles are broadly categorized as follows:
+  - *Passable* tiles can be walked on while *obstacle* tiles block movement
+  - *Resouce* tiles can be harvested while *non-resource* can not.
+
++-------------------+-----------------------------+-------------+
+| **Type**          | *Passable*                  | *Obstacle*  |
++===================+=============================+=============+
+| **Resource**      | Foliage, Ore, Tree, Crystal | Water, Fish |
++-------------------+-----------------------------+-------------+
+| **Non-resource**  | Grass, Harvested Tile       | Stone, Void |
++-------------------+-----------------------------+-------------+
+
+*Resource* tiles may be harvested - *Passable* tiles by walking over them and *non-passable* tiles by walking adjacent to them. The resource is then consumed from the tile, but it will regenerate randomly over time on the same tile. The only exception is the Water tile, which provides unlimited resource.
+
+.. dropdown:: About the tile generation algorithm
+    
+    The default tile generation algorithm is more sophisticated than typical Perlin noise -- it stretches the space of one Perlin fractal using a second Perlin fractal. It further attempts to scale spacial frequency to be higher at the edges of the map and lower at the center. This effect is not noticable in small maps but creates large deviations in local terrain structure in larger maps.
+    
+|icon| Survival
+###############
+
+Agents have health, food, and water. These are displayed overhead as green, gold, and blue bars respectively. Agents must stay full, hydrated, and healthy in order to survive.
+
+Losing and gaining resources:
+  - Health, food, and water start at 100
+  - Agents lose 5 food and 5 water per game tick
+  - Agents lose 10 health per tick if out of food
+  - Agents lose 10 health per tick if out of water
+  - These values add - lose 20 health if out of food and water per tick
+  - If above half food and half water, agents regain 10 health per tick
+
+Agents can collect food and water. Walking on a foliage tile restores food to 100. The foliage tile then decays and will respawn at a random time in the same place. Walking adjacent to a water tile restores water to 100. Water tiles do not decay.
+
+About Combat
+************
+
+Each Agent can attack one opponent per game tick. In a given tick, multiple enemy Agents can attack a single Agent. Agents select from Melee, Range, and Mage style attacks. An Agent's main combat skill is the one that they use the most / have the highest level in. This is denoted by the hat they are wearing.
+
+Attack skills obey a rock-paper-scissors dominance relationship: 
+ - Melee beats Range 
+ - Range beats Mage 
+ - Mage beats Melee
+
+Attack range is 3 tiles, full sweep.
+
+**Insert Image**
+
+.. tab-set::
+
+    .. tab-item:: Choosing attack style
+    
+        The attacker can select the skill strongest against the target's main skill. This multiplies the effectiveness of their attack. However, the defender can immediately retaliate in the same way. **An agent with combat style has a higher level and better equipment may outperform an attacker who only benefits from the attack dominance effectiveness multiplier.**
+
+    .. tab-item:: Armor
+    
+        There are three pieces of armor: Hat, Top, Bottom. Armor requires at least one skill ≥ the item level to equip. Armor provides defense that increases with equipment level.
+
+    .. tab-item:: Weapons and Tools
+    
+        Weapons require an associated fighting style skill level ≥ the item level to equip. Weapons boost attacks; higher level weapons provide more boost. Tools grant a flat defense regardless of item level.
+
+**Damage** to health is a randomized function based on several factors, including:
+ - Fighting style
+ - Combat skill level
+ - Weapon level
+ - Armor levels
+
+.. code-block:: python
+
+   def COMBAT_DAMAGE_FORMULA(self, offense, defense, multiplier):
+      '''Damage formula'''
+      return int(multiplier * (offense * (15 / (15 + defense))))
+
+
+.. dropdown:: Example combat interaction
+
+    Start:
+
+    *Agent You:* 100 HP, poor armor and weapons
+
+    *Agent Them:* 75 HP, good armor and weapons
+
+    |
+
+    Tick 1:
+
+    You attack them. They lose 18 HP
+
+    They attack you. You lose 27 HP
+
+    |
+
+    Tick 2:
+
+    You attack them. They lose 14 HP
+
+    They attack you. You lose 32 HP
+
+    |
+
+    Tick 3: 
+
+    You attack them. They lose 18 HP
+
+    They run
+
+    |
+
+    Tick 4: You chase and attack them. They lose 15 HP.
+
+    They consume a poultice to regain 50 HP and run some more.
+
+    |
+
+    This continues for some time, with your opponent running away, and you chasing them. 
+    Eventually, you give up and let them go. Your HP is low, and they had to consume a poultice. 
+
+    Fortunately, this was only a training run, and you now can reconsider your strategy for the next round.
+
+Professions, Tools, and Items
+*****************************
+
+There are 8 Professions that Agents can learn and level up in. Agents can improve their skills in multiple Professions, but will not be able to progress in all Professions. How Professions are distributed across Agent teams is a part of game strategy. 
+
+**Agents have an inventory that can hold 12 items.**
+
++----------------+-------------+---------+-----------------+------------+------------------+------------------+
+| **Type**       |*Profession* |*Tool*   |*Level up method*|*HP Effect* |*Food/Water Level*|*Market Buy/Sell* |
++================+=============+=========+=================+============+==================+==================+
+|                | Mage        | Wand    | Hitting and     | \-HP level |                  | Wand             |
+|                +-------------+---------+ damaging        | unless you |                  +------------------+
+|**Combat**      | Melee       | Sword   | NPCs and        | take no    |                  | Sword            |
+|                +-------------+---------+ Enemies         | damage     |                  +------------------+
+|                | Range       | Bow     |                 |            |                  | Bow              |
++----------------+-------------+---------+-----------------+------------+------------------+------------------+
+|                | Fishing     | Rod     | Level up via    | \+HP level | \+Food &         | Fish Ration      |
+|**Gathering**   +-------------+---------+ experience      +------------+ Water level      +------------------+
+|                | Herbalism   | Gloves  | and use         | \+HP level |                  | Poultice         |
++                +-------------+---------+                 +------------+------------------+------------------+
+|                | Carving     | Chisel  |                 | \+HP level |                  | Chisel & Shaving |
+|                +-------------+---------+                 +------------+                  +------------------+
+|                | Prospecting | Pickaxe |                 | \+HP level |                  | Pickaxe & Scrap  |
+|                +-------------+---------+                 +------------+                  +------------------+
+|                | Alchemy     | Arcane  |                 |            |                  | Arcane & Shards  |
++----------------+-------------+---------+-----------------+------------+------------------+------------------+
+
+|
+
+**Tools**
+  - All Tools provide a flat 30 defense regardless of item level.
+  - Tools need a pertinent skill level (fishing, herbalism, prospecting, carving, alchemy) > or = the item level to equip.
+  - Tools enable an agent to collect an associated resource (ration, poultice, scrap, shaving, shard) at a level equal to the item level.
+
+|
+
+**Rations**
+  - Consume to restore 5 food and water per item level.
+  - Requires at least one skill greater than or equal to the item level to use.
+
+|
+
+**Poultices**
+  - Consume to restore 5 health per item level.
+  - Requires at least one skill greater than or equal to the item level to use.
+
+
+|icon| Market
+*************
+
+Gold coins are the currency for buying and selling items in NMMO. Gold coins cannot be sub-divided. Agents set their own prices and receive gold when someone is willing to accept their price. Within the same team, can gift to one another if they are standing on the same tile. 
+
+Market interactions are as follows:
+ - Agents place sell offers on the market for one of their items at a desired price
+ - The item is immediately removed from the seller's inventory
+ - Other agents can immediately buy that item and receive it
+ - If multiple agents attempt to buy the same item at the same time, the market will attempt to fulfill the request from another seller at a price no more than 10% higher.
+
+Agents only observe the current best offer for each item of each level. This bounds the observation and action spaces.
+
++--------------------------------------------------------------------------------------+
+| **BUY and SELL with GOLD**                                                           |
++======================================================================================+
+| **COMBAT items**                                                                     |
++--------------------+------------------------+--------------------+-------------------+
+| *Tools*            | *Ammunitions*          | *Weapons*          | *Armors*          |
++--------------------+------------------------+--------------------+-------------------+
+| AXE                | Wood ARROWS            | BOW                | HAT               |
++--------------------+------------------------+--------------------+-------------------+
+| PICKAXE            | Rock WHETSTONES        | SWORD              | TOP               |
++--------------------+------------------------+--------------------+-------------------+
+| CHISEL             | Magic RUNES            | WAND               | BOTTOM            |
++--------------------+------------------------+--------------------+-------------------+
+| **Health items**                                                                     |
++--------------------+-----------------------------------------------------------------+
+| *Tools*            | *Consumables*                                                   |
++--------------------+-----------------------------------------------------------------+
+| ROD                | HARVEST fish to produce RATION items (restore water and food)   |
++--------------------+-----------------------------------------------------------------+
+| GLOVES             | HARVEST herbs to produce POTION items (restore health)          |
++--------------------+-----------------------------------------------------------------+
+
+|icon| NPCs
+************
+
+**Characteristics**
+ - NPCs are controlled by one of three scripted AIs
+ - Passive NPCs wander randomly and cannot attack
+ - Neutral NPCs wander randomly but will attack aggressors and give chase using a Dijkstra's algorithm based pathing routine
+ - Hostile NPCs will actively hunt down and attack other NPCs and players using the same pathing algorithm
+ - NPCs will appear in varying levels
+
+**NPC Items**
+ - NPCs spawn with random armor piece
+ - NPCs spawn with a random tool
+ - Any equipment dropped will be of level equal to the NPC's level
+ - NPCs spawn with gold equal to their level
+
+Generally, Passive NPCs will spawn towards the edges of the map, Hostile NPCs spawn in the middle, and Neutral NPCs spawn somewhere between.
+
+|icon| Tasks
+************
+
+**In process**
+
+**About Tasks**
+  - Goal is to accomplish specific tasks from the curriculum for points.
+  - Tasks are randomly generated and assigned at the beginning of each round.
+  - If a Team accomplishes a Task, they receive 1 point for the round. 
+  - Each team receives different tasks from one another each round.
+  - Difficulty of the tasks evens out, as all teams compete with each other 1024 rounds to determine the best teams overall in that group.
+  - Based on the average scores, teams are placed in the next round of 1024 with other teams whose performance matches their own.
+
+.. dropdown:: Sample tasks
+
+    Inflict(damage_type, quantity) - 
+      - Damage_type = 3 combat styles 
+      - Quantity = 1-100 HP out of total 100 HP
+      - Ex. Inflict 5 damage with melee
+
+    Defeat(npc/player, level)
+      - npc/player = NPC or Player, Unit = 1
+      - Level = 1-10
+      - Defeat a level 5 npc
+
+    Achieve(skill, level)
+      - Skill = 8 skills (Professions)
+      - Level = 10
+      - Ex: Achieve level 5 prospecting
+
+    Harvest(resource, level)
+      - Resource = 5 resources
+      - Level = 10 levels
+      - Ex: collect a level 3 shard
+
+    Equip(type, level)
+      - Type = Hat, Top, Bottom
+      - Level = 10
+      - Ex: equip a level 5 hat
+
+    Hoard(gold) - Accumulate a total of 20 gold as a team
+      - Gold: Units of transaction ingots
+
+    Group(num_tiles, num_teammates) - Always stay within 5 tiles of at least 3 of your teammates
+      - Num_tiles: Variable starting with tile you’re on as 0
+      - Num_teammates: Self evident. Stay together-ish
+
+    Spread(num_tiles, num_teammates) - Always stay at least 5 tiles away from at least 3 of your teammates
+      - Opposite of Group
+
+    Defend(teammate) - Don’t let your 3rd teammate die
+      - Teammate: Specific member of your team can’t die
+
+    Eliminate(team, direction) - Eliminate the team that spawns to your right
+      - Team: ID # of team
+      - Direction: Left; Right
+
+TODO
+****
 
 *Skills*
 
@@ -177,758 +473,3 @@ Each agent may take multiple actions per tick -- one from each category. Each ac
           },
       },
   }
-
-Pointer actions refer to a selection from the observation space. For example, to purchase an item, an agent should select the corresponding item from the observation space. This works by computing a similarity score against entity embeddings and is handled by the baseline model.
-
-
-The Game Map
-************
-
-Each instance of Neural MMO contains an automatically generated tile-based game map of 128 x 128 tiles. The map is surrounded by Void. Agents that attempt to walk into the void dissapear never to be seen again.
-
-Tiles are broadly categorized as follows:
-  - *Passable* tiles can be walked on while *obstacle* tiles block movement
-  - *Resouce* tiles can be harvested while *non-resource* can not.
-
-+-------------------+-----------------------------+-------------+
-| **Type**          | *Passable*                  | *Obstacle*  |
-+===================+=============================+=============+
-| **Resource**      | Foliage, Ore, Tree, Crystal | Water, Fish |
-+-------------------+-----------------------------+-------------+
-| **Non-resource**  | Grass, Harvested Tile       | Stone, Void |
-+-------------------+-----------------------------+-------------+
-
-*Resource* tiles may be harvested - *Passable* tiles by walking over them and *non-passable* tiles by walking adjacent to them. The resource is then consumed from the tile, but it will regenerate randomly over time on the same tile. The only exception is the Water tile, which provides unlimited resource.
-
-.. dropdown:: About the tile generation algorithm
-    
-    The default tile generation algorithm is more sophisticated than typical Perlin noise -- it stretches the space of one Perlin fractal using a second Perlin fractal. It further attempts to scale spacial frequency to be higher at the edges of the map and lower at the center. This effect is not noticable in small maps but creates large deviations in local terrain structure in larger maps.
-    
-|icon| Survival
-###############
-
-Agents have health, food, and water. These are displayed overhead as green, gold, and blue bars respectively. Agents must stay full, hydrated, and healthy in order to survive.
-
-Losing and gaining resources:
-- Health, food, and water start at 100
-- Agents lose 5 food and 5 water per game tick
-- Agents lose 10 health per tick if out of food
-- Agents lose 10 health per tick if out of water
-- These values add - lose 20 health if out of food and water per tick
-- If above half food and half water, agents regain 10 health per tick
-
-Agents can collect food and water. Walking on a foliage tile restores food to 100. The foliage tile then decays and will respawn at a random time in the same place. Walking adjacent to a water tile restores water to 100. Water tiles do not decay.
-
-About Combat
-************
-
-Each Agent can attack one opponent per game tick. In a given tick, multiple enemy Agents can attack a single Agent. Agents select from Melee, Range, and Mage style attacks. An Agent's main combat skill is the one that they use the most / have the highest level in. This is denoted by the hat they are wearing.
-
-Attack skills obey a rock-paper-scissors dominance relationship: 
- - Melee beats Range 
- - Range beats Mage 
- - Mage beats Melee
-
-Attack range is 3 tiles, full sweep.
-
-**Insert Image**
-
-.. tab-set::
-
-    .. tab-item:: Choosing attack style
-    
-        The attacker can select the skill strongest against the target's main skill. This multiplies the effectiveness of their attack. However, the defender can immediately retaliate in the same way. **An agent with combat style has a higher level and better equipment may outperform an attacker who only benefits from the attack dominance effectiveness multiplier.**
-
-    .. tab-item:: Armor
-    
-        There are three pieces of armor: Hat, Top, Bottom. Armor requires at least one skill ≥ the item level to equip. Armor provides defense that increases with equipment level.
-
-    .. tab-item:: Weapons and Tools
-    
-        Weapons require an associated fighting style skill level ≥ the item level to equip. Weapons boost attacks; higher level weapons provide more boost. Tools grant a flat defense regardless of item level.
-
-**Damage** to health is a randomized function based on several factors, including:
- - Fighting style
- - Combat skill level
- - Weapon level
- - Armor levels
-
-.. code-block:: python
-
-   def COMBAT_DAMAGE_FORMULA(self, offense, defense, multiplier):
-      '''Damage formula'''
-      return int(multiplier * (offense * (15 / (15 + defense))))
-
-
-.. dropdown:: Example combat interaction
-
-    Start:
-
-    *Agent You:* 100 HP, poor armor and weapons
-
-    *Agent Them:* 75 HP, good armor and weapons
-
-    |
-
-    Tick 1:
-
-    You attack them. They lose 18 HP
-
-    They attack you. You lose 27 HP
-
-    |
-
-    Tick 2:
-
-    You attack them. They lose 14 HP
-
-    They attack you. You lose 32 HP
-
-    |
-
-    Tick 3: 
-
-    You attack them. They lose 18 HP
-
-    They run
-
-    |
-
-    Tick 4: You chase and attack them. They lose 15 HP.
-
-    They consume a poultice to regain 50 HP and run some more.
-
-    |
-
-    This continues for some time, with your opponent running away, and you chasing them. 
-    Eventually, you give up and let them go. Your HP is low, and they had to consume a poultice. 
-
-    Fortunately, this was only a training run, and you now can reconsider your strategy for the next round.
-
-Professions, Tools, and Items
-*****************************
-
-There are 8 Professions that Agents can learn and level up in. Agents can improve their skills in multiple Professions, but will not be able to progress in all Professions. How Professions are distributed across Agent teams is a part of game strategy. 
-
-**Agents have an inventory that can hold 12 items.**
-
-+----------------+-------------+---------+-----------------+------------+------------------+------------------+
-| **Type**       |*Profession* |*Tool*   |*Level up method*|*HP Effect* |*Food/Water Level*|*Market Buy/Sell* |
-+================+=============+=========+=================+============+==================+==================+
-|                | Mage        | Wand    | Hitting and     | \-HP level |                  | Wand             |
-|                +-------------+---------+ damaging        | unless you |                  +------------------+
-|**Combat**      | Melee       | Sword   | NPCs and        | take no    |                  | Sword            |
-|                +-------------+---------+ Enemies         | damage     |                  +------------------+
-|                | Range       | Bow     |                 |            |                  | Bow              |
-+----------------+-------------+---------+-----------------+------------+------------------+------------------+
-|                | Fishing     | Rod     | Level up via    | \+HP level | \+Food &         | Fish Ration      |
-|**Gathering**   +-------------+---------+ experience      +------------+ Water level      +------------------+
-|                | Herbalism   | Gloves  | and use         | \+HP level |                  | Poultice         |
-+                +-------------+---------+                 +------------+------------------+------------------+
-|                | Carving     | Chisel  |                 | \+HP level |                  | Chisel & Shaving |
-|                +-------------+---------+                 +------------+                  +------------------+
-|                | Prospecting | Pickaxe |                 | \+HP level |                  | Pickaxe & Scrap  |
-|                +-------------+---------+                 +------------+                  +------------------+
-|                | Alchemy     | Arcane  |                 |            |                  | Arcane & Shards  |
-+----------------+-------------+---------+-----------------+------------+------------------+------------------+
-
-|
-
-**Tools**
-  - All Tools provide a flat 30 defense regardless of item level.
-  - Tools need a pertinent skill level (fishing, herbalism, prospecting, carving, alchemy) > or = the item level to equip.
-  - Tools enable an agent to collect an associated resource (ration, poultice, scrap, shaving, shard) at a level equal to the item level.
-
-|
-
-**Rations**
-  - Consume to restore 5 food and water per item level.
-  - Requires at least one skill greater than or equal to the item level to use.
-
-|
-
-**Poultices**
-  - Consume to restore 5 health per item level.
-  - Requires at least one skill greater than or equal to the item level to use.
-
-
-|icon| Market
-*************
-
-**Market: Buy and Sell Resources**
-
-Gold coins are the currency for buying and selling goods in NMMO. Gold coins cannot be sub-divided. Agents set their own prices and receive gold when someone is willing to accept their price. Within the same team, can gift to one another if they are standing on the same tile. 
-
-Market interactions are as follows:
- - Agents place sell offers on the market for one of their items at a desired price
- - The item is immediately removed from the seller's inventory
- - Other agents can immediately buy that item and receive it
- - If multiple agents attempt to buy the same item at the same time, the market will attempt to fulfill the request from another seller at a price no more than 10% higher.
-
-Agents only observe the current best offer for each item of each level. This bounds the observation and action spaces.
-
-+--------------------------------------------------------------------------------------+
-| **BUY and SELL with GOLD**                                                           |
-+======================================================================================+
-| **COMBAT items**                                                                     |
-+--------------------+------------------------+--------------------+-------------------+
-| *Tools*            | *Ammunitions*          | *Weapons*          | *Armors*          |
-+--------------------+------------------------+--------------------+-------------------+
-| AXE                | Wood ARROWS            | BOW                | HAT               |
-+--------------------+------------------------+--------------------+-------------------+
-| PICKAXE            | Rock WHETSTONES        | SWORD              | TOP               |
-+--------------------+------------------------+--------------------+-------------------+
-| CHISEL             | Magic RUNES            | WAND               | BOTTOM            |
-+--------------------+------------------------+--------------------+-------------------+
-| **Health items**                                                                     |
-+--------------------+-----------------------------------------------------------------+
-| *Tools*            | *Consumables*                                                   |
-+--------------------+-----------------------------------------------------------------+
-| ROD                | HARVEST fish to produce RATION items (restore water and food)   |
-+--------------------+-----------------------------------------------------------------+
-| GLOVES             | HARVEST herbs to produce POTION items (restore health)          |
-+--------------------+-----------------------------------------------------------------+
-
-|icon| NPCs
-************
-
-**Characteristics**
- - NPCs are controlled by one of three scripted AIs
- - Passive NPCs wander randomly and cannot attack
- - Neutral NPCs wander randomly but will attack aggressors and give chase using a Dijkstra's algorithm based pathing routine
- - Hostile NPCs will actively hunt down and attack other NPCs and players using the same pathing algorithm
- - NPCs will appear in varying levels
-
-**NPC Items**
- - NPCs spawn with random armor piece
- - NPCs spawn with a random tool
- - Any equipment dropped will be of level equal to the NPC's level
- - NPCs spawn with gold equal to their level
-
-Generally, Passive NPCs will spawn towards the edges of the map, Hostile NPCs spawn in the middle, and Neutral NPCs spawn somewhere between.
-
-|icon| Tasks
-************
-
-**In process**
-
-**About Tasks**
-  - Goal is to accomplish specific tasks from the curriculum for points.
-  - Tasks are randomly generated and assigned at the beginning of each round.
-  - If a Team accomplishes a Task, they receive 1 point for the round. 
-  - Each team receives different tasks from one another each round.
-  - Difficulty of the tasks evens out, as all teams compete with each other 1024 rounds to determine the best teams overall in that group.
-  - Based on the average scores, teams are placed in the next round of 1024 with other teams whose performance matches their own.
-
-.. dropdown:: Sample tasks
-
-    Inflict(damage_type, quantity) - 
-    - Damage_type = 3 combat styles 
-    - Quantity = 1-100 HP out of total 100 HP
-    - Ex. Inflict 5 damage with melee
-
-    Defeat(npc/player, level)
-    - npc/player = NPC or Player, Unit = 1
-    - Level = 1-10
-    - Defeat a level 5 npc
-
-    Achieve(skill, level)
-    - Skill = 8 skills (Professions)
-    - Level = 10
-    - Ex: Achieve level 5 prospecting
-
-    Harvest(resource, level)
-    - Resource = 5 resources
-    - Level = 10 levels
-    -Ex: collect a level 3 shard
-
-    Equip(type, level)
-    - Type = Hat, Top, Bottom
-    - Level = 10
-    - Ex: equip a level 5 hat
-
-    Hoard(gold) - Accumulate a total of 20 gold as a team
-    - Gold: Units of transaction ingots
-
-    Group(num_tiles, num_teammates) - Always stay within 5 tiles of at least 3 of your teammates
-      - Num_tiles: Variable starting with tile you’re on as 0
-      - Num_teammates: Self evident. Stay together-ish
-
-    Spread(num_tiles, num_teammates) - Always stay at least 5 tiles away from at least 3 of your teammates
-      - Opposite of Group
-
-    Defend(teammate) - Don’t let your 3rd teammate die
-      - Teammate: Specific member of your team can’t die
-
-    Eliminate(team, direction) - Eliminate the team that spawns to your right
-      - Team: ID # of team
-      - Direction: Left; Right
-
-*OLD WIKI:*
-
-|icon| Overview 
-###############
-
-Neural MMO is inspired by classic Massively Multiplayer Online Role-Playing Games. Most of the game systems are adapted from existing games, but they are not copied directly for two reasons. First, the mechanics of actual MMOs are substantially more complex and require dozens to hundreds of hours of investment in order to understand. As Neural MMO is primarily a research platform, we aim to keep it accessible for that purpose. Second, many common game mechanics result in complex and inefficient observation and action spaces. We have made the necessary adaptations to preserve as much environment expressivity as possible without compromising efficiency.
-
-Glossary
-********
-
-A quick reference of standard game terms:
- - **Tick:** The simulation interval of the server; a timestep. With rendering enabled, the server targets 0.6s/tick.
- - **NPC:** Non-Player Character; any agent not controlled by a user. Sometimes called a *mob*
- - **Spawn:** Entering into the game, e.g. *players spawn with 10 health*
- - **RPG:** Role-Playing Game, e.g. a game in which the player takes on a particular role, usually one removed from modern reality, such as that of a knight or wizard. *MMO* is short for *MMORPG*, as most MMOs are also role-playing games.
- - **XP (exp):** Experience, a stat associated with progression systems to represent levels.
-
-Features
-********
-
-Neural MMO includes the following game systems
- - **Terrain:** Procedurally generated maps with obstacles
- - **Resource:** Agents must forage for resources to survive
- - **Combat:** Agent can fight each other
- - **NPC:** Maps are inhabited by mobs of varying friendliness
- - **Progression:** Agents improve various abilities through usage
- - **Item:** Agents can acquire a number of items with distinct uses
- - **Equipment:** Agents can use armor, weapons, and tools
- - **Profession:** Agents can practice distinct jobs
- - **Exchange:** Agents can trade items on a global market
-
-Each of these sytems may be configured or disabled individually (with some common sense dependencies). This wiki assumes the default configuration with all game systems enabled and does not provide constants (such as the amount of player health) because these are documented separately as part of the environment config.
-
-Contributing
-************
-
-If you find errors or ambiguities in the documentation, please either submit a PR with the associated fixes or, if it is easier, simply point it out on the Discord. Numerical constants sometimes change as we balance the game mechanics: always double-check your config file when making important decisions.
-
-|icon| IO 
-#########
-
-Encoding
-********
-
-By default, Neural MMO flattens the observation of each agent into a fixed-length array and accepts a multidiscrete action obtained by flattening the arguments of all actions. This makes the environment compatible with nearly any reinforcement learning library. The baselines repository includes subnetworks that unflatten, process, and reflatten observations and actions. This makes it possible to treat Neural MMO as a much simpler environment without any loss of expressivity. The information below is therefore mainly to enumerate agent capabilities.
-
-Observation Space
-*****************
-
-Each agent observes a groups of entities comprising nearby tiles and agents, its own inventory, and the market. Continuous and discrete tensors of attributes parametrize each entity group. An extra variable *N* counts the number of entities per group.
-
-.. code-block:: python
-  :caption: Observation space of a single agent
-
-  observation_space(agent_idx) = {
-      'Tile': {
-          'Continuous': ...,
-          'Discrete': ...,
-          'N': ...,
-      },
-      'Entity': {
-          'Continuous': ...,
-          'Discrete': ...,
-          'N': ...,
-      }, 
-      'Item': {
-          'Continuous': ...,
-          'Discrete': ...,
-          'N': ...,
-      }, 
-      'Market': {
-          'Continuous': ...,
-          'Discrete': ...,
-          'N': ...,
-      }, 
-  }
-
-The exact size of each tensor changes frequently from update to update. You can view the full gym space definition as below:
-
-.. code-block:: python
-
-  import nmmo
-  env = nmmo.Env()
-  print(env.observation_space(0))
-      
-Action Space
-************
-
-Each agent may take multiple actions per tick -- one from each category. Each action accepts arguments.
-
-.. code-block:: python
-  :caption: Action space of a single agent
-
-  action_space(agent_idx) = {
-      nmmo.action.Move: {
-          nmmo.action.Direction: {
-              nmmo.action.North,
-              nmmo.action.South,
-              nmmo.action.East,
-              nmmo.action.West,
-          },
-      },
-      nmmo.action.Attack: {
-          nmmo.action.Style: {
-              nmmo.action.Melee,
-              nmmo.action.Range,
-              nmmo.action.Mage,
-          },
-          nmmo.action.Target: {
-              Entity Pointer,
-          }
-      },
-      nmmo.action.Use: {
-          nmmo.action.Item: {
-              Inventory Pointer,
-          },
-      },
-      nmmo.action.Sell: {
-          nmmo.action.Item: {
-              Inventory Pointer,
-          },
-          nmmo.action.Price: {
-              Discrete Value,
-          },
-      },
-      nmmo.action.Buy: {
-          nmmo.action.Item: {
-              Market Pointer,
-          },
-      },
-      nmmo.action.Comm: {
-          nmmo.action.Token: {
-              Discrete Value,
-          },
-      },
-  }
-
-Pointer actions refer to a selection from the observation space. For example, to purchase an item, an agent should select the corresponding item from the observation space. This works by computing a similarity score against entity embeddings and is already handled by the baseline model.
-
-You can view the formal gym space definition as below:
-
-.. code-block:: python
-
-  import nmmo
-  env = nmmo.Env()
-  print(env.action_space(0))
- 
-|icon| Game Systems
-###################
-
-Neural MMO uses a tile-based grid engine. This is a much less significant limitation on environment expressivity than some modern reinforcement learning practitioners would suggest: several classic MMOs supporting thousands of players, reasonably realistic economies, and diverse gameplay features also use this structure internally.
-
-Neural MMO includes the following game systems
-- **Terrain:** Procedurally generated maps with obstacles
-- **Resource:** Agents must forage for resources to survive
-- **Combat:** Agent can fight each other
-- **NPC:** Maps are inhabited by mobs of varying friendliness
-- **Progression:** Agents improve various abilities through usage
-- **Items:** Agents can acquire a number of items with distinct uses
-- **Equipment:** Agents can use armor, weapons, and tools
-- **Profession:** Agents can practice distinct jobs
-- **Exchange:** Agents can trade items on a global market
-
-
-Each game system is individually toggleable and configurable, with a few common sense interdependencies. This wiki primarily addresses the default config with all game systems enabled as the impact of disabling any particular system is fairly obvious. We do, however, point out some important interactions. Also note that all numerical values stated below are configurable, and you should always check the base config for the latest values.
-
-Base
-****
-
-The base environment with no game systems enabled provides empty, square maps
- - The terrain is made of grass that agents can walk on freely
- - Agents spawn with 100 health (irrelevant in the absence of other enabled systems)
- - Agents die upon stepping in lava
-
-Terrain
-*******
-
-Procedurally generates maps with obstacles and resources.
- - Adds the stone tile type that blocks agent movement
- - Adds a default fractal noise generation algorithm
- - Adds an API for custom terrain generation
-   
-If the Resouce system is enabled:
- - Adds the foliage, scrub, and water tile types
- - The default generation algorithm will attempt to place foliage farther from water near the center of the map
-
-If the Profession system is enabled:
- - Adds the fish, herb, ore rock, tree, and crystal tile types
- - The default generation algorithm will place individual fish and herbs randomly on water and grass tiles respectively
- - The default generation algorithm will place clusters of ore rock, tree, and crystal on grass tiles
-
-Users can create different terrain by altering generation parameters in the config or by passing a custom generator.
-   
-The default generation algorithm is more sophisticated than typical Perlin noise -- it actually stretches the space of one Perlin fractal using a second Perlin fractal. It further attempts to scale spacial frequency to be higher at the edges of the map and lower at the center. This effect is not noticable in small maps but creates large deviations in local terrain structure in larger maps.
-
-Resource
-********
-
-Agents must forage for food and water in order to survive. Foliage tiles containing food and water tiles containing ... well, water ... are added to the map. A foliage tile is consumed when an agent steps on it. Agents cannot step on water tiles but can drink by being adjacent. This does not deplete the tile.
- - Agents spawn with 100 food and 100 water
- - Food and water are depleted by 5 per tick
- - Agents above 50% food and water will slowly restore health 
- - Agents with 0 food take 5 damage per tick
- - Agents with 0 water take 5 damage per tick
- - These damage values stack
-
-Consumed foliage tiles regenerate with a small probability each subsequent tick. This temporary unavailibility places a carrying capacity on local regions.
-
-Combat
-******
-
-Agents gain access to melee, range, and mage attacks. These obey a rock-paper-scissors dominance relationship: melee beats range beats mage beats melee. Dominance is calculated using the attacker's chosen attack skill and the defender's main combat skill. Attacks inflict damage to the target according to the following formula: *damage = effectiveness multiplier * (attack score - defense score).
-
-**Combat defaults are currently only correctly configured for all systems enabled. The base system information below will be accurate once this is fixed.**
-
-In the base Combat system:
- - Attacks can inflict damage from 3 squares away
- - Attack score is equal to a flat base damage of 30
- - Defense score is equal to zero
- - Main combat skill is the one an agent has used the most
- - Effective damage multiplier is 1.5 for using the correct style (e.g. mage vs melee) and 1 otherwise
-
-If the progression system is enabled
- - Base damage is decreased to 0
- - Attack score is increased by 5 for each level of the attacker's offensive skill
- - Defense is increased by 5 for each level of the defender's highest skill
- - Main combat skill is the one with the most experience
-
-If the equipment system is enabled
- - Attack score is increased by the attacker's offensive equipment bonus (weapons, ammunition)
- - Defense score is increased by the defender's defensive bonus (armor, tools)
- - Attack score for a specific style is increased by 15 if wielding a weapon
- - Attack score is increased by 15 per weapon or ammunition level
- - Defense score is increased by 30 if wielding a tool
- - Defense score is increased by 10 per armor level
-
-With all systems enabled:
-
-.. code-block:: python
-
-  offense = base damage + attacker level adjustment + attacker equipment adjustment
-  defense = target level adjustment + target equipment adjustment
-  raw_damage = effectiveness multiplier * offense * (15 / (15 + defense))
-  final_damage = max(0, int(damage))
-
-The attacker always has an advantage in that they can select the skill strong against the target's main skill. However, the defender can immediately retaliate in the same manner. Additionally, a combat style in which an agent has a higher level and better equipment may outperform one with only the effectiveness multiplier.
-
-NPC
-***
-
-Adds NPCs (non-playable characters) to the environment
-
-**Requires:** Combat system
-
-In the base NPC system:
- - NPCs are controlled by one of three scripted AIs
- - Passive NPCs wander randomly and cannot attack
- - Neutral NPCs wander randomly but will attack aggressors and give chase using a Dijkstra's algorithm based pathing routine
- - Hostile NPCs will actively hunt down and attack other NPCs and players using the same pathing algorithm
-
-If the Equipment system is enabled:
- - NPCs spawn with random armor piece
-
-If the Profession system is enabled:
- - NPCs spawn with a random tool
-
-If the Progression system is enabled:
- - NPCs will appear in varying levels
- - Any equipment dropped will be of level equal to the NPC's level
-
-If the Exchange system is enabled:
- - NPCs spawn with gold equal to their level
-
-Generally, Passive NPCs will spawn towards the edges of the map, Hostile NPCs spawn in the middle, and Neutral NPCs spawn somewhere between. The exact number and power distribution of NPCs varies by environment config.
-
-Progression
-***********
-
-Adds a leveling system that enables agents to become better at things by doing them.
-
-**Requires:** Combat or Profession system
-
-In the base Progression system:
- - Levels range from 1 to 10
- - Agents spawn with all skills at level 1 (0 XP)
- - Level *x+1* requires 10*2^*x* XP
-
-If the Combat system is enabled:
- - Agents are awarded 1 XP per attack
-
-If the Item system is enabled:
- - All items except gold will appear in varying levels
-
-If the Profession system is enabled
- - Agents are awarded 1 XP per ammunition resource gathered
- - Agents are awarded 5 XP per consumable resource gathered
-
-Item
-****
-
-Agents gain an inventory that can hold 12 items. Which items are available is dependent upon which other systems are enabled.
-
-**Requires:** Equipment or Profession system
-
-If the Equipment system is enabled:
- - Adds armor and weapons
-
-If the Profession system is enabled:
- - Adds consumables, tools, and ammunition
-
-If the Exchange system is enabled:
- - Adds Gold
-
-Equipment
-*********
-
-Agents gain access to an additional 5 inventory slots for equipped items: a hat, top, bottom, held item, and a stack of ammunition.
-
-**Requires:** Combat and Item system
-
-If the Progression system is enabled:
- - All items appear in level 1-10 variants. 
- - Agents can equip armor up to the level of their highest skill
- - Agents can equip weapons up to the level of the associated skill
-
-If the Profession system is enabled:
- - Agents can equip ammunition and tools up to the level of the associated skill
-
-Profession
-**********
-
-The Profession system adds 5 new gathering skills that provide supplies for exploration and combat. Unlike in the Resource system, materials gathered from the Profession system are added to the agent's inventory as items.
-
-**Requires:** Item system
-
-In the base progression system:
- - Prospecting, Carving, Alchemy: gather resources used as ammunition to enhance melee, range, and mage attacks
- - Fishing, Herbalism: gather resources that can be consumed to restore food, water, and health
- - There is a 2.5 percent chance to obtain a weapon while gathering ammunition
- - These drops are intentionally not for the same style as the gathered ammunition
- - Ore (Prospecting) can drop Wands
- - Trees (Carving) can drop Swords
- - Crystals (Alchemy) can drop Bows
-
-Exchange
-********
-
-Agents gain access to an environment-wide market where they can buy items from and sell items to each other using gold.
-
-**Requires:** Item and Equipment or Profession systems
-
-In the base Exchange system:
- - Agents place sell offers on the market for one of their items at a particular price
- - The item is immediately removed from the seller's inventory
- - Other agents can immediately buy that item and receive it
- - If multiple agents attempt to buy the same item at the same time, the market will attempt to fulfill the request from another seller at a price no more than 10% higher.
- - Buy and sell actions are prioritized per-population based on each agent's entity ID. So if the first agent on a team sells an item, the second agent will have the first chance to buy it. Note that there are some edge cases here, and we would appreciate user feedback.
-
-Agents only observe the current best offer for each item of each level. This prevents unbounded blowup of the observation and action spaces.
-
-|icon| Skills
-#############
-
-Melee
-*****
-
-Weapon: Sword
-Ammunition: Scrap
-Strong against: Range
-Weak against: Mage
-
-Range
-*****
-
-Weapon: Bow
-Ammunition: Shaving
-Strong against: Mage
-Weak against: Melee
-
-Mage
-****
-
-Weapon: Wand
-Ammunition: Shard
-Strong against: Melee
-Weak against: Range
-
-Fishing
-*******
-
-Tool: Rod
-Resource: Ration
-Usage: Restores food and water
-
-Herbalism
-*********
-
-Tool: Gloves
-Resource: Poultice
-Usage: Restores health
-
-Prospecting
-***********
-
-Tool: Pickaxe
-Resource: Scrap
-Usage: Melee ammunition
-
-Carving
-*******
-
-Tool: Chisel
-Resource: Shaving
-Usage: Range ammunition
-
-Alchemy
-*******
-
-Tool: Arcane focus
-Resource: Shard
-Usage: Mage ammunition
-
-|icon| Items 
-############
-
-Gold
-****
-
-Currency used on the market. Inherently valuable as the only medium of exchange.
-
-Armor: Hat, Top, Bottom
-***********************
-
-Grants 10 defense per item level
-
-Requires at least one skill greater than or equal to the item level to equip
-
-Also referred to as helmet, chestplate, and platelegs
-
-Weapon: Sword, Bow, Wand
-************************
-
-Grants a flat 15  plus 15 attack bonus per item level to the associated style (melee, range, mage)
-
-Requires a pertinent skill level greater than or equal to the item level to equip
-
-Tool: Rod, Gloves, Pickaxe, Chisel, Arcane Focus
-************************************************
-
-Grants a flat 30 defense regardless of item level
-
-Requires a pertinent skill level (fishing, herbalism, prospecting, carving, alchemy) greater than or equal to the item level to equip
-
-Enables an agent to collect a pertinent resource (ration, poultice, scrap, shaving, shard) at a level equal to the item level
-
-Ration
-******
-
-Consume to restore 5 food and water per item level.
-
-Requires at least one skill greater than or equal to the item level to use
-
-Poultice
-********
-
-Consume to restore 5 health per item level.
-
-Requires at least one skill greater than or equal to the item level to use
