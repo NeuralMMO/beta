@@ -218,16 +218,6 @@ Environments provide a standard PettingZoo API. Join our community Discord and p
   - **Profession:** Agents can practice distinct jobs
   - **Exchange:** Agents can trade items on a global market
 
-.. dropdown:: General features of NMMO
-
-  - Gameplay is on a map
-  - Map has Water, Stone, and Grass tiles in a 128 x 128 array
-  - A team has 8 Agents
-  - There are 7 other teams competing in each round, each with 8 Agents as well
-  - Map is also populated by Non-Playable Characters (NPCs) of varying hostility
-  - Agents survive if they have HP
-  - Goal is to complete tasks
-
 |icon| Your Objective
 #####################
 
