@@ -97,19 +97,21 @@ Each tick provides the opportunity for every Agent and NPC to do any, all or non
 
 **Move 1 tile in any available direction**
 
-        - Agents cannot move off of the game space, or **into water.** 
-        - As the game progresses, the action space becomes constrained as a fog encircles the board. Agents cannot be in tiles covered in fog, and all gradually move towards the center of the game space.
+- Agents cannot move off of the game space, or **into water.** 
+- As the game progresses, the action space becomes constrained as a fog encircles the board. Agents cannot be in tiles covered in fog, and all gradually move towards the center of the game space.
 
 **Attack an Agent - either NPC or from another team**
 
-        - Attack can only be against one other Agent or NPC
-        - To attack, your Agent must be within three tiles as the opponent -- actually within a 7x7 square around your Agent.**
+- Attack can only be against one other Agent or NPC
+- To attack, your Agent must be within three tiles as the opponent -- actually within a 7x7 square around your Agent.**
  
 **Inventory Management**
-        Inventory capacity is 12 items, including armor, weapon, tools, and consumables.
-        - Buy or Sell in the Market
-        - Destroy an item if no market value
-        - **Giving an item to a team mate is only permitted when standing on the same tile**
+
+Inventory capacity is 12 items, including armor, weapon, tools, and consumables.
+
+- Buy or Sell in the Market
+- Destroy an item if no market value
+- **Giving an item to a team mate is only permitted when standing on the same tile**
 
 .. dropdown:: About the Observation Space
 
