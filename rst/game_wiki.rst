@@ -83,8 +83,8 @@ Losing and gaining resources:
 
 Agents can replenish food and water. Walking on a foliage tile restores food to 100. The foliage tile then is harvested and will respawn at a random time in the same place. Walking adjacent to a water tile restores water to 100. Water tiles do not empty.
 
-|icon| Competition Environment 
-***********************
+|icon| Competition Environment and Levels
+*****************************************
 
 At the start of a game, all agents on all teams spawn (enter the game) together around the perimeter of the map on the same tile. Agent teams are evenly dispersed around the perimeter. 
 
@@ -95,24 +95,109 @@ Agents can occupy the same tile as other agents. There is no limit to number or 
 **Time and Gameplay**
 Each tick provides the opportunity for every Agent and NPC to do any, all or none of the following actions:
 
-.. grid:: 3
-
-    .. grid-item-card::  Move 1 tile in any available direction
+**Move 1 tile in any available direction**
 
         - Agents cannot move off of the game space, or **into water.** 
         - As the game progresses, the action space becomes constrained as a fog encircles the board. Agents cannot be in tiles covered in fog, and all gradually move towards the center of the game space.
 
-    .. grid-item-card::  Attack an Agent - either NPC or from another team
+**Attack an Agent - either NPC or from another team**
 
         - Attack can only be against one other Agent or NPC
         - To attack, your Agent must be within three tiles as the opponent -- actually within a 7x7 square around your Agent.**
  
- .. grid-item-card::  Inventory Management
+**Inventory Management**
         Inventory capacity is 12 items, including armor, weapon, tools, and consumables.
         - Buy or Sell in the Market
         - Destroy an item if no market value
-        - **Giving an item to a team mate is not permitted**
+        - **Giving an item to a team mate is only permitted when standing on the same tile**
 
+.. dropdown:: About the Observation Space
+
+    Each agent observes a groups of entities comprising nearby tiles and agents, its own inventory, and the market. Continuous and discrete tensors of attributes parametrize each entity group. An extra variable *N* counts the number of entities per group.
+
+    .. code-block:: python
+        :caption: Observation space of a single agent
+
+  observation_space(agent_id) = {
+        'AgentId': Discrete(1),
+        'Entity' :Box(-1048576.0, 1048576.0, (100, 22), float32),
+        'Inventory': Box(-1048576.0, 1048576.0, (12, 16), float32),
+        'Market': Box(-1048576.0, 1048576.0, (640, 16), float32),
+        'Tick': Box(-1048576.0, 1048576.0, (1, 1), float32),
+        'Tile': Box(-1048576.0, 1048576.0, (225, 3), float32)
+    }
+
+Levels
+######
+.. tab-set::
+
+    .. tab-item:: Agent Levels
+
+         - Levels range from 1 to 10
+         - Agents spawn with all skills at level 1 (0 XP)
+         - Level x+1 requires 10*2^x* XP
+         - Agents are awarded 1 XP per attack
+
+         - Agents are awarded 1 XP per ammunition resource gathered
+         - Agents are awarded 5 XP per consumable resource gathered
+ 
+         - All items except gold will appear in varying levels
+
+    .. tab-item:: Items and Equipment Levels
+
+         - All items appear in level 1-10 variants. 
+         - Agents can equip armor up to the level of their highest skill
+         - Agents can equip weapons up to the level of the associated skill
+         - Agents can equip ammunition and tools up to the level of the associated skill
+
+Each agent may take multiple actions per tick -- one from each category. Each action accepts arguments.
+
+.. code-block:: python
+  :caption: Action space of a single agent
+
+  action_space(agent_idx) = {
+      nmmo.action.Move: {
+          nmmo.action.Direction: {
+              nmmo.action.North,
+              nmmo.action.South,
+              nmmo.action.East,
+              nmmo.action.West,
+          },
+      },
+      nmmo.action.Attack: {
+          nmmo.action.Style: {
+              nmmo.action.Melee,
+              nmmo.action.Range,
+              nmmo.action.Mage,
+          },
+          nmmo.action.Target: {
+              Entity Pointer,
+          }
+      },
+      nmmo.action.Use: {
+          nmmo.action.Item: {
+              Inventory Pointer,
+          },
+      },
+      nmmo.action.Sell: {
+          nmmo.action.Item: {
+              Inventory Pointer,
+          },
+          nmmo.action.Price: {
+              Discrete Value,
+          },
+      },
+      nmmo.action.Buy: {
+          nmmo.action.Item: {
+              Market Pointer,
+          },
+      },
+      nmmo.action.Comm: {
+          nmmo.action.Token: {
+              Discrete Value,
+          },
+      },
+  }
 About Combat
 ************
 
@@ -204,7 +289,7 @@ Professions, Tools, and Items
 
 There are 8 Professions that Agents can learn and level up in. Agents can improve their skills in multiple Professions, but will not be able to progress in all Professions. How Professions are distributed across Agent teams is a part of game strategy. 
 
-For Skills Prospecting, Carving, and Alchemy, agents walk on the associated resource tile to harvest the resource. Agent receives a different quality/level of resource, depending on agent levels/tools. The resource tile will respawn later in the same place. 
+For Skills Prospecting, Carving, and Alchemy, agents walk on the associated resource tile to harvest the resource. Agent receives a different quality/level of resource, depending on agent levels/tools. The resource tile will respawn later in the same place. There is a 2.5 percent chance to obtain a weapon while gathering ammunition on a tile.
 
 **Agents have an inventory that can hold 12 items.**
 
@@ -368,47 +453,11 @@ TODO
 ****
 
 
-
-Competition Environment 
-***********************
-
-At the start of a game, all Agents on all teams spawn together around the perimeter of the map on the same tile. Agent teams are evenly dispersed around the perimeter. 
-
-
-**NPCs are scattered across the entire map. They get stronger and more aggressive towards the center. NPCs are all individuals; they fight each other as well; and they are all controlled by very basic scripts. Their aggression and strength levels are correlated, but otherwise are identical. 
-
-Agents can occupy the same tile as other Agents. Other Agents can be their own teammates and/or other team’s Agents. There is no limit to number or type of agents on a single tile, including enemy agents and NPCs. 
-
-**Time and Gameplay**
-The gameplay consists of time units called “ticks.” Each tick provides the opportunity for every Agent and NPC to do any, all or none of the following actions:
-
-.. grid:: 3
-
-    .. grid-item-card::  Move 1 tile in any available direction
-
-        - Agents cannot move off of the game space, or **into water.** 
-        - As the game progresses, the action space becomes constrained as a fog encircles the board. Agents cannot be in tiles covered in fog, and all gradually move towards the center of the game space.
-
-    .. grid-item-card::  Attack an Agent - either NPC or from another team
-
-        - Attack can only be against one other Agent or NPC
-        - To attack, your Agent must be within three tiles as the opponent -- actually within a 7x7 square around your Agent.**
- 
- .. grid-item-card::  Inventory Management
-        Inventory capacity is 12 items, including armor, weapon, tools, and consumables.
-        - Buy or Sell in the Market
-        - Destroy an item if no market value
-        - **Giving an item to a team mate is not permitted**
-
-
-**TBD - whether one can Buy/Sell; Give and Destroy simultaneously
-
 A Section Needs Naming
 **********************
 
 **Tile Resources**
 On these tiles are various important resources. Access resources and stay alive in the game - EAT, DRINK and COMBAT.
-There is a 2.5 percent chance to obtain a weapon while gathering ammunition on a tile.
 
 +--------------------+------------------------+--------------------+
 |**Resource**        |**Purpose**             |**Obtaining**       |
@@ -446,91 +495,3 @@ There is a 2.5 percent chance to obtain a weapon while gathering ammunition on a
 |                    | players on the MARKET  | NPCs.              |
 +--------------------+------------------------+--------------------+
 
-
-
-.. dropdown:: More about the Observation Space
-
-    Each agent observes a groups of entities comprising nearby tiles and agents, its own inventory, and the market. Continuous and discrete tensors of attributes parametrize each entity group. An extra variable *N* counts the number of entities per group.
-
-    .. code-block:: python
-        :caption: Observation space of a single agent
-
-  observation_space(agent_id) = {
-        'AgentId': Discrete(1),
-        'Entity' :Box(-1048576.0, 1048576.0, (100, 22), float32),
-        'Inventory': Box(-1048576.0, 1048576.0, (12, 16), float32),
-        'Market': Box(-1048576.0, 1048576.0, (640, 16), float32),
-        'Tick': Box(-1048576.0, 1048576.0, (1, 1), float32),
-        'Tile': Box(-1048576.0, 1048576.0, (225, 3), float32)
-    }
-
-
-.. tab-set::
-
-    .. tab-item:: Agent Levels
-
-         - Levels range from 1 to 10
-         - Agents spawn with all skills at level 1 (0 XP)
-         - Level x+1 requires 10*2^x* XP
-         - Agents are awarded 1 XP per attack
-
-         - Agents are awarded 1 XP per ammunition resource gathered
-         - Agents are awarded 5 XP per consumable resource gathered
- 
-         - All items except gold will appear in varying levels
-
-    .. tab-item:: Items and Equipment Levels
-
-         - All items appear in level 1-10 variants. 
-         - Agents can equip armor up to the level of their highest skill
-         - Agents can equip weapons up to the level of the associated skill
-         - Agents can equip ammunition and tools up to the level of the associated skill
-
-Each agent may take multiple actions per tick -- one from each category. Each action accepts arguments.
-
-.. code-block:: python
-  :caption: Action space of a single agent
-
-  action_space(agent_idx) = {
-      nmmo.action.Move: {
-          nmmo.action.Direction: {
-              nmmo.action.North,
-              nmmo.action.South,
-              nmmo.action.East,
-              nmmo.action.West,
-          },
-      },
-      nmmo.action.Attack: {
-          nmmo.action.Style: {
-              nmmo.action.Melee,
-              nmmo.action.Range,
-              nmmo.action.Mage,
-          },
-          nmmo.action.Target: {
-              Entity Pointer,
-          }
-      },
-      nmmo.action.Use: {
-          nmmo.action.Item: {
-              Inventory Pointer,
-          },
-      },
-      nmmo.action.Sell: {
-          nmmo.action.Item: {
-              Inventory Pointer,
-          },
-          nmmo.action.Price: {
-              Discrete Value,
-          },
-      },
-      nmmo.action.Buy: {
-          nmmo.action.Item: {
-              Market Pointer,
-          },
-      },
-      nmmo.action.Comm: {
-          nmmo.action.Token: {
-              Discrete Value,
-          },
-      },
-  }
