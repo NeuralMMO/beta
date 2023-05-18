@@ -66,11 +66,16 @@ Your team of 8 Agents must collect food and water to survive. Each Agent has 8 i
 
       Docker container including Neural MMO and GPU-accelerated baselines. Guarantees correct dependencies and environment setup. We recommended the following setup for local containerized development:
         - Install Docker Hub, VSCode, and the VSCode dev containers plugin.
-        - Clone `PufferTank <https://github.com/PufferAI/PufferTank>`_ on Linux/MacOS/WSL
+        - Clone the competition branch of `PufferTank <https://github.com/PufferAI/PufferTank>`_ on Linux/MacOS/WSL
         - VSCode: F1 -> "Remote-Containers: Open Folder in Container" -> Select PufferTank folder
+
+      .. code-block:: python
+
+         git clone https://github.com/pufferai/puffertank --branch=competition
 
    .. tab-item:: Pip Package
 
+      #WARNING: No pip package during soft launch. Use Docker or source.
       Official support for Ubuntu 20.04/22.04, WSL, and MacOS
 
       .. code-block:: python
