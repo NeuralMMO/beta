@@ -7,37 +7,58 @@
 
 
 
-|icon| Overview
-***************
+|icon| Overview of a typical game of NMMO
+*********************************************
 
-Pointer actions refer to a selection from the observation space. For example, to purchase an item, an agent should select the corresponding item from the observation space. This works by computing a similarity score against entity embeddings and is handled by the baseline model.
+Before diving into the Game Wiki, why not warm up and read a narrative of a typical game?
 
-Enumerating the exact features behind each of these systems would be neither practical nor informative. The documentation contains this information verbatim as a wiki-style reference in which users can quickly look up how each specific mechanic works, but reading that page start to bottom would not provide a good high-level overview of what happens in a typical game of NMMO. As an explanatory example, instead consider that we have a team of 8 agents trying to survive. Agents spawn around the edges of a large, square map. A potentially hostile team will spawn to the right and to the left of our team. Immediately, we have a few options. We can attempt to rush into the center of the map and get away from nearby teams. However, we can only see a limited distance ahead, and it is possible that we will get stuck on some obstacles and be attacked by both nearby teams at the same time. We could instead attempt to rush and eliminate the team either directly to our right or to our left, which could result in a better than even chance of victory if we catch them off guard. However, we are likely to lose several agents on our team if we do that. A third option is to send 1-2 agents to each the right and the left to scout and distract the nearby teams. If they behave passively, the scouts can return to the main team safely. If the scouts are caught and perish, they have at least bought some time for the rest of the team to escape into the rest of the map. This was the strategy learned by the winning agents of the most recent competition. This also represents only the opening 15-30 seconds of play in a 10-minute game.
+.. dropdown:: NMMO Gameplay Narrative
 
-The next step of play is to establish an advantage verses the competition. Agents have access to 8 different professions which can be improved through practice. All of these in some way confer a benefit to offensive or defensive capabilities that allow agents to protect themselves. The team must now decide which agents on the team will spend their time improving which skills. For example, one agent could practice ranged combat by fighting weak NPCs that roam the map while another agent practices fletching to provide the former with powerful ammunition. One agent could practice herbalism, allowing them to make potions to heal the rest of the team. One agent could practice Magic, which is a powerful counter to hostile opponents using Melee combat. Multiple agents could practice different forms of combat and aggressively challenge more powerful NPCs in order to acquire defensive equipment as loot to share with the rest of the team. Agents should spread out to search for resources but stay together to create safety in numbers. Agents should diversify their skills but do not have the time to cover all their bases. Agents may sell unneeded items on a global market but should be wary of giving the competition an edge. Agents should proactively seek out potential enemies but only if they catch them unawares or otherwise have a strategic advantage. Ultimately, these decisions are a matter of strategy and opportunism - plans may change to become more aggressive or conservative depending on what resources agents are able to harvest early in the game. This stage of play occupies the next few minutes.
+    Our team of 8 agents is trying to survive. Agents spawn around the edges of a large, square map. A potentially hostile team will spawn to the right and to the left of our team. 
 
-At this stage, the edges of the map become dangerous. Agents will begin taking damage from "poisonous fog" if they do not move towards the center of the map. This fog slowly expands to occupy all but the center of the map - a mechanic borrowed from the battle royale genre of games. The idea is to force encounters between agents. If our team did not fight before, it will almost certainly have to now. By this stage, most if not all teams will lose at least a couple of agents, but strategically better teams still maintain positional advantage, either by having more agents remaining or by having acquired better equipment.
+    *Tactics*
+    Immediately, we have a few options. We can attempt to rush into the center of the map and get away from nearby teams. However, we can only see a limited distance ahead. It is possible that we will get trapped by obstacles and be attacked by both nearby teams at the same time. 
 
-At the end of the game, the fog closes to a tight final area. Assuming our team is still alive, we should assess our situation and determine whether we are better or worse equipped than the remaining team(s). If we think we have the advantage, we should aggressively challenge and encircle any weaker opponents attempting to evade us while being wary of attacks by a third party. If we think we are at a disadvantage, we should attempt to evade and lure opponents into exposing themselves to a third party. These are all tactics we saw emerge in the previous competition, and they are rather reminiscent of the strategies human players employ in many battle royale games.
+    We could instead attempt to rush and eliminate the team either directly to our right or to our left. This could result in a better than even chance of victory if we catch them off guard. However, we are likely to lose several agents on our team if we do that. 
+
+    A third option is to send 1-2 agents to each the right and the left to scout and distract the nearby teams. If they behave passively, the scouts can return to the main team safely. If the scouts are caught and perish, they have at least bought some time for the rest of the team to escape into the rest of the map. This was the strategy learned by the winning agents of the most recent competition. This also represents only the opening 15-30 seconds of play in a 10-minute game.
+
+    *Playing*
+    The next step of play is to establish an advantage verses the competition. Agents have access to 8 different professions which can be improved through practice. All of these in some way confer a benefit to offensive or defensive capabilities that allow agents to protect themselves. The team must now decide which agents on the team will spend their time improving which skills. 
+
+    - For example, one agent could practice ranged bow-and-arrow combat by fighting weak non-playable characters (NPCs) that roam the map, while another agent practices fletching to provide the former with powerful arrows as ammunition. 
+
+    - One agent could practice herbalism, allowing them to make potions to heal the rest of the team. One agent could practice Magic, which is a powerful counter to hostile opponents using Melee combat. 
+
+    - Multiple agents could practice different forms of combat and aggressively challenge more powerful NPCs. Winning yields defensive equipment to share with the rest of the team. 
+
+    *Trade-offs and Strategy*
+    Agents should spread out to search for resources but stay together to create safety in numbers. Agents should diversify their skills but do not have the time to develop expertise in all professions. Agents may sell unneeded items on a global market but should be wary of giving the competition an edge. Agents should proactively seek out potential enemies but only if they catch them unawares or otherwise have a strategic advantage. Ultimately, these decisions are a matter of strategy and opportunism - plans may change to become more aggressive or conservative depending on what resources agents are able to harvest early in the game. This stage of play occupies the next few minutes.
+
+    *Closing in*
+    At this stage, the edges of the map become dangerous. Agents will begin taking damage from "poisonous fog" if they do not move towards the center of the map. This fog slowly expands to occupy all but the center of the map - a mechanic borrowed from the battle royale genre of games. This forces encounters between agent teams. If our team did not fight before, it will almost certainly have to now. By this stage, most if not all teams will lose at least a couple of agents. Strategically better teams still maintain positional advantage, either by having more agents remaining or by having acquired better equipment.
+
+    *Final moments*
+    At the end of the game, the fog closes to a tight central area. Assuming our team is still alive, we should assess our situation and determine whether we are better or worse equipped than the remaining team(s). If we think we have the advantage, we should aggressively challenge and encircle any weaker opponents attempting to evade us, while being wary of attacks by a third party. If we think we are at a disadvantage, we should attempt to evade and lure opponents into exposing themselves to a third party. These are all tactics that emerged in the previous NMMO competition, and they are reminiscent of the strategies human players employ in many battle royale games.
 
 The Game Map
 ************
 
-Each instance of Neural MMO contains an automatically generated tile-based game map of 128 x 128 tiles. The map is surrounded by Void. Agents that attempt to walk into the void dissapear never to be seen again.
+Each instance of Neural MMO contains an automatically generated tile-based game map of 128 x 128 tiles. The map is surrounded by Void. Agents that attempt to walk into the void dissapear, never to be seen again.
 
 Tiles are broadly categorized as follows:
   - *Passable* tiles can be walked on while *obstacle* tiles block movement
-  - *Resouce* tiles can be harvested while *non-resource* can not.
+  - *Resource* tiles can be harvested while *non-resource* cannot
 
 +-------------------+-----------------------------+-------------+
-| **Type**          | *Passable*                  | *Obstacle*  |
+| **Tile Type**     | *Passable*                  | *Obstacle*  |
 +===================+=============================+=============+
 | **Resource**      | Foliage, Ore, Tree, Crystal | Water, Fish |
 +-------------------+-----------------------------+-------------+
 | **Non-resource**  | Grass, Harvested Tile       | Stone, Void |
 +-------------------+-----------------------------+-------------+
 
-*Resource* tiles may be harvested - *Passable* tiles by walking over them and *non-passable* tiles by walking adjacent to them. The resource is then consumed from the tile, but it will regenerate randomly over time on the same tile. The only exception is the Water tile, which provides unlimited resource.
+*Resource* tiles may be harvested. *Passable* tiles are harvested by walking over them and *non-passable* tiles by walking next to them. The resource is then consumed from the tile. It will regenerate randomly over time on the same tile. The only exception is the Water tile, which provides unlimited resource.
 
 .. dropdown:: About the tile generation algorithm
     
