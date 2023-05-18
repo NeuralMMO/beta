@@ -454,11 +454,8 @@ Generally, Passive NPCs will spawn towards the edges of the map, Hostile NPCs sp
 |icon| Tiles Quick Reference
 ******************************
 
-**Tile Resources**
-On these tiles are various important resources. Access resources and stay alive in the game - EAT, DRINK and COMBAT.
-
 +--------------------+------------------------+--------------------+
-|**Resource**        |**Purpose**             |**Obtaining**       |
+|**Tile Resource**   |**Purpose**             |**Obtaining**       |
 +====================+========================+====================+
 | **WATER Tile Resources**                                         |
 +--------------------+------------------------+--------------------+
@@ -468,7 +465,7 @@ On these tiles are various important resources. Access resources and stay alive 
 | FISH               | RATION item to EAT     | ROD to HARVEST     |
 |                    |                        |                    | 
 +--------------------+------------------------+--------------------+
-| **GRASS Tile Resources**.                                        |
+| **GRASS Tile Resources**                                         |
 +--------------------+------------------------+--------------------+
 | FOOD               | FOOD to EAT            | Stand on FOOD      |
 |                    |                        | to EAT             | 
