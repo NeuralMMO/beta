@@ -338,7 +338,7 @@ For Skills Prospecting, Carving, and Alchemy, agents walk on the associated reso
   - Consume to restore 5 health per gloves level.
   - Requires at least one skill greater than or equal to the glove level to use.
   
-  The same rules about levels apply to poultices as rations. 
+  The same rules about levels apply to poultices and rations. 
 
 
 |icon| Market
