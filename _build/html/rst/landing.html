@@ -18,26 +18,27 @@
 
 <style>
   body {
-    --color-code-background: #eeffcc;
+    --color-code-background: #f8f8f8;
   --color-code-foreground: black;
   --color-foreground-primary: black;
-  --color-foreground-secondary: #5a5c63;
-  --color-foreground-muted: #646776;
+  --color-foreground-secondary: #005050;
+  --color-foreground-muted: #005050;
   --color-foreground-border: #878787;
   --color-background-primary: white;
-  --color-background-secondary: #f8f9fb;
+  --color-background-secondary: #bbcccc;
   --color-background-hover: #efeff4ff;
   --color-background-hover--transparent: #efeff400;
-  --color-background-border: #eeebee;
+  --color-background-border: #005050;
   --color-background-item: #ccc;
   --color-announcement-background: #000000dd;
   --color-announcement-text: #eeebee;
-  --color-brand-primary: #2962ff;
-  --color-brand-content: #2a5adf;
+  --color-brand-primary: black;
+  --color-brand-content: black;
   --color-inline-code-background: #f8f9fb;
   --color-highlighted-background: #ddeeff;
   --color-guilabel-background: #ddeeff80;
   --color-guilabel-border: #bedaf580;
+  --color-card-background: #bbcccc;
   
   }
   @media not print {
@@ -230,13 +231,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api.html"> Environment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html#icon-config"> Config</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html#icon-ratings"> Ratings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html#icon-scripting"> Scripting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html#icon-procedural-generation"> Procedural Generation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html#icon-overlays"> Overlays</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="api.html#icon-reference"> Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
-</ul>
-</li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Game Wiki</span></p>
 <ul>
@@ -520,13 +515,23 @@ Reinforcement Learning</label><div class="sd-tab-content docutils">
 <p>We release a baseline repository that includes a model adapted from NetEase’s winning submission to the NeurIPS 2022 competition, a fixed curriculum of procedurally generated tasks, a single-file CleanRL PPO implementation, PufferLib integration for simpler training, and WandB for logging and visualization. The baseline is designed to be easy to use and modify. We encourage you to use it as a starting point for your own submissions.</p>
 <dl class="simple">
 <dt>To get started:</dt><dd><ul class="simple">
-<li><p>tools/train.py contains the main training file. Modify hyperprameters and scale here.</p></li>
+<li><p>train.py contains the main training file. Modify hyperprameters and scale here.</p></li>
 <li><p>cleanrl_ppo_lstm.py contains the CleanRL PPO implementation. Modify it to alter the training algorithm. This version includes PufferLib integration and asynchronous environment execution.</p></li>
-<li><p>/models contains the network definition. This is an advanced architecture with a custom featurizer and multiple subnetworks dedicated to processing different types of information.</p></li>
-<li><p>/featurizer preprocesses observations from the environment before they are passed to the network. It separately processes the map, inventory, and market observations.</p></li>
+<li><p>/model contains the network definition. This is an advanced architecture with a custom featurizer and multiple subnetworks dedicated to processing different types of information.</p></li>
+<li><p>/feature_extractor preprocesses observations from the environment before they are passed to the network. It separately processes the map, inventory, and market observations.</p></li>
 </ul>
 </dd>
 </dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run training. This is very memory intensive!</span>
+<span class="c1"># We are working on a smaller config</span>
+<span class="c1"># The --use_serial_vecenv flat puts envs on a</span>
+<span class="c1"># local process and is useful for debugging</span>
+<span class="n">python</span> <span class="n">train</span><span class="o">.</span><span class="n">py</span>
+
+<span class="c1"># Evaluate a trained checkpoint</span>
+<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">tools</span><span class="o">.</span><span class="n">evaluate</span> <span class="o">--</span><span class="n">model</span><span class="o">.</span><span class="n">checkpoint</span> <span class="n">model_weights</span><span class="o">/</span><span class="n">achievements_4x10_new</span><span class="mf">.200</span><span class="o">.</span><span class="n">pt</span>
+</pre></div>
+</div>
 </div>
 <input id="sd-tab-item-4" name="sd-tab-set-1" type="radio">
 </input><label class="sd-tab-label" for="sd-tab-item-4">

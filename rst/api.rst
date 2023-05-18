@@ -26,40 +26,6 @@ Neural MMO provides a pettingzoo compliant environment API, an extensive configu
    :undoc-members:
    :noindex:
 
-|icon| Ratings
-##############
-
-.. autoclass:: nmmo.OpenSkillRating
-   :members:
-   :noindex:
-
-|icon| Scripting
-################
-
-To support scripted models, we provide a small wrapper class for extracting meaningful attributes from observation tensors. We also expose static definitions of the environment's materials and observation/action spaces. The core environment ships with a random example agent; more are available in the accompanying baselines repository.
-
-.. automodule:: nmmo.scripting
-   :members:
-   :noindex:
-
-.. autoclass:: nmmo.Serialized
-   :members:
-   :undoc-members:
-   :noindex:
-
-.. automodule:: nmmo.action
-   :members:
-   :undoc-members:
-   :noindex:
-
-.. automodule:: nmmo.material
-   :members: Lava, Water, Grass, Scrub, Forest, Stone, Orerock, All, Impassible, Habitable
-   :noindex:
-
-.. automodule:: nmmo.agent
-   :members: Random
-   :noindex:
-
 |icon| Procedural Generation
 ############################
 
@@ -72,27 +38,3 @@ The default map generator is multioctave perlin noise that is itself seeded usin
 .. autoclass:: nmmo.Terrain
    :members:
    :noindex:
-
-|icon| Overlays
-###############
-
-For visualization, the Overlay API enables users to write custom 2D overlays to be rendered in the Unity3D client
-
-
-.. autoclass:: nmmo.Overlay
-   :members:
-   :noindex:
-
-.. autoclass:: nmmo.OverlayRegistry
-   :members:
-   :noindex:
-
-|icon| Reference
-################
-
-The doctree below contains automatically generated documentation for the entire project. Most users will only need the more thoroughly documented user API above.
-
-.. toctree::
-   :maxdepth: 4
-
-   ../autodoc/nmmo

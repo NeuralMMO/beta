@@ -177,10 +177,21 @@ Neural MMO (NMMO) has three tracks to compete and win. In all tracks, the object
       We release a baseline repository that includes a model adapted from NetEase's winning submission to the NeurIPS 2022 competition, a fixed curriculum of procedurally generated tasks, a single-file CleanRL PPO implementation, PufferLib integration for simpler training, and WandB for logging and visualization. The baseline is designed to be easy to use and modify. We encourage you to use it as a starting point for your own submissions.
 
       To get started:
-        - tools/train.py contains the main training file. Modify hyperprameters and scale here.
+        - train.py contains the main training file. Modify hyperprameters and scale here.
         - cleanrl_ppo_lstm.py contains the CleanRL PPO implementation. Modify it to alter the training algorithm. This version includes PufferLib integration and asynchronous environment execution.
-        - /models contains the network definition. This is an advanced architecture with a custom featurizer and multiple subnetworks dedicated to processing different types of information.
-        - /featurizer preprocesses observations from the environment before they are passed to the network. It separately processes the map, inventory, and market observations.
+        - /model contains the network definition. This is an advanced architecture with a custom featurizer and multiple subnetworks dedicated to processing different types of information.
+        - /feature_extractor preprocesses observations from the environment before they are passed to the network. It separately processes the map, inventory, and market observations.
+
+      .. code-block:: python
+
+        # Run training. This is very memory intensive!
+        # We are working on a smaller config
+        # The --use_serial_vecenv flat puts envs on a
+        # local process and is useful for debugging
+        python train.py
+
+        # Evaluate a trained checkpoint
+        python -m tools.evaluate --model.checkpoint model_weights/achievements_4x10_new.200.pt
 
   .. tab-item:: Curriculum Generation
 

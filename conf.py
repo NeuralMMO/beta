@@ -17,6 +17,7 @@ release = '2.0'
 extensions = [
         'myst_parser',
         'sphinx_design',
+        'sphinx.ext.autodoc', 
         ]
 
 myst_enable_extensions = ['colon_fence']
@@ -43,23 +44,24 @@ muted = '#005050'
 html_theme_options = {
     "light_css_variables": {
         "color-foreground-primary": "black",
-        "color-foreground-secondary": "#5a5c63",
-        "color-foreground-muted": "#646776",
+        "color-foreground-secondary": muted,
+        "color-foreground-muted": muted,
         "color-foreground-border": "#878787",
         "color-background-primary": "white",
-        "color-background-secondary": "#f8f9fb",
+        "color-background-secondary": "#bbcccc",
         "color-background-hover": "#efeff4ff",
         "color-background-hover--transparent": "#efeff400",
-        "color-background-border": "#eeebee",
+        "color-background-border": muted,
         "color-background-item": "#ccc",
         "color-announcement-background": "#000000dd",
         "color-announcement-text": "#eeebee",
-        "color-brand-primary": "#2962ff",
-        "color-brand-content": "#2a5adf",
+        "color-brand-primary": "black",
+        "color-brand-content": "black",
         "color-inline-code-background": "#f8f9fb",
         "color-highlighted-background": "#ddeeff",
         "color-guilabel-background": "#ddeeff80",
         "color-guilabel-border": "#bedaf580",
+        "color-card-background": "#bbcccc",
     },
     "dark_css_variables": {
         "color-problematic": "#ee5151",
@@ -88,6 +90,4 @@ html_theme_options = {
     }
 }
 
-
-pygments_style = "sphinx"
 pygments_dark_style = "monokai"
