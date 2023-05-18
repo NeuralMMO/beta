@@ -60,6 +60,8 @@ Tiles are broadly categorized as follows:
 
 *Resource* tiles may be harvested. *Passable* tiles are harvested by walking over them and *non-passable* tiles by walking next to them. The resource is then consumed from the tile. It will regenerate randomly over time on the same tile. The only exception is the Water tile, which provides unlimited resource.
 
+Visibility range is 7 tiles.
+
 .. dropdown:: About the tile generation algorithm
     
     The default tile generation algorithm is more sophisticated than typical Perlin noise -- it stretches the space of one Perlin fractal using a second Perlin fractal. It further attempts to scale spacial frequency to be higher at the edges of the map and lower at the center. This effect is not noticable in small maps but creates large deviations in local terrain structure in larger maps.
@@ -77,9 +79,39 @@ Losing and gaining resources:
   - These values add - lose 20 health if out of food and water per tick
   - If above half food and half water, agents regain 10 health per tick
 
-**Tick:** The simulation interval of the server; a timestep. With rendering enabled, the server targets 0.6s/tick.
+**Tick:** The gameplay consists of time units called “ticks.” When rendering, the game moves at 0.6s/tick.
 
 Agents can replenish food and water. Walking on a foliage tile restores food to 100. The foliage tile then is harvested and will respawn at a random time in the same place. Walking adjacent to a water tile restores water to 100. Water tiles do not empty.
+
+|icon| Competition Environment 
+***********************
+
+At the start of a game, all agents on all teams spawn (enter the game) together around the perimeter of the map on the same tile. Agent teams are evenly dispersed around the perimeter. 
+
+Non-Player Characters (NPCs) are any agent not controlled by a user; sometimes called a *mob*. NPCs are scattered across the entire map. They get stronger and more aggressive towards the center. NPCs are all individuals; they fight each other as well; and they are all controlled by basic scripts. Their aggression and strength levels are correlated, but otherwise are identical. 
+
+Agents can occupy the same tile as other agents. There is no limit to number or type of agents on a single tile, including enemy agents and NPCs. 
+
+**Time and Gameplay**
+Each tick provides the opportunity for every Agent and NPC to do any, all or none of the following actions:
+
+.. grid:: 3
+
+    .. grid-item-card::  Move 1 tile in any available direction
+
+        - Agents cannot move off of the game space, or **into water.** 
+        - As the game progresses, the action space becomes constrained as a fog encircles the board. Agents cannot be in tiles covered in fog, and all gradually move towards the center of the game space.
+
+    .. grid-item-card::  Attack an Agent - either NPC or from another team
+
+        - Attack can only be against one other Agent or NPC
+        - To attack, your Agent must be within three tiles as the opponent -- actually within a 7x7 square around your Agent.**
+ 
+ .. grid-item-card::  Inventory Management
+        Inventory capacity is 12 items, including armor, weapon, tools, and consumables.
+        - Buy or Sell in the Market
+        - Destroy an item if no market value
+        - **Giving an item to a team mate is not permitted**
 
 About Combat
 ************
@@ -171,6 +203,8 @@ Professions, Tools, and Items
 *****************************
 
 There are 8 Professions that Agents can learn and level up in. Agents can improve their skills in multiple Professions, but will not be able to progress in all Professions. How Professions are distributed across Agent teams is a part of game strategy. 
+
+For Skills Prospecting, Carving, and Alchemy, agents walk on the associated resource tile to harvest the resource. Agent receives a different quality/level of resource, depending on agent levels/tools. The resource tile will respawn later in the same place. 
 
 **Agents have an inventory that can hold 12 items.**
 
@@ -333,11 +367,7 @@ Generally, Passive NPCs will spawn towards the edges of the map, Hostile NPCs sp
 TODO
 ****
 
-*Skills*
 
-For Skills Prospecting, Carving, and Alchemy - walk on resource tile to get the resource. Agent receives a different quality/level of resource, depending on Agent levels/tools. Resource tile will respawn later in the same place. 
-
-Visibility range is 7 tiles.
 
 Competition Environment 
 ***********************
@@ -347,10 +377,10 @@ At the start of a game, all Agents on all teams spawn together around the perime
 
 **NPCs are scattered across the entire map. They get stronger and more aggressive towards the center. NPCs are all individuals; they fight each other as well; and they are all controlled by very basic scripts. Their aggression and strength levels are correlated, but otherwise are identical. 
 
-Agents can occupy the same tile as other Agents. Other Agents can be their own teammates and/or other team’s Agents. **Is there a limit to number or type of Agents on a single tile? No LIMIT Also, can NPCs be on the Tile and treated the same as player Agents? YES
+Agents can occupy the same tile as other Agents. Other Agents can be their own teammates and/or other team’s Agents. There is no limit to number or type of agents on a single tile, including enemy agents and NPCs. 
 
 **Time and Gameplay**
-The gameplay consists of time units called “ticks.” Each tick provides the opportunity for every Agent and NPC** to do any, all or none of the following actions:
+The gameplay consists of time units called “ticks.” Each tick provides the opportunity for every Agent and NPC to do any, all or none of the following actions:
 
 .. grid:: 3
 
