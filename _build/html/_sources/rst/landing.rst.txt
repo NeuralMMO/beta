@@ -7,9 +7,6 @@
 
 **News:** 2.0 is now in soft-launch. The environment is stable and a working version of the RL baseline is available, but not everything has been fully tuned and documented.
 
-.. card::
-   :img-background: /../_static/banner.png
-
 Neural MMO is a computationally accessible, open-source research platform that simulates populations of agents in virtual worlds. We challenge you to train a team of agents to complete *tasks they have never seen before against opponents they have never seen before on maps they have never seen before*. Our objective is to spur research on increasingly general and cognitively realistic environments.
 
 .. card::
@@ -21,6 +18,8 @@ Neural MMO is a computationally accessible, open-source research platform that s
   **Demo Neural MMO in your browser**
 
 |
+
+.. figure:: /resource/poster.png
 
 .. grid:: 3
 
@@ -157,8 +156,6 @@ Your team of 8 Agents must collect food and water to survive. Each Agent has 8 i
 #######################
 
 Successfully complete the most tasks to win! At stake are $20,000 in prizes sponsored by Parametrix.ai. All submissions receive A100 compute credits for training sponsored by Stability.ai. The competition is currently planned for the start of July 2023.
-
-.. figure:: /resource/poster.png
 
 Neural MMO (NMMO) has three tracks to compete and win. In all tracks, the objective is for your team of 8 agents to accomplish more tasks than 15 other opponent teams. There are 128 Agents in play at the start of each round, and your submission will be evaluated over thousands of rounds with increasingly difficult tasks. Lobbies are made by a matchmaking algorithm that selects 16 teams of similar skill level. For the RL and Curriculum tracks, all entrants receive up to 8 hours of free A100 compute time per submission to train.
 

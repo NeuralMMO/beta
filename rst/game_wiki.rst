@@ -1,5 +1,7 @@
 .. |icon| image:: /resource/icon.png
 
+|
+
 .. card::
     :img-background: /../_static/banner.png
 
