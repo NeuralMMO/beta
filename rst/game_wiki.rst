@@ -58,7 +58,7 @@ Tiles are broadly categorized as follows:
 | **Non-resource**  | Grass, Harvested Tile       | Stone, Void |
 +-------------------+-----------------------------+-------------+
 
-*Resource* tiles may be harvested. *Passable* tiles are harvested by walking over them and *non-passable* tiles by walking next to them. The resource is then consumed from the tile. It will regenerate randomly over time on the same tile. The only exception is the Water tile, which provides unlimited resource.
+*Resource* tiles may be harvested. *Passable* tiles are harvested by walking over them and *obstacle* tiles by walking next to them. The resource is then consumed from the tile. It will regenerate randomly over time on the same tile. The only exception is the Water tile, which provides unlimited resource.
 
 Visibility range is 7 tiles.
 
@@ -97,21 +97,21 @@ Each tick provides the opportunity for every Agent and NPC to do any, all or non
 
 **Move 1 tile in any available direction**
 
-- Agents cannot move off of the game space, or **into water.** 
-- As the game progresses, the action space becomes constrained as a fog encircles the board. Agents cannot be in tiles covered in fog, and all gradually move towards the center of the game space.
+- Agents cannot move off of the game space, or toward obstacle tiles like water and stone.
+- As the game progresses, the action space becomes constrained as a fog encircles the board. Agents take increasing damage in tiles covered in fog, and all gradually move towards the center of the game space.
 
 **Attack an Agent - either NPC or from another team**
 
 - Attack can only be against one other Agent or NPC
-- To attack, your Agent must be within three tiles as the opponent -- actually within a 7x7 square around your Agent.**
+- To attack, your Agent must be within three tiles (in Chebyshev distance) as the opponent -- actually within a 7x7 square around your Agent.**
  
 **Inventory Management**
 
-Inventory capacity is 12 items, including armor, weapon, tools, and consumables.
+Inventory capacity is 12 items, including armor, weapon, tools, ammunition, and consumables. Each item except ammunitions takes one inventory space. Ammunitions of the same type and level can be stacked infinitely in an inventory space. If an Agent's inventory is full, it can no longer harvest or loot new item. To manage inventory, an Agent can
 
-- Buy or Sell in the Market
-- Destroy an item if no market value
-- **Giving an item to a team mate is only permitted when standing on the same tile**
+- List an item in the Market, which remains on the inventory until sold
+- Destroy an item if no market value and instantly make a space available
+- Give an item to a team mate, which is **only permitted when standing on the same tile**
 
 .. dropdown:: About the Observation Space
 
@@ -487,6 +487,6 @@ Generally, Passive NPCs will spawn towards the edges of the map, Hostile NPCs sp
 | **GOLD Resources**                                               |
 +--------------------+------------------------+--------------------+
 | GOLD               | BUY items from other   | SELL items. DEFEAT |
-|                    | players on the MARKET  | NPCs.              |
+|                    | players on the MARKET  | Agents and NPCs.   |
 +--------------------+------------------------+--------------------+
 
