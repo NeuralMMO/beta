@@ -530,18 +530,77 @@ Reinforcement Learning</label><div class="sd-tab-content docutils">
 Curriculum Generation</label><div class="sd-tab-content docutils">
 <p>The Curriculum track is a great way for programmers to compete and participate, without the need for advanced knowledge of AI. In this track, you will design unique and useful curricula for training successful teams on tasks. A curriculum is a structured set of tasks presented to the RL algorithm intelligently to maximize learning. Design the task generator, task sampler, and reward using Python.</p>
 <p>All submitted curricula will be applied to the same baseline RL policy to control a team of agents. Your objective is to create a curriculum of tasks that results in better, more robust learning such that agents are able to complete tasks not seen during training. You will receive performance metrics to see how effective the curriculum is and iterate your training curriculum. The reinforcement learning algorithm, observation featurization, and neural network architecture are provided by the baseline and remain constant across teams.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Insert actual code here:</span>
-<span class="n">metrics</span> <span class="o">=</span> <span class="n">train_on_tasks</span><span class="p">(</span><span class="n">tasks</span><span class="p">)</span>
-<span class="n">metrics</span> <span class="o">=</span> <span class="n">evaluate_on_tasks</span><span class="p">(</span><span class="n">tasks</span><span class="p">)</span>
-
-<span class="n">tasks</span> <span class="o">=</span> <span class="n">make_some_tasks</span><span class="p">()</span>
-<span class="n">metrics</span> <span class="o">=</span> <span class="n">evaluate_on_tasks</span><span class="p">(</span><span class="n">tasks</span><span class="p">)</span>
-
-<span class="k">if</span> <span class="n">tasks_are_good</span><span class="p">:</span>
-    <span class="n">train_on_tasks</span><span class="p">(</span><span class="n">tasks</span><span class="p">)</span>
+<p>The baseline for this track includes a fixed curriculum of tasks and OpenELM integration. For researchers and advanced users, we encourage approaches leveraging <a class="reference external" href="https://arxiv.org/abs/2206.08896">ELM</a> and provide a code generation model with the baselines.</p>
+<p>By default, Neural MMO provides a reward signal of 1 every tick the agent is alive. Our goal is to provide a flexible, powerful high level API to define rewards - and simple enough for even a language model to program. For example, to reward teams for exploring the map</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">scenario</span> <span class="o">=</span> <span class="n">Scenario</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<span class="n">scenario</span><span class="o">.</span><span class="n">add_tasks</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">DistanceTraveled</span><span class="p">(</span><span class="n">dist</span><span class="o">=</span><span class="mi">64</span><span class="p">))</span>
+<span class="n">env</span><span class="o">.</span><span class="n">change_task</span><span class="p">(</span><span class="n">scenario</span><span class="o">.</span><span class="n">tasks</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The baseline for this track includes a fixed curriculum of tasks and OpenELM integration. For researchers and advanced users, we encourage approaches leveraging <a class="reference external" href="https://arxiv.org/abs/2206.08896">ELM</a> and provide a code generation model with the baselines.</p>
+<p>We define a list of tasks, one for each team - to collectively travel 64 tiles away from the starting position. Agents are gradually rewarded as they move away, with a total reward summed to 1 on completion.</p>
+<dl class="simple">
+<dt>Glossary of key terms</dt><dd><ul class="simple">
+<li><p><strong>GameState</strong> is a simplified read-only snapshot view of the environment.</p></li>
+<li><p><strong>Group</strong> is an immutable set of agents.</p></li>
+<li><p><strong>Predicate</strong> is a special, clipped case of Task.</p></li>
+<li><p><strong>Scenario</strong> is a utility class to help assign subjects to tasks.</p></li>
+<li><p><strong>Task</strong> is a mapping from GameState to a reward shared across its (subject: Group). We provide utilities that cover many use cases.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Get started by defining your own tasks by building from our provided set of operators.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">task</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">OR</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">CountEvent</span><span class="p">(</span><span class="n">event</span><span class="o">=</span><span class="s1">&#39;PLAYER_KILL&#39;</span><span class="p">,</span><span class="n">N</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span><span class="n">p</span><span class="o">.</span><span class="n">TickGE</span><span class="p">(</span><span class="n">num_tick</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">task</span> <span class="o">=</span> <span class="n">task</span> <span class="o">*</span> <span class="mi">5</span>
+<span class="n">scenario</span><span class="o">.</span><span class="n">add_tasks</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+
+<span class="c1"># Rewarding the agent for increasing time isn&#39;t helpful for training</span>
+<span class="c1"># Try improving this task!</span>
+</pre></div>
+</div>
+<p>Some possibilities include OR different tasks to count progress towards either, and MUL (overloaded operator “*””) to scale up rewards. It is possible to explicitly assign subjects and groups to tasks.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">env</span><span class="o">.</span><span class="n">change_task</span><span class="p">([</span><span class="n">StayAlive</span><span class="p">(</span><span class="n">Group</span><span class="p">([</span><span class="n">agent</span><span class="p">]))</span> <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">agents</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>More expressivity is possible from decorators &#64;define_task and &#64;define_predicate.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@t</span><span class="o">.</span><span class="n">define_task</span>
+<span class="k">def</span> <span class="nf">KillTask</span><span class="p">(</span><span class="n">gs</span><span class="p">:</span> <span class="n">GameState</span><span class="p">,</span>
+             <span class="n">subject</span><span class="p">:</span> <span class="n">Group</span><span class="p">):</span> <span class="c1"># Annotated with Group to expose env variables</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot; Reward 0.1 per player defeated, with a bonus for the 1st and 3rd kills.&quot;&quot;&quot;</span>
+  <span class="n">num_kills</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">subject</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">PLAYER_KILL</span><span class="p">)</span>
+  <span class="n">score</span> <span class="o">=</span> <span class="n">num_kills</span> <span class="o">*</span> <span class="mf">0.1</span>
+
+  <span class="k">if</span> <span class="n">num_kills</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">score</span> <span class="o">+=</span> <span class="mi">1</span>
+
+  <span class="c1"># You can use other tasks in a definition!</span>
+  <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">CountEvent</span><span class="p">(</span><span class="n">subject</span><span class="o">=</span><span class="n">subject</span><span class="p">,</span> <span class="n">event</span><span class="o">=</span><span class="s1">&#39;PLAYER_KILL&#39;</span><span class="p">,</span><span class="n">N</span><span class="o">=</span><span class="mi">3</span><span class="p">)(</span><span class="n">gs</span><span class="p">)</span> <span class="o">==</span> <span class="mf">1.0</span><span class="p">:</span>
+    <span class="n">score</span> <span class="o">+=</span> <span class="mi">1</span>
+
+  <span class="k">return</span> <span class="n">score</span>
+
+<span class="c1"># scenario also accepts fn(Group -&gt; Task), and calls this for all desired</span>
+<span class="c1"># Groups. The default behavior (passing in Task) is similar to the</span>
+<span class="c1"># lambda definition below.</span>
+<span class="c1"># Defined across agents instead of teams.</span>
+<span class="n">scenario</span><span class="o">.</span><span class="n">add_tasks</span><span class="p">(</span><span class="k">lambda</span> <span class="n">agent</span><span class="p">:</span> <span class="n">KillTask</span><span class="p">(</span><span class="n">subject</span><span class="o">=</span><span class="n">agent</span><span class="p">),</span> <span class="n">groups</span><span class="o">=</span><span class="s1">&#39;agents&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We return a score for an input GameState and the reward each tick is the change in score. Advanced usage can involve directly inheriting from the base Task class or subclasses.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># TaskOperator itself is a subclass of Task</span>
+<span class="k">class</span> <span class="nc">Repeat</span><span class="p">(</span><span class="n">TaskOperator</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">:</span> <span class="n">Task</span><span class="p">,</span> <span class="n">subject</span><span class="p">:</span> <span class="n">Group</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; The reward each turn is the value of the operand.&quot;&quot;&quot;</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="n">n</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="n">subject</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_current_score</span> <span class="o">=</span> <span class="mi">0</span>
+
+  <span class="k">def</span> <span class="nf">_evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gs</span><span class="p">:</span> <span class="n">GameState</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_current_score</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tasks</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span><span class="n">gs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_score</span>
+
+  <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Config</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">Repeat</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 <input id="sd-tab-item-5" name="sd-tab-set-1" type="radio">
 </input><label class="sd-tab-label" for="sd-tab-item-5">

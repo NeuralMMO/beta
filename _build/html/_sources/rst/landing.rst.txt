@@ -183,19 +183,85 @@ Neural MMO (NMMO) has three tracks to compete and win. In all tracks, the object
 
       All submitted curricula will be applied to the same baseline RL policy to control a team of agents. Your objective is to create a curriculum of tasks that results in better, more robust learning such that agents are able to complete tasks not seen during training. You will receive performance metrics to see how effective the curriculum is and iterate your training curriculum. The reinforcement learning algorithm, observation featurization, and neural network architecture are provided by the baseline and remain constant across teams.
 
+      The baseline for this track includes a fixed curriculum of tasks and OpenELM integration. For researchers and advanced users, we encourage approaches leveraging `ELM <https://arxiv.org/abs/2206.08896>`_ and provide a code generation model with the baselines.
+
+      By default, Neural MMO provides a reward signal of 1 every tick the agent is alive. Our goal is to provide a flexible, powerful high level API to define rewards - and simple enough for even a language model to program. For example, to reward teams for exploring the map
+
       .. code-block:: python
 
-         # Insert actual code here:
-         metrics = train_on_tasks(tasks)
-         metrics = evaluate_on_tasks(tasks)
+         scenario = Scenario(config)
+         scenario.add_tasks(p.DistanceTraveled(dist=64))       
+         env.change_task(scenario.tasks)
 
-         tasks = make_some_tasks()
-         metrics = evaluate_on_tasks(tasks)
+      We define a list of tasks, one for each team - to collectively travel 64 tiles away from the starting position. Agents are gradually rewarded as they move away, with a total reward summed to 1 on completion.
 
-         if tasks_are_good:
-             train_on_tasks(tasks)
+      Glossary of key terms
+        - **GameState** is a simplified read-only snapshot view of the environment.
+        - **Group** is an immutable set of agents.
+        - **Predicate** is a special, clipped case of Task.
+        - **Scenario** is a utility class to help assign subjects to tasks.
+        - **Task** is a mapping from GameState to a reward shared across its (subject: Group). We provide utilities that cover many use cases.
 
-      The baseline for this track includes a fixed curriculum of tasks and OpenELM integration. For researchers and advanced users, we encourage approaches leveraging `ELM <https://arxiv.org/abs/2206.08896>`_ and provide a code generation model with the baselines.
+      Get started by defining your own tasks by building from our provided set of operators.
+
+      .. code-block:: python
+
+         task = t.OR(p.CountEvent(event='PLAYER_KILL',N=5),p.TickGE(num_tick=5))
+         task = task * 5
+         scenario.add_tasks(task)
+
+         # Rewarding the agent for increasing time isn't helpful for training
+         # Try improving this task!
+
+      Some possibilities include OR different tasks to count progress towards either, and MUL (overloaded operator "*"") to scale up rewards. It is possible to explicitly assign subjects and groups to tasks.
+
+      .. code-block:: python
+
+         env.change_task([StayAlive(Group([agent])) for agent in agents])
+
+      More expressivity is possible from decorators @define_task and @define_predicate.
+
+      .. code-block:: python
+        
+         @t.define_task
+         def KillTask(gs: GameState,
+                      subject: Group): # Annotated with Group to expose env variables
+           """ Reward 0.1 per player defeated, with a bonus for the 1st and 3rd kills."""
+           num_kills = len(subject.event.PLAYER_KILL)
+           score = num_kills * 0.1
+            
+           if num_kills >= 1:
+             score += 1
+              
+           # You can use other tasks in a definition!
+           if p.CountEvent(subject=subject, event='PLAYER_KILL',N=3)(gs) == 1.0:
+             score += 1
+
+           return score
+
+         # scenario also accepts fn(Group -> Task), and calls this for all desired      
+         # Groups. The default behavior (passing in Task) is similar to the
+         # lambda definition below.
+         # Defined across agents instead of teams.
+         scenario.add_tasks(lambda agent: KillTask(subject=agent), groups='agents')
+
+      We return a score for an input GameState and the reward each tick is the change in score. Advanced usage can involve directly inheriting from the base Task class or subclasses.
+
+      .. code-block:: python
+
+        # TaskOperator itself is a subclass of Task
+        class Repeat(TaskOperator):
+          def __init__(self, task: Task, subject: Group=None):
+            """ The reward each turn is the value of the operand."""
+            super().__init__(lambda n: n==1, task, subject=subject)
+            self._current_score = 0
+
+          def _evaluate(self, gs: GameState) -> float:
+            self._current_score += self._tasks[0](gs)
+            return self._current_score
+
+          def sample(self, config: Config, **kwargs):
+            return super().sample(config, Repeat, **kwargs)
 
   .. tab-item:: No Holds Barred
 
