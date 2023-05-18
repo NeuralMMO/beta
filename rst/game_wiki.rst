@@ -122,10 +122,10 @@ Inventory capacity is 12 items, including armor, weapon, tools, ammunition, and 
 
   observation_space(agent_id) = {
         'AgentId': Discrete(1),
-        'Entity' :Box(-1048576.0, 1048576.0, (100, 22), float32),
+        'CurrentTick': Discrete(1),
+        'Entity' :Box(-1048576.0, 1048576.0, (100, 23), float32),
         'Inventory': Box(-1048576.0, 1048576.0, (12, 16), float32),
         'Market': Box(-1048576.0, 1048576.0, (640, 16), float32),
-        'Tick': Box(-1048576.0, 1048576.0, (1, 1), float32),
         'Tile': Box(-1048576.0, 1048576.0, (225, 3), float32)
     }
 
@@ -136,14 +136,12 @@ Levels
     .. tab-item:: Agent Levels
 
          - Levels range from 1 to 10
-         - Agents spawn with all skills at level 1 (0 XP)
-         - Level x+1 requires 10*2^x* XP
+         - Agents spawn with all skills at level 1 and 0 XP
+         - Level x+1 requires 10*2^(x-1)* XP. For example, to get to level 2, one needs 10 XP.
          - Agents are awarded 1 XP per attack
 
          - Agents are awarded 1 XP per ammunition resource gathered
          - Agents are awarded 5 XP per consumable resource gathered
- 
-         - All items except gold will appear in varying levels
 
     .. tab-item:: Items and Equipment Levels
 
@@ -164,6 +162,7 @@ Each agent may take multiple actions per tick -- one from each category. Each ac
               nmmo.action.South,
               nmmo.action.East,
               nmmo.action.West,
+              nmmo.action.Stay,
           },
       },
       nmmo.action.Attack: {
@@ -177,12 +176,33 @@ Each agent may take multiple actions per tick -- one from each category. Each ac
           }
       },
       nmmo.action.Use: {
-          nmmo.action.Item: {
+          nmmo.action.InventoryItem: {
               Inventory Pointer,
           },
       },
+      nmmo.action.Destroy: {
+          nmmo.action.InventoryItem: {
+              Inventory Pointer,
+          },
+      },
+      nmmo.action.Give: {
+          nmmo.action.InventoryItem: {
+              Inventory Pointer,
+          },
+          nmmo.action.Target: {
+              Entity Pointer,
+          }
+      },
+      nmmo.action.GiveGold: {
+          nmmo.action.Price: {
+              Discrete Value,
+          },
+          nmmo.action.Target: {
+              Entity Pointer,
+          }
+      },
       nmmo.action.Sell: {
-          nmmo.action.Item: {
+          nmmo.action.InventoryItem: {
               Inventory Pointer,
           },
           nmmo.action.Price: {
@@ -190,7 +210,7 @@ Each agent may take multiple actions per tick -- one from each category. Each ac
           },
       },
       nmmo.action.Buy: {
-          nmmo.action.Item: {
+          nmmo.action.MarketItem: {
               Market Pointer,
           },
       },
@@ -218,7 +238,7 @@ Attack range is 3 tiles, full sweep view.
 
     .. tab-item:: Choosing attack style
     
-        The attacker can select the skill strongest against the target's main skill. This multiplies the effectiveness of the attack. However, the defender can immediately retaliate in the same way. A strong agent with a higher level and better equipment can still beat a weaker agent, even if the weaker agent uses the attack style that multiplies damage. 
+        The attacker can select the skill strongest against the target's main skill. This increases the attack damage by 50%. However, the defender can immediately retaliate in the same way. A strong agent with a higher level and better equipment can still beat a weaker agent, even if the weaker agent uses the attack style that multiplies damage. 
 
     .. tab-item:: Armor
     
@@ -320,7 +340,7 @@ For Skills Prospecting, Carving, and Alchemy, agents walk on the associated reso
 **Tools**
   - All Tools provide a flat 30 defense regardless of item level
   - Tools need a relevant skill level (fishing, herbalism, prospecting, carving, alchemy) ≥ the item level to equip
-  - Tools enable an agent to collect an associated resource (ration, poultice, scrap, shaving, shard) at a level equal to the item level
+  - Tools enable an agent to collect an associated resource (ration, poultice, scrap, shaving, shard) at a level equal to the tool level
 
 |
 
