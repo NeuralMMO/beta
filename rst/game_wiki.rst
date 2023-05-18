@@ -449,12 +449,8 @@ Generally, Passive NPCs will spawn towards the edges of the map, Hostile NPCs sp
       - Team: ID # of team
       - Direction: Left; Right
 
-TODO
-****
-
-
-A Section Needs Naming
-**********************
+|icon| Tiles Quick Reference
+******************************
 
 **Tile Resources**
 On these tiles are various important resources. Access resources and stay alive in the game - EAT, DRINK and COMBAT.
