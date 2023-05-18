@@ -67,7 +67,7 @@ Tiles are broadly categorized as follows:
 |icon| Survival
 ###############
 
-Agents have health, food, and water. These are displayed overhead as green, gold, and blue bars respectively. Agents must stay full, hydrated, and healthy in order to survive.
+Agents have health, food, and water. These are displayed overhead as green, gold, and blue bars respectively. Agents must stay full, hydrated, and healthy in order to survive. 
 
 Losing and gaining resources:
   - Health, food, and water start at 100
@@ -77,19 +77,21 @@ Losing and gaining resources:
   - These values add - lose 20 health if out of food and water per tick
   - If above half food and half water, agents regain 10 health per tick
 
-Agents can collect food and water. Walking on a foliage tile restores food to 100. The foliage tile then decays and will respawn at a random time in the same place. Walking adjacent to a water tile restores water to 100. Water tiles do not decay.
+**Tick:** The simulation interval of the server; a timestep. With rendering enabled, the server targets 0.6s/tick.
+
+Agents can replenish food and water. Walking on a foliage tile restores food to 100. The foliage tile then is harvested and will respawn at a random time in the same place. Walking adjacent to a water tile restores water to 100. Water tiles do not empty.
 
 About Combat
 ************
 
-Each Agent can attack one opponent per game tick. In a given tick, multiple enemy Agents can attack a single Agent. Agents select from Melee, Range, and Mage style attacks. An Agent's main combat skill is the one that they use the most / have the highest level in. This is denoted by the hat they are wearing.
+Each agent can attack one opponent per game tick. In a given tick, multiple enemy agents can attack a single agent. Agents select from Melee, Range, and Mage style attacks. An agent's main combat skill is the one that they use the most / have the highest level in. This is denoted by the hat they are wearing.
 
 Attack skills obey a rock-paper-scissors dominance relationship: 
  - Melee beats Range 
  - Range beats Mage 
  - Mage beats Melee
 
-Attack range is 3 tiles, full sweep.
+Attack range is 3 tiles, full sweep view.
 
 **Insert Image**
 
@@ -97,7 +99,7 @@ Attack range is 3 tiles, full sweep.
 
     .. tab-item:: Choosing attack style
     
-        The attacker can select the skill strongest against the target's main skill. This multiplies the effectiveness of their attack. However, the defender can immediately retaliate in the same way. **An agent with combat style has a higher level and better equipment may outperform an attacker who only benefits from the attack dominance effectiveness multiplier.**
+        The attacker can select the skill strongest against the target's main skill. This multiplies the effectiveness of the attack. However, the defender can immediately retaliate in the same way. A strong agent with a higher level and better equipment can still beat a weaker agent, even if the weaker agent uses the attack style that multiplies damage. 
 
     .. tab-item:: Armor
     
@@ -173,7 +175,7 @@ There are 8 Professions that Agents can learn and level up in. Agents can improv
 **Agents have an inventory that can hold 12 items.**
 
 +----------------+-------------+---------+-----------------+------------+------------------+------------------+
-| **Type**       |*Profession* |*Tool*   |*Level up method*|*HP Effect* |*Food/Water Level*|*Market Buy/Sell* |
+| **Item Type**  |*Profession* |*Tool*   |*Level up method*|*HP Effect* |*Food/Water Level*|*Market Buy/Sell* |
 +================+=============+=========+=================+============+==================+==================+
 |                | Mage        | Wand    | Hitting and     | \-HP level |                  | Wand             |
 |                +-------------+---------+ damaging        | unless you |                  +------------------+
@@ -195,21 +197,27 @@ There are 8 Professions that Agents can learn and level up in. Agents can improv
 |
 
 **Tools**
-  - All Tools provide a flat 30 defense regardless of item level.
-  - Tools need a pertinent skill level (fishing, herbalism, prospecting, carving, alchemy) > or = the item level to equip.
-  - Tools enable an agent to collect an associated resource (ration, poultice, scrap, shaving, shard) at a level equal to the item level.
+  - All Tools provide a flat 30 defense regardless of item level
+  - Tools need a relevant skill level (fishing, herbalism, prospecting, carving, alchemy) ≥ the item level to equip
+  - Tools enable an agent to collect an associated resource (ration, poultice, scrap, shaving, shard) at a level equal to the item level
 
 |
 
 **Rations**
-  - Consume to restore 5 food and water per item level.
-  - Requires at least one skill greater than or equal to the item level to use.
+  - Consume rations to restore 5 food and water per item level
+  - Requires at least one skill greater than or equal to the item level to use
 
+    A rod is used to collect the rations. Alternatively, agents can buy rations in the market.
+    
+    For example, agents can harvest a level 3 fish only with a level 3 rod. If they buy a fish in the market, they can eat level 3 fish by just having any skill level 3 or above. If they buy a ration with a level higher than any of their skills, they can store but cannot eat it until a skill level = the ration level. 
+ 
 |
 
 **Poultices**
-  - Consume to restore 5 health per item level.
-  - Requires at least one skill greater than or equal to the item level to use.
+  - Consume to restore 5 health per gloves level.
+  - Requires at least one skill greater than or equal to the glove level to use.
+  
+  The same rules about levels apply to poultices as rations. 
 
 
 |icon| Market
