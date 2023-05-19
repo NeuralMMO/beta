@@ -26,11 +26,11 @@ Before diving into the Game Wiki, why not warm up and read a narrative of a typi
     *Playing*
     The next step of play is to establish an advantage versus the competition. Agents have access to 8 different professions which can be improved through practice. All of these in some way confer a benefit to offensive or defensive capabilities that allow agents to protect themselves. The team must now decide which agents on the team will spend their time improving which skills. 
 
-    - For example, one agent could practice ranged bow-and-arrow combat by fighting weak non-playable characters (NPCs) that roam the map, while another agent practices fletching to provide the former with powerful arrows as ammunition. 
+    - For example, one agent could practice ranged bow-and-arrow combat by fighting weak non-playable characters (NPCs) that roam the map, while another agent practices carving to provide the former with powerful arrows as ammunition. 
 
     - One agent could practice herbalism, allowing them to make potions to heal the rest of the team. One agent could practice Magic, which is a powerful counter to hostile opponents using Melee combat. 
 
-    - Multiple agents could practice different forms of combat and collaborately challenge more powerful NPCs. Winning yields defensive equipment to share with the rest of the team. 
+    - Multiple agents could practice different forms of combat and collaborately challenge more powerful NPCs. Winning yields defensive equipment, tools, and gold to share with the rest of the team. 
 
     *Trade-offs and Strategy*
     Agents should spread out to search for resources but stay together to create safety in numbers. Agents should diversify their skills but do not have the time to develop expertise in all professions. Agents may sell unneeded items on a global market but should be wary of giving the competition an edge. Agents should proactively seek out potential enemies but only if they catch them unawares or otherwise have a strategic advantage. Ultimately, these decisions are a matter of strategy and opportunism - plans may change to become more aggressive or conservative depending on what resources agents are able to harvest early in the game. This stage of play occupies the next few minutes.
