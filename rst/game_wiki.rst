@@ -103,7 +103,7 @@ Each tick provides the opportunity for every Agent and NPC to do any, all or non
 **Attack an Agent - either NPC or from another team**
 
 - Attack can only be against one other Agent or NPC
-- To attack, your Agent must be within three tiles in Chebyshev distance as the opponent -- within a 7x7 square around your Agent.**
+- To attack, your Agent must be within three tiles in Chebyshev distance as the opponent -- **within a 7x7 square around your Agent.**
  
 **Inventory Management**
 
