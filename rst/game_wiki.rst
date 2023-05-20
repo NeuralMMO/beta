@@ -311,54 +311,56 @@ Professions, Tools, and Items
 
 There are 8 Professions that Agents can learn and level up in. Agents can improve their skills in multiple Professions, but will not be able to progress in all Professions. How Professions are distributed across Agent teams is a part of game strategy. 
 
-For Skills Prospecting, Carving, and Alchemy, agents walk on the associated resource tile to harvest the resource. Agent receives a different quality/level of resource, depending on agent's tool level. (CHECK ME: for example, fishing level=5 without rod will only yield level-1 ration. DO WE WANT THIS?) The resource tile will respawn later in the same place. There is a 2.5 percent chance to obtain a weapon while gathering ammunition on a tile, the level of which is also determined by the tool level of the harvesting agent.
+For Skills Prospecting, Carving, and Alchemy, agents walk on the associated resource tile to harvest the resource. Agent receives a different quality/level of resource, depending on agent's tool level. **(CHECK ME: for example, fishing level=5 without rod will only yield level-1 ration. DO WE WANT THIS?)** The resource tile will respawn later in the same place. There is a 2.5 percent chance to obtain a weapon while gathering ammunition on a tile, the level of which is also determined by the tool level of the harvesting agent.
 
 **Agents have an inventory that can hold 12 items.**
 
-+----------------+-------------+---------+-----------------+------------+------------------+------------------+
-| **Item Type**  |*Profession* |*Tool*   |*Level up method*|*HP Effect* |*Food/Water Level*|*Market Buy/Sell* |
-+================+=============+=========+=================+============+==================+==================+
-|                | Mage        | Wand    | Hitting and     | \-HP level |                  | Wand             |
-|                +-------------+---------+ damaging        | unless you |                  +------------------+
-|**Combat**      | Melee       | Sword   | NPCs and        | take no    |                  | Sword            |
-|                +-------------+---------+ Enemies         | damage     |                  +------------------+
-|                | Range       | Bow     |                 |            |                  | Bow              |
-+----------------+-------------+---------+-----------------+------------+------------------+------------------+
-|                | Fishing     | Rod     | Level up via    | \+HP level | \+Food &         | Fish Ration      |
-|**Gathering**   +-------------+---------+ experience      +------------+ Water level      +------------------+
-|                | Herbalism   | Gloves  | and use         | \+HP level |                  | Poultice         |
-+                +-------------+---------+                 +------------+------------------+------------------+
-|                | Carving     | Chisel  |                 | \+HP level |                  | Chisel & Shaving |
-|                +-------------+---------+                 +------------+                  +------------------+
-|                | Prospecting | Pickaxe |                 | \+HP level |                  | Pickaxe & Scrap  |
-|                +-------------+---------+                 +------------+                  +------------------+
-|                | Alchemy     | Arcane  |                 |            |                  | Arcane & Shards  |
-+----------------+-------------+---------+-----------------+------------+------------------+------------------+
++----------------+-------------+---------+-----------------+------------+------------------+---------------------+
+| **Item Type**  |*Profession* |*Tool*   |*Level up method*|*HP Effect* |*Food/Water Level*|*Market Buy/Sell*    |
++================+=============+=========+=================+============+==================+=====================+
+|                | Mage        | Wand    | Hitting and     | \-HP level |                  | Wand                |
+|                +-------------+---------+ damaging        | unless you |                  +---------------------+
+|**Combat**      | Melee       | Spear   | NPCs and        | take no    |                  | Spear               |
+|                +-------------+---------+ Enemies         | damage     |                  +---------------------+
+|                | Range       | Bow     |                 |            |                  | Bow                 |
++----------------+-------------+---------+-----------------+------------+------------------+---------------------+
+|                | Fishing     | Rod     | Level up        |            | \+Food & Water   | Ration              |
+|**Gathering**   +-------------+---------+ via harvest     +------------+------------------+---------------------+
+|                | Herbalism   | Gloves  | experience      | \+HP level |                  | Potion              |
++                +-------------+---------+                 +------------+                  +---------------------+
+|                | Carving     | Axe     |                 |            |                  | Axe & Arrow         |
+|                +-------------+---------+                 +            +                  +---------------------+
+|                | Prospecting | Pickaxe |                 |            |                  | Pickaxe & Whetstone |
+|                +-------------+---------+                 +            +                  +---------------------+
+|                | Alchemy     | Chisel  |                 |            |                  | Chisel & Runes      |
++----------------+-------------+---------+-----------------+------------+------------------+---------------------+
 
 |
 
 **Tools**
   - All Tools provide a flat 30 defense regardless of item level
   - Tools need a relevant skill level (fishing, herbalism, prospecting, carving, alchemy) ≥ the item level to equip
-  - Tools enable an agent to collect an associated resource (ration, poultice, scrap, shaving, shard) at a level equal to the tool level
+  - Tools enable an agent to collect an associated resource (ration, potion, scrap, shaving, shard) at a level equal to the tool level **(REPEAT CHECK ME: for example, fishing level=5 without rod will only yield level-1 ration. DO WE WANT THIS?)**
 
 |
 
 **Rations**
-  - Consume rations to restore 5 food and water per item level
-  - Requires at least one skill greater than or equal to the item level to use
+  - Consume a ration to restore food and water level, which increase by 50 + 5*item level 
+  - Requires at least one skill greater than or equal to the ration level to use
 
-    A rod is used to collect the rations. Alternatively, agents can buy rations in the market.
+    A rod helps harvesting rations. Alternatively, agents can buy rations in the market.
     
-    For example, agents can harvest a level 3 fish only with a level 3 rod. If they buy a fish in the market, they can eat level 3 fish by just having any skill level 3 or above. If they buy a ration with a level higher than any of their skills, they can store but cannot eat it until a skill level = the ration level. 
+    For example, if agents buy a level 3 ration in the market, they can use it only when they have any skill level 3 or above. If they buy a ration with a level higher than any of their skills, they can store but cannot use it until a skill level = the ration level. 
  
 |
 
-**Poultices**
-  - Consume to restore 5 health per gloves level.
-  - Requires at least one skill greater than or equal to the glove level to use.
+**Potions**
+  - Consume a potion to restore health level, which increases by 50 + 5*item level
+  - Requires at least one skill greater than or equal to the potion level to use.
   
-  The same rules about levels apply to poultices and rations. 
+    A glove helps harvesting potions. Alternatively, agents can buy potions in the market.
+  
+    The same rules about skill and item levels apply to both potions and rations. 
 
 
 |icon| Market
