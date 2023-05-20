@@ -311,7 +311,7 @@ Professions, Tools, and Items
 
 There are 8 Professions that Agents can learn and level up in. Agents can improve their skills in multiple Professions, but will not be able to progress in all Professions. How Professions are distributed across Agent teams is a part of game strategy. 
 
-For Skills Prospecting, Carving, and Alchemy, agents walk on the associated resource tile to harvest the resource. Agent receives a different quality/level of resource, depending on agent's tool level. **(CHECK ME: for example, fishing level=5 without rod will only yield level-1 ration. DO WE WANT THIS?)** The resource tile will respawn later in the same place. There is a 2.5 percent chance to obtain a weapon while gathering ammunition on a tile, the level of which is also determined by the tool level of the harvesting agent.
+For Skills Prospecting, Carving, and Alchemy, agents walk on the associated resource tile to harvest the resource. Agent receives a different quality/level of resource, depending on agent's tool level. *(CHECK ME: for example, fishing level=5 without rod will only yield level-1 ration. DO WE WANT THIS?)* The resource tile will respawn later in the same place. There is a 2.5 percent chance to obtain a weapon while gathering ammunition on a tile, the level of which is also determined by the tool level of the harvesting agent.
 
 **Agents have an inventory that can hold 12 items.**
 
@@ -340,7 +340,7 @@ For Skills Prospecting, Carving, and Alchemy, agents walk on the associated reso
 **Tools**
   - All Tools provide a flat 30 defense regardless of item level
   - Tools need a relevant skill level (fishing, herbalism, prospecting, carving, alchemy) ≥ the item level to equip
-  - Tools enable an agent to collect an associated resource (ration, potion, scrap, shaving, shard) at a level equal to the tool level **(REPEAT CHECK ME: for example, fishing level=5 without rod will only yield level-1 ration. DO WE WANT THIS?)**
+  - Tools enable an agent to collect an associated resource (ration, potion, whetstone, arrow, runes) at a level equal to the tool level *(REPEAT CHECK ME: for example, fishing level=5 without rod will only yield level-1 ration. DO WE WANT THIS?)*
 
 |
 
@@ -358,7 +358,7 @@ For Skills Prospecting, Carving, and Alchemy, agents walk on the associated reso
   - Consume a potion to restore health level, which increases by 50 + 5*item level
   - Requires at least one skill greater than or equal to the potion level to use.
   
-    A glove helps harvesting potions. Alternatively, agents can buy potions in the market.
+    A pair of gloves helps harvesting potions. Alternatively, agents can buy potions in the market.
   
     The same rules about skill and item levels apply to both potions and rations. 
 
@@ -366,15 +366,16 @@ For Skills Prospecting, Carving, and Alchemy, agents walk on the associated reso
 |icon| Market
 *************
 
-Gold coins are the currency for buying and selling items in NMMO. Gold coins cannot be sub-divided. Agents set their own prices and receive gold when someone is willing to accept their price. Within the same team, can gift to one another if they are standing on the same tile. 
+Gold coins are the currency for buying and selling items in NMMO. Gold coins cannot be sub-divided. Agents set their own prices when selling items and receive gold when someone is willing to accept their price. Within the same team, can gift to one another if they are standing on the same tile. 
 
-Market interactions are as follows:
- - Agents place sell offers on the market for one of their items at a desired price
- - The item is immediately removed from the seller's inventory
- - Other agents can immediately buy that item and receive it
- - If multiple agents attempt to buy the same item at the same time, the market will attempt to fulfill the request from another seller at a price no more than 10% higher.
-
-Agents only observe the current best offer for each item of each level. This bounds the observation and action spaces.
+Market interactions are as follows, which are similar to that of Craiglist:
+ - Agents list one of their items at a desired price on the market via Sell action
+ - When the sell action is processed, other agents can see the listings from the next tick
+ - The item remains in the seller's inventory until sold or for 5 ticks, if not sold
+ - Other agents can offer to buy the item via Buy action at the seller's price
+ - If multiple agents attempt to buy the same item, the market will randomly select a single buyer
+ 
+Agents have access to all the listings.
 
 +--------------------------------------------------------------------------------------+
 | **BUY and SELL with GOLD**                                                           |
@@ -383,11 +384,11 @@ Agents only observe the current best offer for each item of each level. This bou
 +--------------------+------------------------+--------------------+-------------------+
 | *Tools*            | *Ammunitions*          | *Weapons*          | *Armors*          |
 +--------------------+------------------------+--------------------+-------------------+
-| AXE                | Wood ARROWS            | BOW                | HAT               |
-+--------------------+------------------------+--------------------+-------------------+
-| PICKAXE            | Rock WHETSTONES        | SWORD              | TOP               |
-+--------------------+------------------------+--------------------+-------------------+
-| CHISEL             | Magic RUNES            | WAND               | BOTTOM            |
+| AXE                | Wood ARROWS            | BOW                | HAT, TOP, BOTTOM  |
++--------------------+------------------------+--------------------+                   |
+| PICKAXE            | Rock WHETSTONES        | SPEAR              |                   |
++--------------------+------------------------+--------------------+                   +
+| CHISEL             | Magic RUNES            | WAND               |                   |
 +--------------------+------------------------+--------------------+-------------------+
 | **Health items**                                                                     |
 +--------------------+-----------------------------------------------------------------+
@@ -484,12 +485,12 @@ Generally, Passive NPCs will spawn towards the edges of the map, Hostile NPCs sp
 | WATER              | WATER to DRINK         | Stand next to WATER|
 |                    |                        | to DRINK           | 
 +--------------------+------------------------+--------------------+
-| FISH               | RATION item to EAT     | ROD to HARVEST     |
-|                    |                        |                    | 
+| FISH               | RATION to increase     | Equip ROD          |
+|                    | FOOD and WATER         |                    | 
 +--------------------+------------------------+--------------------+
 | **GRASS Tile Resources**                                         |
 +--------------------+------------------------+--------------------+
-| FOOD               | FOOD to EAT            | Stand on FOOD      |
+| FOILAGE            | FOOD to EAT            | Stand on FOILAGE   |
 |                    |                        | to EAT             | 
 +--------------------+------------------------+--------------------+
 | HERB               | POTION item to         | GLOVES to HARVEST  |
