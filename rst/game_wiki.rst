@@ -44,23 +44,23 @@ Before diving into the Game Wiki, why not warm up and read a narrative of a typi
 The Game Map
 ************
 
-Each instance of Neural MMO contains an automatically generated tile-based game map of 128 x 128 tiles. The map is surrounded by Void. Agents that attempt to walk into the void dissapear, never to be seen again.
+Each instance of Neural MMO contains an automatically generated tile-based game map of 128 x 128 tiles. The map is surrounded by Void, which is not reachable at all.
 
 Tiles are broadly categorized as follows:
   - *Passable* tiles can be walked on while *obstacle* tiles block movement
   - *Resource* tiles can be harvested while *non-resource* cannot
 
-+-------------------+-----------------------------+-------------+
-| **Tile Type**     | *Passable*                  | *Obstacle*  |
-+===================+=============================+=============+
-| **Resource**      | Foliage, Ore, Tree, Crystal | Water, Fish |
-+-------------------+-----------------------------+-------------+
-| **Non-resource**  | Grass, Harvested Tile       | Stone, Void |
-+-------------------+-----------------------------+-------------+
++-------------------+-----------------------------------+-------------+
+| **Tile Type**     | *Passable*                        | *Obstacle*  |
++===================+===================================+=============+
+| **Resource**      | Foliage, Ore, Tree, Crystal, Herb | Water, Fish |
++-------------------+---------------------+-------------+-------------+
+| **Non-resource**  | Grass, Harvested Tile             | Stone, Void |
++-------------------+-----------------------------------+-------------+
 
-*Resource* tiles may be harvested. *Passable* tiles are harvested by walking over them and *obstacle* tiles by walking next to them. The resource is then consumed from the tile. It will regenerate randomly over time on the same tile. The only exception is the Water tile, which provides unlimited resource.
+*Resource* tiles may be harvested. *Passable* tiles are harvested by walking over them and *obstacle* tiles by walking next to them. The resource is then depleted from the tile. It will regenerate randomly over time on the same tile. The only exception is the Water tile, which provides unlimited resource.
 
-Visibility range is 7 tiles.
+Each Agent has a visibility of up to seven tiles in Chebyshev distance, allowing it to see a 15x15 square around itself.
 
 .. dropdown:: About the tile generation algorithm
     
@@ -81,12 +81,12 @@ Losing and gaining resources:
 
 **Tick:** The gameplay consists of time units called “ticks.” When rendering, the game moves at 0.6s/tick.
 
-Agents can replenish food and water. Walking on a foliage tile restores food to 100. The foliage tile then is harvested and will respawn at a random time in the same place. Walking adjacent to a water tile restores water to 100. Water tiles do not empty.
+Agents can replenish food and water. Walking on a foliage tile restores food to 100. The foliage tile then is depleted and will respawn at a random time in the same place. Walking adjacent to a water tile restores water to 100. Water tiles do not empty.
 
 |icon| Competition Environment and Levels
 *****************************************
 
-At the start of a game, all agents on all teams spawn (enter the game) together around the perimeter of the map on the same tile. Agent teams are evenly dispersed around the perimeter. 
+At the start of a game, all agents on each team spawn (enter the game) together on the same tile around the perimeter of the map. Agent teams are evenly dispersed around the perimeter. 
 
 Non-Player Characters (NPCs) are any agent not controlled by a user; sometimes called a *mob*. NPCs are scattered across the entire map. They get stronger and more aggressive towards the center. NPCs are all individuals; they fight each other as well; and they are all controlled by basic scripts. Their aggression and strength levels are correlated, but otherwise are identical. 
 
@@ -103,11 +103,11 @@ Each tick provides the opportunity for every Agent and NPC to do any, all or non
 **Attack an Agent - either NPC or from another team**
 
 - Attack can only be against one other Agent or NPC
-- To attack, your Agent must be within three tiles (in Chebyshev distance) as the opponent -- actually within a 7x7 square around your Agent.**
+- To attack, your Agent must be within three tiles in Chebyshev distance as the opponent -- within a 7x7 square around your Agent.**
  
 **Inventory Management**
 
-Inventory capacity is 12 items, including armor, weapon, tools, ammunition, and consumables. Each item except ammunitions takes one inventory space. Ammunitions of the same type and level can be stacked infinitely in an inventory space. If an Agent's inventory is full, it can no longer harvest or loot new item. To manage inventory, an Agent can
+Inventory capacity is 12 items, including armor, weapon, tools, ammunition, and consumables. Each item except ammunitions takes one inventory space. Ammunitions of the same type and level can be stacked infinitely in one inventory space. If an Agent's inventory is full, it cannot harvest or loot new item. To manage inventory, an Agent can
 
 - List an item in the Market, which remains on the inventory until sold
 - Destroy an item if no market value and instantly make a space available
@@ -115,7 +115,7 @@ Inventory capacity is 12 items, including armor, weapon, tools, ammunition, and 
 
 .. dropdown:: About the Observation Space
 
-    Each agent observes a groups of entities comprising nearby tiles and agents, its own inventory, and the market. Continuous and discrete tensors of attributes parametrize each entity group. An extra variable *N* counts the number of entities per group.
+    Each agent's observation consists of the current tick, its id, its nearby 15x15 visible tiles, up to 100 entities within its vision, its own inventory, and the global market listings.
 
     .. code-block:: python
         :caption: Observation space of a single agent
@@ -223,7 +223,7 @@ Each agent may take multiple actions per tick -- one from each category. Each ac
 About Combat
 ************
 
-Each agent can attack one opponent per game tick. In a given tick, multiple enemy agents can attack a single agent. Agents select from Melee, Range, and Mage style attacks. An agent's main combat skill is the one that they use the most / have the highest level in. This is denoted by the hat they are wearing.
+Each agent can attack one opponent per game tick. In a given tick, multiple enemy agents can attack a single agent. Agents select from Melee, Range, and Mage style attacks. An agent's main combat skill is the one that they use the most / have the highest XP in. This is denoted by the hat they are wearing.
 
 Attack skills obey a rock-paper-scissors dominance relationship: 
  - Melee beats Range 
@@ -248,9 +248,9 @@ Attack range is 3 tiles, full sweep view.
     
         Weapons require an associated fighting style skill level ≥ the item level to equip. Weapons boost attacks; higher level weapons provide more boost. Tools grant a flat defense regardless of item level.
 
-**Damage** to health is a randomized function based on several factors, including:
- - Fighting style
- - Combat skill level
+**Damage** to health is determined based on several factors, including:
+ - Fighting styles
+ - Combat skill levels
  - Weapon level
  - Armor levels
 
@@ -281,9 +281,9 @@ Attack range is 3 tiles, full sweep view.
 
     Tick 2:
 
-    You attack them. They lose 14 HP
+    You attack them. They lose 18 HP
 
-    They attack you. You lose 32 HP
+    They attack you. You lose 27 HP
 
     |
 
@@ -295,14 +295,14 @@ Attack range is 3 tiles, full sweep view.
 
     |
 
-    Tick 4: You chase and attack them. They lose 15 HP.
+    Tick 4: You chase and attack them. They lose 18 HP.
 
-    They consume a poultice to regain 50 HP and run some more.
+    They consume a potion to regain 50 HP and run some more.
 
     |
 
     This continues for some time, with your opponent running away, and you chasing them. 
-    Eventually, you give up and let them go. Your HP is low, and they had to consume a poultice. 
+    Eventually, you give up and let them go. Your HP is low, and they had to consume a potion. 
 
     Fortunately, this was only a training run, and you now can reconsider your strategy for the next round.
 
@@ -311,7 +311,7 @@ Professions, Tools, and Items
 
 There are 8 Professions that Agents can learn and level up in. Agents can improve their skills in multiple Professions, but will not be able to progress in all Professions. How Professions are distributed across Agent teams is a part of game strategy. 
 
-For Skills Prospecting, Carving, and Alchemy, agents walk on the associated resource tile to harvest the resource. Agent receives a different quality/level of resource, depending on agent levels/tools. The resource tile will respawn later in the same place. There is a 2.5 percent chance to obtain a weapon while gathering ammunition on a tile.
+For Skills Prospecting, Carving, and Alchemy, agents walk on the associated resource tile to harvest the resource. Agent receives a different quality/level of resource, depending on agent's tool level. (CHECK ME: for example, fishing level=5 without rod will only yield level-1 ration. DO WE WANT THIS?) The resource tile will respawn later in the same place. There is a 2.5 percent chance to obtain a weapon while gathering ammunition on a tile, the level of which is also determined by the tool level of the harvesting agent.
 
 **Agents have an inventory that can hold 12 items.**
 
