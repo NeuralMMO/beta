@@ -492,3 +492,7 @@ Generally, Passive NPCs will spawn towards the edges of the map, Hostile NPCs sp
 |           |              +------------------------------------------+               | ARROW and SPEAR                    |
 |           |              | Seldom (2.5%) yield SPEAR (Melee weapon) |               |                                    |
 +-----------+--------------+------------------------------------------+---------------+------------------------------------+
+| ORE       | Yes          | Yield WHETSTONE (Melee ammunition)       | Prospecting   | Equip PICKAXE for high-level       |
+|           |              +------------------------------------------+               | WHETSTONE and WAND                 |
+|           |              | Seldom yield WAND (Mage weapon)          |               |                                    |
++-----------+--------------+------------------------------------------+---------------+------------------------------------+
