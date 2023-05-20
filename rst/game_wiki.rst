@@ -488,3 +488,7 @@ Generally, Passive NPCs will spawn towards the edges of the map, Hostile NPCs sp
 +-----------+--------------+------------------------------------------+---------------+------------------------------------+
 | HERB      | Yes          | Yield POTION                             | Herbalism     | Equip GLOVES for high-level POTION |
 +-----------+--------------+------------------------------------------+---------------+------------------------------------+
+| TREE      | Yes          | Yield ARROW (Range ammunition)           | Carving       | Equip AXE for high-level           |
+|           |              +------------------------------------------+               | ARROW and SPEAR                    |
+|           |              | Seldom (2.5%) yield SPEAR (Melee weapon) |               |                                    |
++-----------+--------------+------------------------------------------+---------------+------------------------------------+
