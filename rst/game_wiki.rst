@@ -496,3 +496,7 @@ Generally, Passive NPCs will spawn towards the edges of the map, Hostile NPCs sp
 |           |              +------------------------------------------+               | WHETSTONE and WAND                 |
 |           |              | Seldom yield WAND (Mage weapon)          |               |                                    |
 +-----------+--------------+------------------------------------------+---------------+------------------------------------+
+| CRYSTAL   | Yes          | Yield RUNES (Mage ammunition)            | Alchemy       | Equip CHISEL for high-level        |
+|           |              +------------------------------------------+               | RUNES and BOW                      |
+|           |              | Seldom yield BOW (Range weapon)          |               |                                    |
++-----------+--------------+------------------------------------------+---------------+------------------------------------+
