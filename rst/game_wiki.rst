@@ -5,7 +5,7 @@
 .. card::
     :img-background: /../_static/banner.png
 
-
+Feedback on our docs? Contribute changes and suggestions on `Discord <https://github.com/neuralmmo>`_.
 
 |icon| Overview of a typical game of NMMO
 *********************************************
@@ -103,7 +103,7 @@ Each tick provides the opportunity for every Agent and NPC to do any, all or non
 **Attack an Agent - either NPC or from another team**
 
 - Attack can only be against one other Agent or NPC
-- To attack, your Agent must be within three tiles as the opponent -- actually within a 7x7 square around your Agent.**
+- To attack, your Agent must be within three tiles of the opponent (within a 7x7 square around your Agent).
  
 **Inventory Management**
 
@@ -117,8 +117,8 @@ Inventory capacity is 12 items, including armor, weapon, tools, and consumables.
 
     Each agent observes a groups of entities comprising nearby tiles and agents, its own inventory, and the market. Continuous and discrete tensors of attributes parametrize each entity group. An extra variable *N* counts the number of entities per group.
 
-    .. code-block:: python
-        :caption: Observation space of a single agent
+.. code-block:: python
+  :caption: Observation space of a single agent
 
   observation_space(agent_id) = {
         'AgentId': Discrete(1),
@@ -137,7 +137,7 @@ Levels
 
          - Levels range from 1 to 10
          - Agents spawn with all skills at level 1 (0 XP)
-         - Level x+1 requires 10*2^x* XP
+         - Level n+1 requires 10 x XP x 2^n
          - Agents are awarded 1 XP per attack
 
          - Agents are awarded 1 XP per ammunition resource gathered
@@ -154,52 +154,55 @@ Levels
 
 Each agent may take multiple actions per tick -- one from each category. Each action accepts arguments.
 
-.. code-block:: python
-  :caption: Action space of a single agent
+.. dropdown:: About the Observation Space
 
-  action_space(agent_idx) = {
-      nmmo.action.Move: {
-          nmmo.action.Direction: {
-              nmmo.action.North,
-              nmmo.action.South,
-              nmmo.action.East,
-              nmmo.action.West,
+    .. code-block:: python
+      :caption: Action space of a single agent
+
+      action_space(agent_idx) = {
+          nmmo.action.Move: {
+              nmmo.action.Direction: {
+                  nmmo.action.North,
+                  nmmo.action.South,
+                  nmmo.action.East,
+                  nmmo.action.West,
+              },
           },
-      },
-      nmmo.action.Attack: {
-          nmmo.action.Style: {
-              nmmo.action.Melee,
-              nmmo.action.Range,
-              nmmo.action.Mage,
+          nmmo.action.Attack: {
+              nmmo.action.Style: {
+                  nmmo.action.Melee,
+                  nmmo.action.Range,
+                  nmmo.action.Mage,
+              },
+              nmmo.action.Target: {
+                  Entity Pointer,
+              }
           },
-          nmmo.action.Target: {
-              Entity Pointer,
-          }
-      },
-      nmmo.action.Use: {
-          nmmo.action.Item: {
-              Inventory Pointer,
+          nmmo.action.Use: {
+              nmmo.action.Item: {
+                  Inventory Pointer,
+              },
           },
-      },
-      nmmo.action.Sell: {
-          nmmo.action.Item: {
-              Inventory Pointer,
+          nmmo.action.Sell: {
+              nmmo.action.Item: {
+                  Inventory Pointer,
+              },
+              nmmo.action.Price: {
+                  Discrete Value,
+              },
           },
-          nmmo.action.Price: {
-              Discrete Value,
+          nmmo.action.Buy: {
+              nmmo.action.Item: {
+                  Market Pointer,
+              },
           },
-      },
-      nmmo.action.Buy: {
-          nmmo.action.Item: {
-              Market Pointer,
+          nmmo.action.Comm: {
+              nmmo.action.Token: {
+                  Discrete Value,
+              },
           },
-      },
-      nmmo.action.Comm: {
-          nmmo.action.Token: {
-              Discrete Value,
-          },
-      },
-  }
+      }
+      
 About Combat
 ************
 
@@ -397,8 +400,6 @@ Generally, Passive NPCs will spawn towards the edges of the map, Hostile NPCs sp
 |icon| Tasks
 ************
 
-**In process**
-
 **About Tasks**
   - Goal is to accomplish specific tasks from the curriculum for points.
   - Tasks are randomly generated and assigned at the beginning of each round.
@@ -414,38 +415,56 @@ Generally, Passive NPCs will spawn towards the edges of the map, Hostile NPCs sp
       - Quantity = 1-100 HP out of total 100 HP
       - Ex. Inflict 5 damage with melee
 
+    |
+
     Defeat(npc/player, level)
       - npc/player = NPC or Player, Unit = 1
       - Level = 1-10
       - Defeat a level 5 npc
+
+    |
 
     Achieve(skill, level)
       - Skill = 8 skills (Professions)
       - Level = 10
       - Ex: Achieve level 5 prospecting
 
+    |
+
     Harvest(resource, level)
       - Resource = 5 resources
       - Level = 10 levels
       - Ex: collect a level 3 shard
+
+    |
 
     Equip(type, level)
       - Type = Hat, Top, Bottom
       - Level = 10
       - Ex: equip a level 5 hat
 
+    |
+
     Hoard(gold) - Accumulate a total of 20 gold as a team
       - Gold: Units of transaction ingots
+
+    |
 
     Group(num_tiles, num_teammates) - Always stay within 5 tiles of at least 3 of your teammates
       - Num_tiles: Variable starting with tile you’re on as 0
       - Num_teammates: Self evident. Stay together-ish
 
+    |
+
     Spread(num_tiles, num_teammates) - Always stay at least 5 tiles away from at least 3 of your teammates
       - Opposite of Group
 
+    |
+
     Defend(teammate) - Don’t let your 3rd teammate die
       - Teammate: Specific member of your team can’t die
+
+    |
 
     Eliminate(team, direction) - Eliminate the team that spawns to your right
       - Team: ID # of team
