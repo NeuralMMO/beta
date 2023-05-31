@@ -58,7 +58,11 @@ Neural MMO is a computationally accessible, open-source research platform that s
 |icon| Neural MMO
 #################
 
-Your team of 8 Agents must collect food and water to survive. Each Agent has 8 individual professions to help them collect resources. Resources can be used to create consumable items that restore food, water and heath as well as to create ammunition that increases damage in combat. Higher level resources create better consumables and ammunition. Agents may aquire armor to protect themselves in combat and weapons to increase their damage output. Agents can also trade items on a global market. Agents can attack each other using one of three styles: Melee, Range, and Magic. Agents can level up their skills in each style and in each profession. The world is populated by NPCs that can be defeated to obtain items and increase power.
+Your team of 8 Agents must collect food and water to survive. Each Agent has 8 individual professions to help them collect resources. Agents can level up their skills in each profession.
+
+Resources can be used to create consumable items that restore food, water and heath as well as to create ammunition that increases damage in combat. Higher level resources create better consumables and ammunition. Agents can also trade items on a global market.
+
+Agents may aquire armor to protect themselves in combat and weapons to increase their damage output. Agents can attack each other using one of three styles: Melee, Range, and Magic. The world is populated by NPCs that can be defeated to obtain items and increase power.
 
 .. tab-set::
    
@@ -291,9 +295,7 @@ Neural MMO (NMMO) has three tracks to compete and win. In all tracks, the object
 |icon| Platform 
 ###############
 
-The project was inspired by classic Massively Multiplayer Online Role-Playing Games (MMOs) - a genre defined by interaction with a large number of other players. It is a platform for creating intelligent agents parameterized by neural networks. Our goal is to support a broad base of multiagent research that would be impractical or impossible to conduct using other environments. Unlike other game genres typically used in research, MMOs simulate persistent worlds that support rich player interactions and a wider variety of progression strategies. These properties seem important to intelligence in the real world.
-
-In NMMO, Agents in teams must forage for food and water to stay alive and harvest resources to increase their combat and task completion capabilities. Agents can level up their fighting styles and equipment, practice different professions, and engage in trade based on market demand. The world is also populated by non-player characters (NPCs) of varying friendliness. The massively multiagent setting allow player teams to interact in interesting ways and use entirely different strategies. 
+The project was inspired by classic Massively Multiplayer Online Role-Playing Games (MMOs) - a genre defined by interaction with a large number of other players. It is a platform for creating intelligent agents parameterized by neural networks. Our goal is to support a broad base of multiagent research that would be impractical or impossible to conduct using other environments. Unlike other game genres typically used in research, MMOs simulate persistent worlds that support rich player interactions and a wider variety of progression strategies. These properties seem important to intelligence in the real world. The massively multiagent setting allow player teams to interact in interesting ways and use entirely different strategies. 
 
 .. code-block:: python
 
@@ -307,4 +309,4 @@ In NMMO, Agents in teams must forage for food and water to stay alive and harves
       actions = {} # Compute with your model
       obs, rewards, dones, infos = env.step(actions)
 
-Environments provide a standard PettingZoo API. Join our community Discord and post in #support for help (do not raise Github issues for support). See the cards at the top of this page for source code, baselines, latest publications, social media, and news!
+Environments provide a standard PettingZoo API. Join our community  `Discord <https://discord.gg/BkMmFUC>`_ and post in #support for help (do not raise Github issues for support). See the cards at the top of this page for source code, baselines, latest publications, social media, and news!
