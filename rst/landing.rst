@@ -110,17 +110,70 @@ Agents may aquire armor to protect themselves in combat and weapons to increase 
  
 |
 
-.. dropdown:: General features of NMMO
+.. tab-set:: 
+   
+   .. tab-item:: Resource
 
-  - **Terrain:** Navigate procedurally generated maps
-  - **Survival:** Forage for food and water to maintain your health
-  - **NPC:** Interact with Non-Playable Characters of varying friendliness
-  - **Combat:** Fight other agents and NPCs with Melee, Range, and Magic
-  - **Profession:** Use tools to practice Herbalism, Fishing, Prospecting, Carving, and Alchemy
-  - **Item:** Acquire consumables and and ammunition through professions
-  - **Equipment:** Increase offensive and defensive capabilities with weapons and armor
-  - **Progression:** Train combat and profession skills to access higher level items and equipment
-  - **Exchange:** Trade items and equipment with other agents on a global market
+      Harvest resources with various uses
+
+      .. card::
+         :img-background: /../_static/resource.png
+
+   .. tab-item:: Survival
+
+      Forage for food and water to maintain your health
+
+      .. card::
+         :img-background: /../_static/survival.png
+
+   .. tab-item:: Combat
+
+      Fight other agents and NPCs with Melee, Range, and Magic
+
+      .. card::
+         :img-background: /../_static/combat.png
+
+   .. tab-item:: NPC
+
+      Interact with Non-Playable Characters of varying friendliness
+
+      .. card::
+         :img-background: /../_static/npc.png
+
+   .. tab-item:: Profession & Progression
+
+      Train combat and profession skills to access higher level items and equipment
+
+      .. card::
+         :img-background: /../_static/progression.png
+
+   .. tab-item:: Item
+
+      Acquire consumables and and ammunition through professions
+
+      .. card::
+         :img-background: /../_static/item.png
+
+   .. tab-item:: Equipment
+
+      Increase offensive and defensive capabilities with weapons and armor
+
+      .. card::
+         :img-background: /../_static/equipment.png
+
+   .. tab-item:: Exchange
+
+      Trade items and equipment with other agents on a global market
+
+      .. card::
+         :img-background: /../_static/exchange.png
+
+   .. tab-item:: Terrain
+
+      Navigate procedurally generated maps
+
+      .. figure:: /../_static/terrain.png
+
 
 .. dropdown:: Contributors
 

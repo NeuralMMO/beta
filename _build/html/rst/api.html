@@ -655,7 +655,7 @@ generated automatically.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">IMMORTAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em></dt>
-<dd><p>Debug parameter: prevents agents from dying except by lava</p>
+<dd><p>Debug parameter: prevents agents from dying except by void</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -691,7 +691,7 @@ generated automatically.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">MAP_BORDER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">16</span></em></dt>
-<dd><p>Number of lava border tiles surrounding each side of the map</p>
+<dd><p>Number of void border tiles surrounding each side of the map</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -749,7 +749,7 @@ generated automatically.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">PATH_CWD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/workspaces/puffertank/neuralmmo/dev-docs'</span></em></dt>
+<span class="sig-name descname"><span class="pre">PATH_CWD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/workspaces/PufferTank/nmmo-beta-docs'</span></em></dt>
 <dd><p>Working directory</p>
 </dd></dl>
 
@@ -767,19 +767,19 @@ generated automatically.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">PATH_RESOURCE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/workspaces/puffertank/neuralmmo/environment/nmmo/resource'</span></em></dt>
+<span class="sig-name descname"><span class="pre">PATH_RESOURCE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/workspace/nmmo-environment/nmmo/resource'</span></em></dt>
 <dd><p>Resource directory</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">PATH_ROOT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/workspaces/puffertank/neuralmmo/environment/nmmo'</span></em></dt>
+<span class="sig-name descname"><span class="pre">PATH_ROOT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/workspace/nmmo-environment/nmmo'</span></em></dt>
 <dd><p>Global repository directory</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">PATH_TILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/workspaces/puffertank/neuralmmo/environment/nmmo/resource/{}.png'</span></em></dt>
+<span class="sig-name descname"><span class="pre">PATH_TILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/workspace/nmmo-environment/nmmo/resource/{}.png'</span></em></dt>
 <dd><p>Tile path – format me with tile name</p>
 </dd></dl>
 
@@ -864,12 +864,6 @@ generated automatically.</p>
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">PROVIDE_ACTION_TARGETS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em></dt>
 <dd><p>Flag used to provide action targets mask</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">SAVE_REPLAY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em></dt>
-<dd><p>Flag used to save replays</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1095,6 +1089,12 @@ generated automatically.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">PROGRESSION_BASE_LEVEL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em></dt>
+<dd><p>Initial skill level</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">PROGRESSION_BASE_XP_SCALE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em></dt>
 <dd><p>Base XP awarded for each skill usage – multiplied by skill level</p>
 </dd></dl>
@@ -1174,7 +1174,7 @@ generated automatically.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">RESOURCE_BASE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">100</span></em></dt>
-<dd><p>Initial level and capacity for Hunting + Fishing resource skills</p>
+<dd><p>Initial level and capacity for food and water</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1191,14 +1191,14 @@ generated automatically.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">RESOURCE_FOREST_CAPACITY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em></dt>
-<dd><p>Maximum number of harvests before a forest tile decays</p>
+<span class="sig-name descname"><span class="pre">RESOURCE_FOILAGE_CAPACITY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em></dt>
+<dd><p>Maximum number of harvests before a foilage tile decays</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">RESOURCE_FOREST_RESPAWN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.025</span></em></dt>
-<dd><p>Probability that a harvested forest tile will regenerate each tick</p>
+<span class="sig-name descname"><span class="pre">RESOURCE_FOILAGE_RESPAWN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.025</span></em></dt>
+<dd><p>Probability that a harvested foilage tile will regenerate each tick</p>
 </dd></dl>
 
 <dl class="py attribute">
