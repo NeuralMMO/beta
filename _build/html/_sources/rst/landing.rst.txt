@@ -190,6 +190,15 @@ Agents may aquire armor to protect themselves in combat and weapons to increase 
     - **Herbie Bradley**: Supervision of the curriculum generation baseline with OpenELM
     - **Louis Castricato**: Co-founder and team lead of Carper AI; supervisor of Carper AI development efforts.
 
+   Parametrix.ai Team. Competition orchestrators and creators of the 2.0 web client.
+    - **Kirsty You**: Product manager, Parametrix.ai
+    - **Yuhao Jiang**: Machine learning researcher, Parametrix.ai
+    - **Qimai Li**: Senior machine learning researcher, Paramerix.ai
+    - **Jiaxin Chen**: Senior machine learning researcher. Co-organizer of 3rd and 4th Neural MMO Challenge
+    - **Xiaolong Zhu**: Senior R&D Director, Paramerix.ai
+
+   **Nick Jenkins**: Layout for design for the competition poster. Adversary.design.
+
    **Sara Earle**: Created 3D assets and 2D icons for items in NMMO 2.0. Hire her on UpWork if you like what you see here.
 
    Previous open source contributors, listed by time since latest contribution. Discord handle have been used for individuals who have not granted explicit permission to display their real names:
