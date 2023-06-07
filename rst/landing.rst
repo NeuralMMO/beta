@@ -58,6 +58,8 @@ Neural MMO is a computationally accessible, open-source research platform that s
 |icon| Neural MMO
 #################
 
+Your team of 8 Agents must collect food and water to survive. Each Agent has 8 individual professions to help them collect resources. Resources can be used to create consumable items that restore food, water and heath as well as to create ammunition that increases damage in combat. Higher level resources create better consumables and ammunition. Agents may acquire armor to protect themselves in combat and weapons to increase their damage output. Agents can also buy and sell items with gold on a global market. Agents can attack each other using one of three styles: Melee, Range, and Magic. Agents can level up their skills in each style and in each profession. The world is populated by NPCs that can be defeated to obtain items and increase power.
+
 Your team of 8 Agents must collect food and water to survive. Each Agent has 8 individual professions to help them collect resources. Agents can level up their skills in each profession.
 
 Resources can be used to create consumable items that restore food, water and heath as well as to create ammunition that increases damage in combat. Higher level resources create better consumables and ammunition. Agents can also trade items on a global market.
@@ -174,7 +176,6 @@ Agents may aquire armor to protect themselves in combat and weapons to increase 
 
       .. figure:: /../_static/terrain.png
 
-
 .. dropdown:: Contributors
 
    **Joseph Suarez**: Creator and lead developer of Neural MMO.
@@ -236,7 +237,7 @@ Neural MMO (NMMO) has three tracks to compete and win. In all tracks, the object
 
       Train teams of agents using RL to complete tasks. Customize the RL algorithm, model, and reward structure, but leverage a fixed baseline curriculum of tasks for training.
 
-      This is an opportunity for you RL enthusiasts to test your skills building agents that can survive and thrive in a massively multi-agent environment full of potential adversaries. Your task is to implement a *policy* that defines how your 8 Agent team performs within a novel environment. At the outset of each game, your team will receive a randomly generated task. Complete the task to score a point. We will evaluate submissions against each other over thousands of games. Whoever scores the most points wins.
+      This is an opportunity for you RL enthusiasts to test your skills building agents that can survive and thrive in a massively multiagent environment full of potential adversaries. Your task is to implement a *policy* that defines how your 8 Agent team performs within a novel environment. At the outset of each game, your team will receive a randomly generated task. Complete the task to score a point. We will evaluate submissions against each other over thousands of games. Whoever scores the most points wins.
 
       The RL track includes control over the RL algorithm, environment rewards signal, observation featurization, and the neural network architecture. The presentation and sampling of tasks are provided by the baseline and are treated as constants. All RL agent teams are trained on the same baseline task curriculum. While hybrid methods are allowed, with the new emphasis on tasks, it is unlikely that pure traditional scripting will be effective.
 
