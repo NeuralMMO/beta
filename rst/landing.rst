@@ -15,7 +15,7 @@ Neural MMO is a computationally accessible, open-source research platform that s
   :margin: 4 2 auto auto
   :text-align: center
 
-  **Demo Neural MMO in your browser**
+  **Click to Demo Neural MMO in your browser**
 
 |
 
@@ -57,8 +57,6 @@ Neural MMO is a computationally accessible, open-source research platform that s
 
 |icon| Neural MMO
 #################
-
-Your team of 8 Agents must collect food and water to survive. Each Agent has 8 individual professions to help them collect resources. Resources can be used to create consumable items that restore food, water and heath as well as to create ammunition that increases damage in combat. Higher level resources create better consumables and ammunition. Agents may acquire armor to protect themselves in combat and weapons to increase their damage output. Agents can also buy and sell items with gold on a global market. Agents can attack each other using one of three styles: Melee, Range, and Magic. Agents can level up their skills in each style and in each profession. The world is populated by NPCs that can be defeated to obtain items and increase power.
 
 Your team of 8 Agents must collect food and water to survive. Each Agent has 8 individual professions to help them collect resources. Agents can level up their skills in each profession.
 
@@ -139,8 +137,7 @@ Agents may aquire armor to protect themselves in combat and weapons to increase 
 
       Interact with Non-Playable Characters of varying friendliness
 
-      .. card::
-         :img-background: /../_static/npc.png
+      .. figure:: /../_static/npc.png
 
    .. tab-item:: Profession & Progression
 

@@ -7,12 +7,9 @@
 
 Feedback on our docs? Contribute changes and suggestions on `Discord <https://github.com/neuralmmo>`_.
 
-|icon| Overview of a typical game of NMMO
-*********************************************
-
-Before diving into the Game Wiki, why not warm up and read a narrative of a typical game?
-
 .. dropdown:: NMMO Gameplay Narrative
+
+    This Wiki is meant as a quick reference. To understand the game at a high-level, consider this narrative example:
 
     Our team of 8 agents spawns on the edge of a large square map. At this time, we are assigned a task to complete (see Tasks), with potential hostile teams just out of view to the left and right.
     
@@ -28,23 +25,23 @@ Before diving into the Game Wiki, why not warm up and read a narrative of a typi
 The Game Map
 ************
 
-Each instance of Neural MMO contains an automatically generated tile-based game map of 128 x 128 tiles. The map is surrounded by Void, which is not reachable at all.
+Each instance of Neural MMO contains an automatically generated tile-based game map of 128 x 128 tiles. The map is surrounded by Void. Agents that attempt to walk into the void dissapear, never to be seen again.
 
 Tiles are broadly categorized as follows:
   - *Passable* tiles can be walked on while *obstacle* tiles block movement
   - *Resource* tiles can be harvested while *non-resource* cannot
 
-+-------------------+-----------------------------------+-------------+
-| **Tile Type**     | *Passable*                        | *Obstacle*  |
-+===================+===================================+=============+
-| **Resource**      | Foliage, Ore, Tree, Crystal, Herb | Water, Fish |
-+-------------------+---------------------+-------------+-------------+
-| **Non-resource**  | Grass, Harvested Tile             | Stone, Void |
-+-------------------+-----------------------------------+-------------+
++-------------------+-----------------------------+-------------+
+| **Tile Type**     | *Passable*                  | *Obstacle*  |
++===================+=============================+=============+
+| **Resource**      | Foliage, Ore, Tree, Crystal | Water, Fish |
++-------------------+-----------------------------+-------------+
+| **Non-resource**  | Grass, Harvested Tile       | Stone, Void |
++-------------------+-----------------------------+-------------+
 
-*Resource* tiles may be harvested. *Passable* tiles are harvested by walking over them and *obstacle* tiles by walking next to them. The resource is then depleted from the tile. It will regenerate randomly over time on the same tile. The only exception is the Water tile, which provides unlimited resource.
+*Resource* tiles may be harvested. *Passable* tiles are harvested by walking over them and *non-passable* tiles by walking next to them. The resource is then consumed from the tile. It will regenerate randomly over time on the same tile. The only exception is the Water tile, which provides unlimited resource.
 
-Each Agent has a visibility of up to seven tiles in Chebyshev distance, allowing it to see a 15x15 square around itself.
+Visibility range is 7 tiles.
 
 .. dropdown:: About the tile generation algorithm
     
@@ -65,12 +62,12 @@ Losing and gaining resources:
 
 **Tick:** The gameplay consists of time units called “ticks.” When rendering, the game moves at 0.6s/tick.
 
-Agents can replenish food and water. Walking on a foliage tile restores food to 100. The foliage tile then is depleted and will respawn at a random time in the same place. Walking adjacent to a water tile restores water to 100. Water tiles do not empty.
+Agents can replenish food and water. Walking on a foliage tile restores food to 100. The foliage tile then is harvested and will respawn at a random time in the same place. Walking adjacent to a water tile restores water to 100. Water tiles do not empty.
 
 |icon| Competition Environment and Levels
 *****************************************
 
-At the start of a game, all agents on each team spawn (enter the game) together on the same tile around the perimeter of the map. Agent teams are evenly dispersed around the perimeter. 
+At the start of a game, all agents on all teams spawn (enter the game) together around the perimeter of the map on the same tile. Agent teams are evenly dispersed around the perimeter. 
 
 Non-Player Characters (NPCs) are any agent not controlled by a user; sometimes called a *mob*. NPCs are scattered across the entire map. They get stronger and more aggressive towards the center. NPCs are all individuals; they fight each other as well; and they are all controlled by basic scripts. Their aggression and strength levels are correlated, but otherwise are identical. 
 
@@ -81,35 +78,35 @@ Each tick provides the opportunity for every Agent and NPC to do any, all or non
 
 **Move 1 tile in any available direction**
 
-- Agents cannot move off of the game space, or toward obstacle tiles like water and stone.
-- As the game progresses, the action space becomes constrained as a fog encircles the board. Agents take increasing damage in tiles covered in fog, and all gradually move towards the center of the game space.
+- Agents cannot move off of the game space, or **into water.** 
+- As the game progresses, the action space becomes constrained as a fog encircles the board. Agents cannot be in tiles covered in fog, and all gradually move towards the center of the game space.
 
 **Attack an Agent - either NPC or from another team**
 
 - Attack can only be against one other Agent or NPC
-- To attack, your Agent must be within three tiles in Chebyshev distance as the opponent -- **within a 7x7 square around your Agent.**
+- To attack, your Agent must be within three tiles of the opponent (within a 7x7 square around your Agent).
  
 **Inventory Management**
 
-Inventory capacity is 12 items, including armor, weapon, tools, ammunition, and consumables. Each item except ammunitions takes one inventory space. Ammunitions of the same type and level can be stacked infinitely in one inventory space. If an Agent's inventory is full, it cannot harvest or loot new item. To manage inventory, an Agent can
+Inventory capacity is 12 items, including armor, weapon, tools, and consumables.
 
-- List an item in the Market, which remains on the inventory until sold
-- Destroy an item if no market value and instantly make a space available
-- Give an item to a team mate, which is **only permitted when standing on the same tile**
+- Buy or Sell in the Market
+- Destroy an item if no market value
+- **Giving an item to a team mate is only permitted when standing on the same tile**
 
 .. dropdown:: About the Observation Space
 
-    Each agent's observation consists of the current tick, its id, its nearby 15x15 visible tiles, up to 100 entities within its vision, its own inventory, and the global market listings.
+    Each agent observes a groups of entities comprising nearby tiles and agents, its own inventory, and the market. Continuous and discrete tensors of attributes parametrize each entity group. An extra variable *N* counts the number of entities per group.
 
 .. code-block:: python
   :caption: Observation space of a single agent
 
   observation_space(agent_id) = {
         'AgentId': Discrete(1),
-        'CurrentTick': Discrete(1),
-        'Entity' :Box(-1048576.0, 1048576.0, (100, 23), float32),
+        'Entity' :Box(-1048576.0, 1048576.0, (100, 22), float32),
         'Inventory': Box(-1048576.0, 1048576.0, (12, 16), float32),
         'Market': Box(-1048576.0, 1048576.0, (640, 16), float32),
+        'Tick': Box(-1048576.0, 1048576.0, (1, 1), float32),
         'Tile': Box(-1048576.0, 1048576.0, (225, 3), float32)
     }
 
@@ -120,11 +117,14 @@ Levels
     .. tab-item:: Agent Levels
 
          - Levels range from 1 to 10
-         - Agents spawn with all skills at level 1 and 0 XP
-         - Level x+1 requires 10*2^(x-1)* XP. For example, to get to level 2, one needs 10 XP.
+         - Agents spawn with all skills at level 1 (0 XP)
+         - Level n+1 requires 10 x XP x 2^n
          - Agents are awarded 1 XP per attack
+
          - Agents are awarded 1 XP per ammunition resource gathered
          - Agents are awarded 5 XP per consumable resource gathered
+ 
+         - All items except gold will appear in varying levels
 
     .. tab-item:: Items and Equipment Levels
 
@@ -205,11 +205,11 @@ Levels
           },
       },
   }
-      
+
 About Combat
 ************
 
-Each agent can attack one opponent per game tick. In a given tick, multiple enemy agents can attack a single agent. Agents select from Melee, Range, and Mage style attacks. An agent's main combat skill is the one that they use the most / have the highest XP in. This is denoted by the hat they are wearing.
+Each agent can attack one opponent per game tick. In a given tick, multiple enemy agents can attack a single agent. Agents select from Melee, Range, and Mage style attacks. An agent's main combat skill is the one that they use the most / have the highest level in. This is denoted by the hat they are wearing.
 
 Attack skills obey a rock-paper-scissors dominance relationship: 
  - Melee beats Range 
@@ -224,7 +224,7 @@ Attack range is 3 tiles, full sweep view.
 
     .. tab-item:: Choosing attack style
     
-        The attacker can select the skill strongest against the target's main skill. This increases the attack damage by 50%. However, the defender can immediately retaliate in the same way. A strong agent with a higher level and better equipment can still beat a weaker agent, even if the weaker agent uses the attack style that multiplies damage. 
+        The attacker can select the skill strongest against the target's main skill. This multiplies the effectiveness of the attack. However, the defender can immediately retaliate in the same way. A strong agent with a higher level and better equipment can still beat a weaker agent, even if the weaker agent uses the attack style that multiplies damage. 
 
     .. tab-item:: Armor
     
@@ -234,9 +234,9 @@ Attack range is 3 tiles, full sweep view.
     
         Weapons require an associated fighting style skill level ≥ the item level to equip. Weapons boost attacks; higher level weapons provide more boost. Tools grant a flat defense regardless of item level.
 
-**Damage** to health is determined based on several factors, including:
- - Fighting styles
- - Combat skill levels
+**Damage** to health is a randomized function based on several factors, including:
+ - Fighting style
+ - Combat skill level
  - Weapon level
  - Armor levels
 
@@ -267,9 +267,9 @@ Attack range is 3 tiles, full sweep view.
 
     Tick 2:
 
-    You attack them. They lose 18 HP
+    You attack them. They lose 14 HP
 
-    They attack you. You lose 27 HP
+    They attack you. You lose 32 HP
 
     |
 
@@ -281,14 +281,14 @@ Attack range is 3 tiles, full sweep view.
 
     |
 
-    Tick 4: You chase and attack them. They lose 18 HP.
+    Tick 4: You chase and attack them. They lose 15 HP.
 
-    They consume a potion to regain 50 HP and run some more.
+    They consume a poultice to regain 50 HP and run some more.
 
     |
 
     This continues for some time, with your opponent running away, and you chasing them. 
-    Eventually, you give up and let them go. Your HP is low, and they had to consume a potion. 
+    Eventually, you give up and let them go. Your HP is low, and they had to consume a poultice. 
 
     Fortunately, this was only a training run, and you now can reconsider your strategy for the next round.
 
@@ -297,71 +297,68 @@ Professions, Tools, and Items
 
 There are 8 Professions that Agents can learn and level up in. Agents can improve their skills in multiple Professions, but will not be able to progress in all Professions. How Professions are distributed across Agent teams is a part of game strategy. 
 
-For Skills Prospecting, Carving, and Alchemy, agents walk on the associated resource tile to harvest the resource. Agent receives a different quality/level of resource, depending **only** on agent's tool level. The resource tile will respawn later in the same place. There is a 2.5 percent chance to obtain a weapon while gathering ammunition on a tile, the level of which is also determined by the tool level of the harvesting agent.
+For Skills Prospecting, Carving, and Alchemy, agents walk on the associated resource tile to harvest the resource. Agent receives a different quality/level of resource, depending on agent levels/tools. The resource tile will respawn later in the same place. There is a 2.5 percent chance to obtain a weapon while gathering ammunition on a tile.
 
 **Agents have an inventory that can hold 12 items.**
 
-+----------------+-------------+---------+-----------------+------------+------------------+---------------------+
-| **Item Type**  |*Profession* |*Tool*   |*Level up method*|*HP Effect* |*Food/Water Level*|*Market Buy/Sell*    |
-+================+=============+=========+=================+============+==================+=====================+
-|                | Mage        | Wand    | Hitting and     | \-HP level |                  | Wand                |
-|                +-------------+---------+ damaging        | unless you |                  +---------------------+
-|**Combat**      | Melee       | Spear   | NPCs and        | take no    |                  | Spear               |
-|                +-------------+---------+ Enemies         | damage     |                  +---------------------+
-|                | Range       | Bow     |                 |            |                  | Bow                 |
-+----------------+-------------+---------+-----------------+------------+------------------+---------------------+
-|                | Fishing     | Rod     | Level up        |            | \+Food & Water   | Ration              |
-|**Gathering**   +-------------+---------+ via harvest     +------------+------------------+---------------------+
-|                | Herbalism   | Gloves  | experience      | \+HP level |                  | Potion              |
-+                +-------------+---------+                 +------------+                  +---------------------+
-|                | Carving     | Axe     |                 |            |                  | Axe & Arrow         |
-|                +-------------+---------+                 +            +                  +---------------------+
-|                | Prospecting | Pickaxe |                 |            |                  | Pickaxe & Whetstone |
-|                +-------------+---------+                 +            +                  +---------------------+
-|                | Alchemy     | Chisel  |                 |            |                  | Chisel & Runes      |
-+----------------+-------------+---------+-----------------+------------+------------------+---------------------+
++----------------+-------------+---------+-----------------+------------+------------------+------------------+
+| **Item Type**  |*Profession* |*Tool*   |*Level up method*|*HP Effect* |*Food/Water Level*|*Market Buy/Sell* |
++================+=============+=========+=================+============+==================+==================+
+|                | Mage        | Wand    | Hitting and     | \-HP level |                  | Wand             |
+|                +-------------+---------+ damaging        | unless you |                  +------------------+
+|**Combat**      | Melee       | Sword   | NPCs and        | take no    |                  | Sword            |
+|                +-------------+---------+ Enemies         | damage     |                  +------------------+
+|                | Range       | Bow     |                 |            |                  | Bow              |
++----------------+-------------+---------+-----------------+------------+------------------+------------------+
+|                | Fishing     | Rod     | Level up via    | \+HP level | \+Food &         | Fish Ration      |
+|**Gathering**   +-------------+---------+ experience      +------------+ Water level      +------------------+
+|                | Herbalism   | Gloves  | and use         | \+HP level |                  | Poultice         |
++                +-------------+---------+                 +------------+------------------+------------------+
+|                | Carving     | Chisel  |                 | \+HP level |                  | Chisel & Shaving |
+|                +-------------+---------+                 +------------+                  +------------------+
+|                | Prospecting | Pickaxe |                 | \+HP level |                  | Pickaxe & Scrap  |
+|                +-------------+---------+                 +------------+                  +------------------+
+|                | Alchemy     | Arcane  |                 |            |                  | Arcane & Shards  |
++----------------+-------------+---------+-----------------+------------+------------------+------------------+
 
 |
 
 **Tools**
   - All Tools provide a flat 30 defense regardless of item level
   - Tools need a relevant skill level (fishing, herbalism, prospecting, carving, alchemy) ≥ the item level to equip
-  - Tools enable an agent to collect an associated resource (ration, potion, whetstone, arrow, runes) at a level equal to the tool level
+  - Tools enable an agent to collect an associated resource (ration, poultice, scrap, shaving, shard) at a level equal to the item level
 
 |
 
 **Rations**
-  - Consume a ration to restore food and water level, which increase by 50 + 5*item level 
-  - Requires at least one skill greater than or equal to the ration level to use
+  - Consume rations to restore 5 food and water per item level
+  - Requires at least one skill greater than or equal to the item level to use
 
-    A rod helps harvesting rations. Alternatively, agents can buy rations in the market.
+    A rod is used to collect the rations. Alternatively, agents can buy rations in the market.
     
-    For example, if agents buy a level 3 ration in the market, they can use it only when they have any skill level 3 or above. If they buy a ration with a level higher than any of their skills, they can store but cannot use it until a skill level = the ration level. 
+    For example, agents can harvest a level 3 fish only with a level 3 rod. If they buy a fish in the market, they can eat level 3 fish by just having any skill level 3 or above. If they buy a ration with a level higher than any of their skills, they can store but cannot eat it until a skill level = the ration level. 
  
 |
 
-**Potions**
-  - Consume a potion to restore health level, which increases by 50 + 5*item level
-  - Requires at least one skill greater than or equal to the potion level to use.
+**Poultices**
+  - Consume to restore 5 health per gloves level.
+  - Requires at least one skill greater than or equal to the glove level to use.
   
-    A pair of gloves helps harvesting potions. Alternatively, agents can buy potions in the market.
-  
-    The same rules about skill and item levels apply to both potions and rations. 
+  The same rules about levels apply to poultices and rations. 
 
 
 |icon| Market
 *************
 
-Gold coins are the currency for buying and selling items in NMMO. Gold coins cannot be sub-divided. Agents set their own prices when selling items and receive gold when someone is willing to accept their price. Within the same team, can gift to one another if they are standing on the same tile. 
+Gold coins are the currency for buying and selling items in NMMO. Gold coins cannot be sub-divided. Agents set their own prices and receive gold when someone is willing to accept their price. Within the same team, can gift to one another if they are standing on the same tile. 
 
-Market interactions are as follows, which are similar to that of Craiglist:
- - Agents list one of their items at a desired price on the market via Sell action
- - When the sell action is processed, other agents can see the listings from the next tick
- - The item remains in the seller's inventory until sold or for 5 ticks, if not sold
- - Other agents can offer to buy the item via Buy action at the seller's price
- - If multiple agents attempt to buy the same item, the market will randomly select a single buyer
- 
-Agents have access to all the listings.
+Market interactions are as follows:
+ - Agents place sell offers on the market for one of their items at a desired price
+ - The item is immediately removed from the seller's inventory
+ - Other agents can immediately buy that item and receive it
+ - If multiple agents attempt to buy the same item at the same time, the market will attempt to fulfill the request from another seller at a price no more than 10% higher.
+
+Agents only observe the current best offer for each item of each level. This bounds the observation and action spaces.
 
 +--------------------------------------------------------------------------------------+
 | **BUY and SELL with GOLD**                                                           |
@@ -370,11 +367,11 @@ Agents have access to all the listings.
 +--------------------+------------------------+--------------------+-------------------+
 | *Tools*            | *Ammunitions*          | *Weapons*          | *Armors*          |
 +--------------------+------------------------+--------------------+-------------------+
-| AXE                | Wood ARROWS            | BOW                | HAT, TOP, BOTTOM  |
-+--------------------+------------------------+--------------------+                   |
-| PICKAXE            | Rock WHETSTONES        | SPEAR              |                   |
-+--------------------+------------------------+--------------------+                   +
-| CHISEL             | Magic RUNES            | WAND               |                   |
+| AXE                | Wood ARROWS            | BOW                | HAT               |
++--------------------+------------------------+--------------------+-------------------+
+| PICKAXE            | Rock WHETSTONES        | SWORD              | TOP               |
++--------------------+------------------------+--------------------+-------------------+
+| CHISEL             | Magic RUNES            | WAND               | BOTTOM            |
 +--------------------+------------------------+--------------------+-------------------+
 | **Health items**                                                                     |
 +--------------------+-----------------------------------------------------------------+
@@ -479,28 +476,39 @@ Generally, Passive NPCs will spawn towards the edges of the map, Hostile NPCs sp
 |icon| Tiles Quick Reference
 ******************************
 
-+-----------+--------------+------------------------------------------+---------------+------------------------------------+
-| **Tile**  | **Passible** | **Resource**                             | **Skill**     | **Note**                           |
-+===========+==============+==========================================+===============+====================================+
-| WATER     | No           | Maximize Agent's water level             |               | Stand next to WATER to drink       |
-+-----------+--------------+------------------------------------------+---------------+------------------------------------+
-| FISH      | No           | Yield RATION. Stand next to harvest.     | Fishing       | Equip ROD for high-level RATION    |
-+-----------+--------------+------------------------------------------+---------------+------------------------------------+
-| FOILAGE   | Yes          | Maximize Agent's food level              |               |                                    |
-+-----------+--------------+------------------------------------------+---------------+------------------------------------+
-| HERB      | Yes          | Yield POTION                             | Herbalism     | Equip GLOVES for high-level POTION |
-+-----------+--------------+------------------------------------------+---------------+------------------------------------+
-| TREE      | Yes          | Yield ARROW (Range ammunition)           | Carving       | Equip AXE for high-level           |
-|           |              +------------------------------------------+               | ARROW and SPEAR                    |
-|           |              | Seldom (2.5%) yield SPEAR (Melee weapon) |               |                                    |
-+-----------+--------------+------------------------------------------+---------------+------------------------------------+
-| ORE       | Yes          | Yield WHETSTONE (Melee ammunition)       | Prospecting   | Equip PICKAXE for high-level       |
-|           |              +------------------------------------------+               | WHETSTONE and WAND                 |
-|           |              | Seldom yield WAND (Mage weapon)          |               |                                    |
-+-----------+--------------+------------------------------------------+---------------+------------------------------------+
-| CRYSTAL   | Yes          | Yield RUNES (Mage ammunition)            | Alchemy       | Equip CHISEL for high-level        |
-|           |              +------------------------------------------+               | RUNES and BOW                      |
-|           |              | Seldom yield BOW (Range weapon)          |               |                                    |
-+-----------+--------------+------------------------------------------+---------------+------------------------------------+
-| STONE     | No           |                                          |               |                                    |
-+-----------+--------------+------------------------------------------+---------------+------------------------------------+
++--------------------+------------------------+--------------------+
+|**Tile Resource**   |**Purpose**             |**Obtaining**       |
++====================+========================+====================+
+| **WATER Tile Resources**                                         |
++--------------------+------------------------+--------------------+
+| WATER              | WATER to DRINK         | Stand next to WATER|
+|                    |                        | to DRINK           | 
++--------------------+------------------------+--------------------+
+| FISH               | RATION item to EAT     | ROD to HARVEST     |
+|                    |                        |                    | 
++--------------------+------------------------+--------------------+
+| **GRASS Tile Resources**                                         |
++--------------------+------------------------+--------------------+
+| FOOD               | FOOD to EAT            | Stand on FOOD      |
+|                    |                        | to EAT             | 
++--------------------+------------------------+--------------------+
+| HERB               | POTION item to         | GLOVES to HARVEST  |
+|                    | increase HEALTH        |                    | 
++--------------------+------------------------+--------------------+
+| TREE               | ARROWS boost BOW       | AXE to HARVEST     |
+|                    | damage of RANGE combat |                    |
++--------------------+------------------------+--------------------+
+| **STONE Tile Resources**                                         |
++--------------------+------------------------+--------------------+
+| ORE                | WHETSTONES boost SWORD | PICKAXE to HARVEST |
+|                    | damage of MELEE combat |                    |
++--------------------+------------------------+--------------------+
+| CRYSTAL            | RUNES boost WAND       | CHISEL to HARVEST  |
+|                    | damage of MAGIC combat |                    |
++--------------------+------------------------+--------------------+
+| **GOLD Resources**                                               |
++--------------------+------------------------+--------------------+
+| GOLD               | BUY items from other   | SELL items. DEFEAT |
+|                    | players on the MARKET  | NPCs.              |
++--------------------+------------------------+--------------------+
+

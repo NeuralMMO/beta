@@ -235,8 +235,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Game Wiki</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="game_wiki.html"> Overview of a typical game of NMMO</a></li>
-<li class="toctree-l1"><a class="reference internal" href="game_wiki.html#the-game-map">The Game Map</a></li>
+<li class="toctree-l1"><a class="reference internal" href="game_wiki.html">The Game Map</a></li>
 <li class="toctree-l1"><a class="reference internal" href="game_wiki.html#icon-competition-environment-and-levels"> Competition Environment and Levels</a></li>
 <li class="toctree-l1"><a class="reference internal" href="game_wiki.html#about-combat">About Combat</a></li>
 <li class="toctree-l1"><a class="reference internal" href="game_wiki.html#professions-tools-and-items">Professions, Tools, and Items</a></li>
@@ -302,7 +301,7 @@
 <p>Neural MMO is a computationally accessible, open-source research platform that simulates populations of agents in virtual worlds. We challenge you to train a team of agents to complete <em>tasks they have never seen before against opponents they have never seen before on maps they have never seen before</em>. Our objective is to spur research on increasingly general and cognitively realistic environments.</p>
 <div class="sd-card sd-sphinx-override sd-w-75 sd-mt-4 sd-mb-2 sd-ml-auto sd-mr-auto sd-shadow-sm sd-card-hover sd-text-center docutils">
 <div class="sd-card-body docutils">
-<p class="sd-card-text"><strong>Demo Neural MMO in your browser</strong></p>
+<p class="sd-card-text"><strong>Click to Demo Neural MMO in your browser</strong></p>
 </div>
 <a class="sd-stretched-link reference external" href="https://neuralmmo.github.io/client"></a></div>
 <div class="line-block">
@@ -470,13 +469,9 @@ Combat</label><div class="sd-tab-content docutils">
 </input><label class="sd-tab-label" for="sd-tab-item-6">
 NPC</label><div class="sd-tab-content docutils">
 <p>Interact with Non-Playable Characters of varying friendliness</p>
-<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
-<img alt="" class="sd-card-img" src="../_static/npc.png" />
-<div class="sd-card-img-overlay docutils">
-<div class="sd-card-body docutils">
-</div>
-</div>
-</div>
+<figure class="align-default">
+<img alt="../_static/npc.png" src="../_static/npc.png" />
+</figure>
 </div>
 <input id="sd-tab-item-7" name="sd-tab-set-1" type="radio">
 </input><label class="sd-tab-label" for="sd-tab-item-7">
@@ -608,7 +603,7 @@ BibTex Citation<div class="sd-summary-down docutils">
 </input><label class="sd-tab-label" for="sd-tab-item-12">
 Reinforcement Learning</label><div class="sd-tab-content docutils">
 <p>Train teams of agents using RL to complete tasks. Customize the RL algorithm, model, and reward structure, but leverage a fixed baseline curriculum of tasks for training.</p>
-<p>This is an opportunity for you RL enthusiasts to test your skills building agents that can survive and thrive in a massively multi-agent environment full of potential adversaries. Your task is to implement a <em>policy</em> that defines how your 8 Agent team performs within a novel environment. At the outset of each game, your team will receive a randomly generated task. Complete the task to score a point. We will evaluate submissions against each other over thousands of games. Whoever scores the most points wins.</p>
+<p>This is an opportunity for you RL enthusiasts to test your skills building agents that can survive and thrive in a massively multiagent environment full of potential adversaries. Your task is to implement a <em>policy</em> that defines how your 8 Agent team performs within a novel environment. At the outset of each game, your team will receive a randomly generated task. Complete the task to score a point. We will evaluate submissions against each other over thousands of games. Whoever scores the most points wins.</p>
 <p>The RL track includes control over the RL algorithm, environment rewards signal, observation featurization, and the neural network architecture. The presentation and sampling of tasks are provided by the baseline and are treated as constants. All RL agent teams are trained on the same baseline task curriculum. While hybrid methods are allowed, with the new emphasis on tasks, it is unlikely that pure traditional scripting will be effective.</p>
 <p>We release a baseline repository that includes a model adapted from NetEase’s winning submission to the NeurIPS 2022 competition, a fixed curriculum of procedurally generated tasks, a single-file CleanRL PPO implementation, PufferLib integration for simpler training, and WandB for logging and visualization. The baseline is designed to be easy to use and modify. We encourage you to use it as a starting point for your own submissions.</p>
 <dl class="simple">

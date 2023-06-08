@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="v2.0" href="updates.html" /><link rel="prev" title="Environment" href="api.html" />
 
     <!-- Generated with Sphinx 5.0.0 and Furo 2023.03.27 -->
-        <title>Overview of a typical game of NMMO - Neural MMO 2.0 documentation</title>
+        <title>The Game Map - Neural MMO 2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=fad236701ea90a88636c2a8c73b44ae642ed2a53" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
@@ -201,7 +201,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -235,8 +235,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Game Wiki</span></p>
 <ul class="current">
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#"> Overview of a typical game of NMMO</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#the-game-map">The Game Map</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">The Game Map</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#icon-competition-environment-and-levels"> Competition Environment and Levels</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#about-combat">About Combat</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#professions-tools-and-items">Professions, Tools, and Items</a></li>
@@ -289,7 +288,7 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
@@ -306,9 +305,6 @@
 </div>
 </div>
 <p>Feedback on our docs? Contribute changes and suggestions on <a class="reference external" href="https://github.com/neuralmmo">Discord</a>.</p>
-<section id="icon-overview-of-a-typical-game-of-nmmo">
-<h1><img alt="icon" src="../_images/icon.png" /> Overview of a typical game of NMMO<a class="headerlink" href="#icon-overview-of-a-typical-game-of-nmmo" title="Permalink to this heading">#</a></h1>
-<p>Before diving into the Game Wiki, why not warm up and read a narrative of a typical game?</p>
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
 NMMO Gameplay Narrative<div class="sd-summary-down docutils">
@@ -316,6 +312,7 @@ NMMO Gameplay Narrative<div class="sd-summary-down docutils">
 <div class="sd-summary-up docutils">
 <svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
 </summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">This Wiki is meant as a quick reference. To understand the game at a high-level, consider this narrative example:</p>
 <p class="sd-card-text">Our team of 8 agents spawns on the edge of a large square map. At this time, we are assigned a task to complete (see Tasks), with potential hostile teams just out of view to the left and right.</p>
 <p class="sd-card-text">Immediate strategic choices arise: rushing into the map center, attempting a quick elimination of nearby teams, or dispatching scouts to gauge the behavior of the nearby teams. This opening flurry of decision making, which encompasses the first 15-30 seconds of a 10-minute game, culminates in a strategic situation that sets the tone for the rest of the game.</p>
 <dl class="simple">
@@ -328,8 +325,7 @@ NMMO Gameplay Narrative<div class="sd-summary-down docutils">
 </dl>
 <p class="sd-card-text">These are but a few possibilities, and ultimately, decisions are a matter of strategy and opportunism.</p>
 </div>
-</details></section>
-<section id="the-game-map">
+</details><section id="the-game-map">
 <h1>The Game Map<a class="headerlink" href="#the-game-map" title="Permalink to this heading">#</a></h1>
 <p>Each instance of Neural MMO contains an automatically generated tile-based game map of 128 x 128 tiles. The map is surrounded by Void. Agents that attempt to walk into the void dissapear, never to be seen again.</p>
 <dl class="simple">
@@ -461,15 +457,16 @@ Items and Equipment Levels</label><div class="sd-tab-content docutils">
 </ul>
 </div>
 </div>
-<p>Each agent may take multiple actions per tick – one from each category. Each action accepts arguments.</p>
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
 <summary class="sd-summary-title sd-card-header">
-About the Observation Space<div class="sd-summary-down docutils">
+About the Action Space<div class="sd-summary-down docutils">
 <svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
 <div class="sd-summary-up docutils">
 <svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
 </summary><div class="sd-summary-content sd-card-body docutils">
-<div class="literal-block-wrapper docutils container" id="id2">
+<p class="sd-card-text">Each agent may take multiple actions per tick – one from each category. Each action accepts a list of arguments. Each argument is a discrete variable. This can be either a standard index (i.e. 0-4 for direction) or a pointer to an entity (i.e. inventory item or agent).</p>
+</div>
+</details><div class="literal-block-wrapper docutils container" id="id2">
 <div class="code-block-caption"><span class="caption-text">Action space of a single agent</span><a class="headerlink" href="#id2" title="Permalink to this code">#</a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">action_space</span><span class="p">(</span><span class="n">agent_idx</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span>
     <span class="n">nmmo</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">Move</span><span class="p">:</span> <span class="p">{</span>
@@ -478,6 +475,7 @@ About the Observation Space<div class="sd-summary-down docutils">
             <span class="n">nmmo</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">South</span><span class="p">,</span>
             <span class="n">nmmo</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">East</span><span class="p">,</span>
             <span class="n">nmmo</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">West</span><span class="p">,</span>
+            <span class="n">nmmo</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">Stay</span><span class="p">,</span>
         <span class="p">},</span>
     <span class="p">},</span>
     <span class="n">nmmo</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">Attack</span><span class="p">:</span> <span class="p">{</span>
@@ -491,12 +489,33 @@ About the Observation Space<div class="sd-summary-down docutils">
         <span class="p">}</span>
     <span class="p">},</span>
     <span class="n">nmmo</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">Use</span><span class="p">:</span> <span class="p">{</span>
-        <span class="n">nmmo</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">Item</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">nmmo</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">InventoryItem</span><span class="p">:</span> <span class="p">{</span>
             <span class="n">Inventory</span> <span class="n">Pointer</span><span class="p">,</span>
         <span class="p">},</span>
     <span class="p">},</span>
+    <span class="n">nmmo</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">Destroy</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">nmmo</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">InventoryItem</span><span class="p">:</span> <span class="p">{</span>
+            <span class="n">Inventory</span> <span class="n">Pointer</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="n">nmmo</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">Give</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">nmmo</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">InventoryItem</span><span class="p">:</span> <span class="p">{</span>
+            <span class="n">Inventory</span> <span class="n">Pointer</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="n">nmmo</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">Target</span><span class="p">:</span> <span class="p">{</span>
+            <span class="n">Entity</span> <span class="n">Pointer</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">nmmo</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">GiveGold</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">nmmo</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">Price</span><span class="p">:</span> <span class="p">{</span>
+            <span class="n">Discrete</span> <span class="n">Value</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="n">nmmo</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">Target</span><span class="p">:</span> <span class="p">{</span>
+            <span class="n">Entity</span> <span class="n">Pointer</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
     <span class="n">nmmo</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">Sell</span><span class="p">:</span> <span class="p">{</span>
-        <span class="n">nmmo</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">Item</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">nmmo</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">InventoryItem</span><span class="p">:</span> <span class="p">{</span>
             <span class="n">Inventory</span> <span class="n">Pointer</span><span class="p">,</span>
         <span class="p">},</span>
         <span class="n">nmmo</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">Price</span><span class="p">:</span> <span class="p">{</span>
@@ -504,7 +523,7 @@ About the Observation Space<div class="sd-summary-down docutils">
         <span class="p">},</span>
     <span class="p">},</span>
     <span class="n">nmmo</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">Buy</span><span class="p">:</span> <span class="p">{</span>
-        <span class="n">nmmo</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">Item</span><span class="p">:</span> <span class="p">{</span>
+        <span class="n">nmmo</span><span class="o">.</span><span class="n">action</span><span class="o">.</span><span class="n">MarketItem</span><span class="p">:</span> <span class="p">{</span>
             <span class="n">Market</span> <span class="n">Pointer</span><span class="p">,</span>
         <span class="p">},</span>
     <span class="p">},</span>
@@ -517,8 +536,7 @@ About the Observation Space<div class="sd-summary-down docutils">
 </pre></div>
 </div>
 </div>
-</div>
-</details></section>
+</section>
 </section>
 <section id="about-combat">
 <h1>About Combat<a class="headerlink" href="#about-combat" title="Permalink to this heading">#</a></h1>
@@ -1022,8 +1040,37 @@ NPCs.</p></td>
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">The Game Map</a><ul>
+<li><a class="reference internal" href="#icon-survival"> Survival</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#icon-competition-environment-and-levels"> Competition Environment and Levels</a><ul>
+<li><a class="reference internal" href="#levels">Levels</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#about-combat">About Combat</a></li>
+<li><a class="reference internal" href="#professions-tools-and-items">Professions, Tools, and Items</a></li>
+<li><a class="reference internal" href="#icon-market"> Market</a></li>
+<li><a class="reference internal" href="#icon-npcs"> NPCs</a></li>
+<li><a class="reference internal" href="#icon-tasks"> Tasks</a></li>
+<li><a class="reference internal" href="#icon-tiles-quick-reference"> Tiles Quick Reference</a></li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

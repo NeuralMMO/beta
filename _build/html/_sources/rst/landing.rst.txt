@@ -15,7 +15,7 @@ Neural MMO is a computationally accessible, open-source research platform that s
   :margin: 4 2 auto auto
   :text-align: center
 
-  **Demo Neural MMO in your browser**
+  **Click to Demo Neural MMO in your browser**
 
 |
 
@@ -137,8 +137,7 @@ Agents may aquire armor to protect themselves in combat and weapons to increase 
 
       Interact with Non-Playable Characters of varying friendliness
 
-      .. card::
-         :img-background: /../_static/npc.png
+      .. figure:: /../_static/npc.png
 
    .. tab-item:: Profession & Progression
 
@@ -173,7 +172,6 @@ Agents may aquire armor to protect themselves in combat and weapons to increase 
       Navigate procedurally generated maps
 
       .. figure:: /../_static/terrain.png
-
 
 .. dropdown:: Contributors
 
@@ -236,7 +234,7 @@ Neural MMO (NMMO) has three tracks to compete and win. In all tracks, the object
 
       Train teams of agents using RL to complete tasks. Customize the RL algorithm, model, and reward structure, but leverage a fixed baseline curriculum of tasks for training.
 
-      This is an opportunity for you RL enthusiasts to test your skills building agents that can survive and thrive in a massively multi-agent environment full of potential adversaries. Your task is to implement a *policy* that defines how your 8 Agent team performs within a novel environment. At the outset of each game, your team will receive a randomly generated task. Complete the task to score a point. We will evaluate submissions against each other over thousands of games. Whoever scores the most points wins.
+      This is an opportunity for you RL enthusiasts to test your skills building agents that can survive and thrive in a massively multiagent environment full of potential adversaries. Your task is to implement a *policy* that defines how your 8 Agent team performs within a novel environment. At the outset of each game, your team will receive a randomly generated task. Complete the task to score a point. We will evaluate submissions against each other over thousands of games. Whoever scores the most points wins.
 
       The RL track includes control over the RL algorithm, environment rewards signal, observation featurization, and the neural network architecture. The presentation and sampling of tasks are provided by the baseline and are treated as constants. All RL agent teams are trained on the same baseline task curriculum. While hybrid methods are allowed, with the new emphasis on tasks, it is unlikely that pure traditional scripting will be effective.
 
